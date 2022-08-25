@@ -31,7 +31,7 @@
 		[self setFrameUsingName:windowFilename];
 		[self setFrameAutosaveName:windowFilename];
 		[self setAcceptsMouseMovedEvents:YES];
-		[self setDelegate:self];
+		// [self setDelegate:self];
 	}
 	return self;
 }

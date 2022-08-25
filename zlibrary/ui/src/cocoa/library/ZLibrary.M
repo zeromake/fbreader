@@ -78,6 +78,7 @@ ZLPaintContext *ZLCocoaLibraryImplementation::createContext() {
 }
 
 void ZLCocoaLibraryImplementation::run(ZLApplication *application) {
+	assert(NSThread.isMainThread);
 	new ZLCocoaApplicationWindow(application);
 	NSApplicationMain(myArgc, myArgv);
 	delete application;

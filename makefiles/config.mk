@@ -38,16 +38,16 @@ ifeq "$(TARGET_STATUS)" "profile"
 	LDFLAGS += -pg
 endif
 
-ZINCLUDE = -I $(ROOTDIR)/zlibrary/core/include -I $(ROOTDIR)/zlibrary/text/include
+ZINCLUDE = -I $(ROOTDIR)/zlibrary/core/include -I $(ROOTDIR)/zlibrary/text/include $(EXTERNAL_ZINCLUDE)
 
 ZLSHARED ?= yes
 
 ifeq "$(ZLSHARED)" "yes"
-  CORE_LIBS = -lm -L$(ROOTDIR)/zlibrary/core -lzlcore -ldl
-	TEXT_LIBS = -lzltext
+  CORE_LIBS = -lm -L$(ROOTDIR)/zlibrary/core -lzlcore -ldl $(EXTERNAL_ZLIBS)
+  TEXT_LIBS = -lzltext $(EXTERNAL_ZLIBS)
 else
-  CORE_LIBS = -lm -L$(ROOTDIR)/zlibrary/ui -L$(ROOTDIR)/zlibrary/core -lzlcore -lzlui-$(UI_TYPE) -lzlcore $(UILIBS) $(XML_LIBS) $(ARCHIVER_LIBS) $(NETWORK_LIBS)
-	TEXT_LIBS = -lzltext $(EXTERNAL_LIBS) -llinebreak -lfribidi
+  CORE_LIBS = -lm -L$(ROOTDIR)/zlibrary/ui -L$(ROOTDIR)/zlibrary/core -lzlcore -lzlui-$(UI_TYPE) -lzlcore $(UILIBS) $(XML_LIBS) $(ARCHIVER_LIBS) $(NETWORK_LIBS) $(EXTERNAL_ZLIBS) -lstdc++
+  TEXT_LIBS = -lzltext $(EXTERNAL_LIBS) -lunibreak -lfribidi -lstdc++
 endif
 
 ifneq "$(BUILD_RESOURCE_OBJECT)" "yes"
