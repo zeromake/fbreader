@@ -30,7 +30,7 @@ LDFLAGS = $(ARCH_FLAGS) \
 EXTERNAL_INCLUDE = -I /usr/local/include -I $(OSXSDK)/usr/include -I $(ROOTDIR)/libs/macosx/include
 EXTERNAL_LIBS = -liconv -L $(ROOTDIR)/libs/macosx/lib64
 
-UILIBS = -framework Appkit $(ROOTDIR)/zlibrary/ui/src/cocoa/application/CocoaWindow.o $(ROOTDIR)/zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.o
+UILIBS = -framework Cocoa $(ROOTDIR)/zlibrary/ui/src/cocoa/application/CocoaWindow.o $(ROOTDIR)/zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.o
 
 RM = rm -rvf
 RM_QUIET = rm -rf
