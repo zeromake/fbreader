@@ -42,8 +42,8 @@
 	//[item setView:[[[NSSearchField alloc] init] autorelease]];
 	//[item setMinSize:[[item view] bounds].size];
 	//[item setMaxSize:[[item view] bounds].size];
-	[item setMinSize:NSMakeSize(200, 30)];
-	[item setMaxSize:NSMakeSize(200, 30)];
+	// [item setMinSize:NSMakeSize(200, 30)];
+	// [item setMaxSize:NSMakeSize(200, 30)];
 
 	[item setLabel:label];
 	[item setToolTip:tooltip];
@@ -60,8 +60,8 @@
 	//[item setView:[[[NSSearchField alloc] init] autorelease]];
 	//[item setMinSize:[[item view] bounds].size];
 	//[item setMaxSize:[[item view] bounds].size];
-	[item setMinSize:NSMakeSize(200, 30)];
-	[item setMaxSize:NSMakeSize(200, 30)];
+	// [item setMinSize:NSMakeSize(200, 30)];
+	// [item setMaxSize:NSMakeSize(200, 30)];
 
 	[item setLabel:label];
 	[item setToolTip:tooltip];

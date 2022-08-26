@@ -7,8 +7,8 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug",
-            "program": "/Applications/FBReader.app/Contents/MacOS/FBReader",
+            "name": "osx-debug",
+            "program": "${workspaceFolder}/build/FBReader.app",
             "args": [],
             "cwd": "${workspaceFolder}"
         }

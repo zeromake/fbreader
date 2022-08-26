@@ -164,16 +164,24 @@ void ZLCocoaApplicationWindow::setToolbarItemState(ZLToolbar::ItemPtr item, bool
 			++index;
 		}
 	}
+	// Todo toolbar 替换计算不对，现在只是随便修复一下防止书籍无法渲染，会出现 toolbar 顺序不对
+	int count = [[toolbar items] count];
+	bool isOver = index >= count;
 	if (pair != 0) {
 		if (pair->second != visible) {
 			pair->second = visible;
 			if (visible) {
-				addToolbarItem(item, index);
-			} else {
+				addToolbarItem(item, isOver ? -1 : index);
+				if (isOver) {
+					index = count;
+				}
+			} else if (!isOver) {
 				[toolbar removeItemAtIndex:index];
 			}
 		}
-		if (visible) {
+		int count = [[toolbar items] count];
+		bool isOver = index >= count;
+		if (visible && !isOver) {
 			[[[toolbar items] objectAtIndex:index] setTarget:enabled ? [toolbar delegate] : nil];
 		}
 	}

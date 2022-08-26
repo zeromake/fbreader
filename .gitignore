@@ -7,9 +7,14 @@ makefiles/target.mk
 *.d
 *.pyc
 *.tmp
+*.dylib
 zlibrary/core/libzlcore.so*
 zlibrary/text/libzltext.so*
 zlibrary/ui/zlui-qt4.so
 zlibrary/ui/zlui-gtk.so
 zlibrary/ui/zlui-qt.so
 fbreader/FBReader
+/build/
+!libs/**/*.a
+!libs/**/*.so
+!libs/**/*.dylib

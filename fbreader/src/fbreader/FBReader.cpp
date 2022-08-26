@@ -410,9 +410,11 @@ void FBReader::setMode(ViewMode mode) {
 			break;
 		case LIBRARY_MODE:
 		{
-			shared_ptr<Book> currentBook = myModel->book();
-			((LibraryView&)*myLibraryByAuthorView).showBook(currentBook);
-			((LibraryView&)*myLibraryByTagView).showBook(currentBook);
+			if (!myModel.isNull()) {
+				shared_ptr<Book> currentBook = myModel->book();
+				((LibraryView&)*myLibraryByAuthorView).showBook(currentBook);
+				((LibraryView&)*myLibraryByTagView).showBook(currentBook);
+			}
 			showLibraryView();
 			break;
 		}
