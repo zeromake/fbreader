@@ -8,17 +8,17 @@ APPIMAGEDIR_MACRO = $(IMAGEDIR_MACRO)
 
 ZLSHARED = no
 
-CC = i586-mingw32msvc-gcc
-AR = i586-mingw32msvc-ar rsu
-LD = i586-mingw32msvc-g++
-RESOURCE_COMPILER = i586-mingw32msvc-windres
+CC = x86_64-w64-mingw32-gcc
+AR = ar rsu
+LD = x86_64-w64-mingw32-g++
+RESOURCE_COMPILER = windres
 
-CFLAGS = -pipe -fno-exceptions -Wall -Wno-ctor-dtor-privacy -W -DUNICODE -D_WIN32_IE=0x0501 -D_WIN32_WINNT=0x0501 -DWINVER=0x0500 -DXMLCONFIGHOMEDIR=\"~\\\\..\"
-LDFLAGS = -mwindows
-#LDFLAGS = -mconsole
+CFLAGS = -DUNICODE -D_WIN32_IE=0x0501 -D_WIN32_WINNT=0x0501 -DWINVER=0x0500 -DXMLCONFIGHOMEDIR=\"~\\\\..\"
+#LDFLAGS = -mwindows
+LDFLAGS = -mconsole
 
 UILIBS = -lgdi32 -lcomctl32 -lcomdlg32 -lpng12 -ljpeg -lungif -ltiff
-NETWORK_LIBS ?= -lcurl -lcurldll
+NETWORK_LIBS ?= -lcurl
 
 RM = rm -rvf
 RM_QUIET = rm -rf

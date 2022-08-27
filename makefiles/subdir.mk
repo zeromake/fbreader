@@ -20,6 +20,7 @@ else
 endif
 	@echo ' OK'
 
+ifneq "$(TARGET_ARCH)" "win32"
 .M.o:
 	@echo -n 'Compiling $@ ...'
 ifdef CFLAGS_NOARCH
@@ -29,6 +30,7 @@ else
 	@$(CC) -MMD -c $(CFLAGS) $(INCLUDE) $<
 endif
 	@echo ' OK'
+endif
 
 .m.o:
 	@echo -n 'Compiling $@ ...'
