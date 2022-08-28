@@ -17,13 +17,16 @@ CFLAGS = -DUNICODE -D_WIN32_IE=0x0501 -D_WIN32_WINNT=0x0501 -DWINVER=0x0500 -DXM
 #LDFLAGS = -mwindows
 LDFLAGS = -mconsole
 
-UILIBS = -lgdi32 -lcomctl32 -lcomdlg32 -lpng12 -ljpeg -lungif -ltiff
+UILIBS = -lgdi32 -lcomctl32 -lcomdlg32 -lpng -ljpeg -lgif -ltiff
 NETWORK_LIBS ?= -lcurl
 
 RM = rm -rvf
 RM_QUIET = rm -rf
 
 BUILD_RESOURCE_OBJECT = yes
+
+EXTERNAL_INCLUDE = -I $(ROOTDIR)/3rd/include
+EXTERNAL_LIBS = -L $(ROOTDIR)/3rd/lib
 
 .resources:
 	@echo -n 'Creating resource object...'
