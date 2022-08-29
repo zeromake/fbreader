@@ -21,7 +21,9 @@
 
 #include <stdio.h>
 #include <setjmp.h>
+extern "C" {
 #include <jpeglib.h>
+}
 
 #include "ZLWin32ImageManager.h"
 
@@ -64,8 +66,7 @@ void JpegSourceManager::termSourceCallback(j_decompress_ptr) {
 
 boolean JpegSourceManager::fillBufferCallBack(j_decompress_ptr info) {
 	JpegSourceManager &sourceManager = *(JpegSourceManager*)info->src;
-	const unsigned int len =
-		std::min((unsigned int)2048, sourceManager.myData.length() - sourceManager.myOffset);
+	const unsigned int len = (std::min)((unsigned int)2048, (unsigned int)(sourceManager.myData.length() - sourceManager.myOffset));
 	if (len > 0) {
 		sourceManager.bytes_in_buffer = len;
 		memcpy(sourceManager.myBuffer, sourceManager.myData.data() + sourceManager.myOffset, len);
@@ -86,7 +87,7 @@ void JpegSourceManager::skipDataCallback(j_decompress_ptr info, long len) {
 		sourceManager.next_input_byte += len;
 	} else {
 		sourceManager.myOffset += len - sourceManager.bytes_in_buffer;
-		sourceManager.myOffset = std::min(sourceManager.myOffset, sourceManager.myData.length());
+		sourceManager.myOffset = (std::min)(sourceManager.myOffset,(unsigned int)sourceManager.myData.length());
 		fillBufferCallBack(info);
 	}
 }

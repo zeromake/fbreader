@@ -43,10 +43,10 @@ void W32StandaloneDialogPanel::endDialog(bool code) {
 	}
 }
 
-BOOL CALLBACK W32StandaloneDialogPanel::StaticCallback(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam) {
+INT_PTR CALLBACK W32StandaloneDialogPanel::StaticCallback(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam) {
 	if (message == WM_INITDIALOG) {
 		((W32DialogPanel*)lParam)->init(hDialog);
-		return true;
+		return TRUE;
 	} else if (message == WM_COMMAND) {
 		W32DialogPanel *panel = ourPanels[hDialog];
 		if (panel != 0) {
@@ -70,7 +70,7 @@ BOOL CALLBACK W32StandaloneDialogPanel::StaticCallback(HWND hDialog, UINT messag
 			MapDialogRect(hDialog, &r);
 			minTrackSize.x = std::max(minTrackSize.x, r.right);
 			minTrackSize.y += r.bottom;
-			return true;
+			return TRUE;
 		}
 	} else if (message == WM_SIZE) {
 		W32DialogPanel *panel = ourPanels[hDialog];
@@ -86,7 +86,7 @@ BOOL CALLBACK W32StandaloneDialogPanel::StaticCallback(HWND hDialog, UINT messag
 				(int)HIWORD(lParam) * 100 / r.bottom));
 			panel->updateElementSize();
 		}
-		return false;
+		return FALSE;
 	} else if (message == WM_DRAWITEM) {
 		W32DialogPanel *panel = ourPanels[hDialog];
 		if (panel != 0) {
@@ -96,10 +96,10 @@ BOOL CALLBACK W32StandaloneDialogPanel::StaticCallback(HWND hDialog, UINT messag
 		W32DialogPanel *panel = ourPanels[hDialog];
 		if (panel != 0) {
 			panel->layout();
-			return true;
+			return TRUE;
 		}
 	}
-	return false;
+	return FALSE;
 }
 
 bool W32StandaloneDialogPanel::commandCallback(WPARAM wParam) {

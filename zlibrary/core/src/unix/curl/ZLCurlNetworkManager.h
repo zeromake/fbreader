@@ -20,7 +20,9 @@
 #ifndef __ZLCURLNETWORKMANAGER_H__
 #define __ZLCURLNETWORKMANAGER_H__
 
+extern "C" {
 #include <curl/curl.h>
+}
 
 #include "../../network/ZLNetworkManager.h"
 

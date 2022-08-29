@@ -162,9 +162,9 @@ void W32TreeView::notificationCallback(LPARAM lParam) {
 			fireEvent(ITEM_SELECTED_EVENT);
 			break;
 		// TODO: symbolic name?
-		case -3:
-			fireEvent(ITEM_DOUBLE_CLICKED_EVENT);
-			break;
+		// case -3:
+		// 	fireEvent(ITEM_DOUBLE_CLICKED_EVENT);
+		// 	break;
 		case TVN_DELETEITEM:
 			break;
 		default:

@@ -539,7 +539,7 @@ LRESULT CALLBACK W32KeyNameEditor::Callback(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 void W32KeyNameEditor::init(HWND parent, W32ControlCollection *collection) {
 	W32AbstractEditor::init(parent, collection);
-	myOriginalWndProc = (WndProc)SetWindowLong(myWindow, GWL_WNDPROC, (LONG)Callback);
+	myOriginalWndProc = (WndProc)(uintptr_t)SetWindowLongPtr(myWindow, GWLP_WNDPROC, (LONG_PTR)(uintptr_t)Callback);
 	ourEditors[myWindow] = this;
 }
 

@@ -23,7 +23,7 @@ NETWORK_LIBS ?= -lcurl
 
 CFLAGS += -DINSTALLDIR=\"$(INSTALLDIR_MACRO)\" -DBASEDIR=\"$(SHAREDIR_MACRO)\" -DLIBDIR=\"$(LIBDIR_MACRO)\" -DIMAGEDIR=\"$(IMAGEDIR_MACRO)\" -DAPPIMAGEDIR=\"$(APPIMAGEDIR_MACRO)\" -DVERSION=\"$(VERSION)\"
 ifeq "$(ZLSHARED)" "yes"
-  CFLAGS += -fPIC -DZLSHARED
+	CFLAGS += -fPIC -DZLSHARED
 endif
 
 ifeq "$(TARGET_STATUS)" "release"
@@ -47,7 +47,7 @@ ifeq "$(ZLSHARED)" "yes"
   TEXT_LIBS = -lzltext $(EXTERNAL_ZLIBS)
 else
   CORE_LIBS = -lm -L$(ROOTDIR)/zlibrary/ui -L$(ROOTDIR)/zlibrary/core -lzlcore -lzlui-$(UI_TYPE) -lzlcore $(UILIBS) $(XML_LIBS) $(ARCHIVER_LIBS) $(NETWORK_LIBS) $(EXTERNAL_ZLIBS) -lstdc++
-  TEXT_LIBS = -lzltext $(EXTERNAL_LIBS) -lunibreak -lfribidi -lstdc++
+  TEXT_LIBS = -lzltext $(EXTERNAL_LIBS) -lunibreak -lfribidi
 endif
 
 ifneq "$(BUILD_RESOURCE_OBJECT)" "yes"

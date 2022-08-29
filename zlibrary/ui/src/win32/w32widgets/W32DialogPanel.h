@@ -95,7 +95,7 @@ public:
 	static const std::string OK_EVENT;
 
 private:
-	static BOOL CALLBACK StaticCallback(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam);
+	static INT_PTR CALLBACK StaticCallback(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
 	W32StandaloneDialogPanel(HWND mainWindow, const std::string &caption);
@@ -125,7 +125,7 @@ private:
 
 private:
 	static int CALLBACK PSCallback(HWND, UINT message, LPARAM lParam);
-	static BOOL CALLBACK StaticCallback(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam);
+	static INT_PTR CALLBACK StaticCallback(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
 	W32PropertySheet(HWND mainWindow, const std::string &caption, bool showApplyButton);

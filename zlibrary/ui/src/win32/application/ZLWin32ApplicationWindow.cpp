@@ -482,7 +482,7 @@ void ZLWin32ApplicationWindow::addToolbarItem(ZLToolbar::ItemPtr item) {
 
 LRESULT CALLBACK ZLWin32ApplicationWindow::TextEditParameter::ComboBoxCallback(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	TextEditParameter &parameter =
-		*(TextEditParameter*)GetWindowLong(hWnd, GWL_USERDATA);
+		*(TextEditParameter*)(uintptr_t)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
 	if ((uMsg == WM_COMMAND) && (HIWORD(wParam) == CBN_SELCHANGE)) {
 		HWND comboBox = parameter.myComboBox;
@@ -508,7 +508,7 @@ LRESULT CALLBACK ZLWin32ApplicationWindow::TextEditParameter::ComboBoxCallback(H
 
 LRESULT CALLBACK ZLWin32ApplicationWindow::TextEditParameter::TextEditCallback(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	TextEditParameter &parameter =
-		*(TextEditParameter*)GetWindowLong(hWnd, GWL_USERDATA);
+		*(TextEditParameter*)(uintptr_t)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
 	if (uMsg == WM_CHAR) {
 		if (wParam == 13) {
@@ -641,7 +641,18 @@ ZLWin32ApplicationWindow::TextEditParameter::TextEditParameter(ZLApplication &ap
 	if (item.type() == ZLToolbar::Item::COMBO_BOX) {
 		style |= CBS_DROPDOWN | WS_VSCROLL;
 	}
-	myComboBox = CreateWindow(WC_COMBOBOX, 0, style, rect.left + 5, rect.top + 8, rect.right - rect.left - 10, rect.bottom - rect.top - 14, toolbar, (HMENU)idCommand, GetModuleHandle(0), 0);
+	myComboBox = CreateWindow(
+		WC_COMBOBOX,
+		0,
+		style,
+		rect.left + 5,
+		rect.top + 8,
+		rect.right - rect.left - 10,
+		rect.bottom - rect.top - 14,
+		toolbar,
+		(HMENU)(uintptr_t)idCommand,
+		GetModuleHandle(0),
+		0);
 	HWND textItem = getTextItem(myComboBox);
 	DWORD textItemStyle = GetWindowLong(textItem, GWL_STYLE);
 	textItemStyle |= ES_CENTER | ES_NOHIDESEL;
@@ -653,12 +664,12 @@ ZLWin32ApplicationWindow::TextEditParameter::TextEditParameter(ZLApplication &ap
 	addTooltipToWindow(myComboBox, item.tooltip());
 	addTooltipToWindow(getTextItem(myComboBox), item.tooltip());
 
-	myOriginalComboBoxCallback = (WndProc)SetWindowLong(myComboBox, GWL_WNDPROC, (LONG)ComboBoxCallback);
-	SetWindowLong(myComboBox, GWL_USERDATA, (LONG)this);
+	myOriginalComboBoxCallback = (WndProc)(uintptr_t)SetWindowLongPtr(myComboBox, GWLP_WNDPROC, (LONG_PTR)(uintptr_t)ComboBoxCallback);
+	SetWindowLongPtr(myComboBox, GWLP_USERDATA, (LONG_PTR)(uintptr_t)this);
 
 	HWND textEdit = getTextItem(myComboBox);
-	myOriginalTextEditCallback = (WndProc)SetWindowLong(textEdit, GWL_WNDPROC, (LONG)TextEditCallback);
-	SetWindowLong(textEdit, GWL_USERDATA, (LONG)this);
+	myOriginalTextEditCallback = (WndProc)(uintptr_t)SetWindowLongPtr(textEdit, GWLP_WNDPROC, (LONG_PTR)(uintptr_t)TextEditCallback);
+	SetWindowLongPtr(textEdit, GWLP_USERDATA, (LONG_PTR)(uintptr_t)this);
 }
 
 HWND ZLWin32ApplicationWindow::TextEditParameter::handle() const {

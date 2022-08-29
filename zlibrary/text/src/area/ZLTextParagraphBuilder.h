@@ -23,7 +23,10 @@
 #include <vector>
 #include <string>
 
+extern "C" {
 #include <fribidi/fribidi.h>
+}
+
 
 #include <ZLUnicodeUtil.h>
 

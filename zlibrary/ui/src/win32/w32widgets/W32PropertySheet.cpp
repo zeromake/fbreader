@@ -106,7 +106,7 @@ int CALLBACK W32PropertySheet::PSCallback(HWND hDialog, UINT message, LPARAM lPa
 	return 0;
 }
 
-BOOL CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM wParam, LPARAM lParam) {
+INT_PTR CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
 		case WM_SHOWWINDOW:
 			if (ourPropertySheetStarted) {
@@ -140,7 +140,7 @@ BOOL CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM 
 					}
 				}
 			}
-			return true;
+			return TRUE;
 		case WM_INITDIALOG:
 			((W32DialogPanel*)((PROPSHEETPAGE*)lParam)->lParam)->init(hPage);
 			return true;
@@ -155,7 +155,7 @@ BOOL CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM 
 		case WM_NOTIFY:
 		{
 			PSHNOTIFY &notification = *(PSHNOTIFY*)lParam;
-			switch ((int)notification.hdr.code) {
+			switch (notification.hdr.code) {
 				case PSN_APPLY:
 				{
 					W32DialogPanel *panel = W32DialogPanel::ourPanels[hPage];
@@ -184,7 +184,7 @@ BOOL CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM 
 			if (panel != 0) {
 				panel->scroll(LOWORD(wParam), SB_HORZ);
 			}
-			return true;
+			return TRUE;
 		}
 		case WM_VSCROLL:
 		{
@@ -192,7 +192,7 @@ BOOL CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM 
 			if (panel != 0) {
 				panel->scroll(LOWORD(wParam), SB_VERT);
 			}
-			return true;
+			return TRUE;
 		}
 		case WM_DRAWITEM:
 		{
@@ -200,7 +200,7 @@ BOOL CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM 
 			if (panel != 0) {
 				return panel->drawItemCallback(wParam, *(DRAWITEMSTRUCT*)lParam);
 			}
-			return false;
+			return FALSE;
 		}
 		default:
 			if (message == W32DialogPanel::LAYOUT_MESSAGE) {
@@ -212,5 +212,5 @@ BOOL CALLBACK W32PropertySheet::StaticCallback(HWND hPage, UINT message, WPARAM 
 			}
 			break;
 	}
-	return false;
+	return FALSE;
 }

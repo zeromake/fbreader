@@ -31,7 +31,7 @@ static LRESULT CALLBACK WaitProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 		case WM_PAINT:
 		{
 			ZLWin32ProgressDialog *dialog =
-				(ZLWin32ProgressDialog*)GetWindowLong(hWnd, GWL_USERDATA);
+				(ZLWin32ProgressDialog*)(uintptr_t)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
 			const ZLUnicodeUtil::Ucs2String &str = dialog->wcharMessage();
 
@@ -90,7 +90,8 @@ ZLWin32ProgressDialog::~ZLWin32ProgressDialog() {
 }
 
 const ZLUnicodeUtil::Ucs2String &ZLWin32ProgressDialog::wcharMessage() const {
-	return myWCharMessage;
+	const ZLUnicodeUtil::Ucs2String &temp = myWCharMessage;
+	return temp;
 }
 
 void ZLWin32ProgressDialog::run(ZLRunnable &runnable) {
@@ -103,7 +104,7 @@ void ZLWin32ProgressDialog::run(ZLRunnable &runnable) {
 		const int centerX = (mainRect.left + mainRect.right) / 2;
 		const int centerY = (mainRect.top + mainRect.bottom) / 2;
 		myMessageWindow = CreateWindowEx(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, L"WaitMessage", 0, WS_BORDER | WS_POPUP, centerX - 20, centerY - 5, 40, 10, mainWindow, 0, GetModuleHandle(0), 0);
-		SetWindowLong(myMessageWindow, GWL_USERDATA, (LONG)this);
+		SetWindowLongPtr(myMessageWindow, GWLP_USERDATA, (LONG_PTR)(uintptr_t)this);
 		setMessage(messageText());
 
 		SIZE size;

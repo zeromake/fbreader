@@ -31,7 +31,7 @@ static LRESULT CALLBACK DockProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 		case WM_KEYUP:
 		{
 			HWND owner = GetWindow(hWnd, GW_OWNER);
-			WndProc proc = (WndProc)GetWindowLong(owner, GWL_WNDPROC);
+			WndProc proc = (WndProc)(uintptr_t)GetWindowLongPtr(owner, GWLP_WNDPROC);
 			return proc(owner, uMsg, wParam, lParam);
 		}
 		case WM_CLOSE:

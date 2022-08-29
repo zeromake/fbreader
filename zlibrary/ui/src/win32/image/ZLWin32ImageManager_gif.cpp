@@ -66,14 +66,15 @@ inline static void copyLine(ColorMapObject &cm, byte *&ptr, ZLWin32ImageData &da
 bool ZLWin32ImageManager::gifConvert(const std::string &stringData, ZLWin32ImageData &data, bool &result) const {
 	result = false;
 	GifReader reader(stringData);
+	int errorCode;
 
-	GifFileType *gif = DGifOpen(&reader, GifReader::inputFunction);
+	GifFileType *gif = DGifOpen(&reader, GifReader::inputFunction, &errorCode);
 	if (gif == 0) {
 		return false;
 	}
 
 	if (DGifSlurp(gif) != GIF_OK) {
-		DGifCloseFile(gif);
+		DGifCloseFile(gif, &errorCode);
 		return false;
 	}
 
@@ -81,7 +82,7 @@ bool ZLWin32ImageManager::gifConvert(const std::string &stringData, ZLWin32Image
 	if ((colormap == 0) ||
 			(gif->ImageCount < 1) ||
 			(colormap->ColorCount != (1 << colormap->BitsPerPixel))) {
-		DGifCloseFile(gif);
+		DGifCloseFile(gif, &errorCode);
 		return false;
 	}
 
@@ -128,7 +129,7 @@ bool ZLWin32ImageManager::gifConvert(const std::string &stringData, ZLWin32Image
 		}
 	}
 
-	DGifCloseFile(gif);
+	DGifCloseFile(gif, &errorCode);
 	result = true;
 	return true;
 }

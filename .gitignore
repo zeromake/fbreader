@@ -8,6 +8,7 @@ makefiles/target.mk
 *.pyc
 *.tmp
 *.dylib
+*.exe
 zlibrary/core/libzlcore.so*
 zlibrary/text/libzltext.so*
 zlibrary/ui/zlui-qt4.so

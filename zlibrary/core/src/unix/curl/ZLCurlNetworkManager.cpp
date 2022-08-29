@@ -20,7 +20,9 @@
 #include <map>
 #include <set>
 
+extern "C" {
 #include <curl/curl.h>
+}
 
 #include <ZLStringUtil.h>
 #include <ZLNetworkUtil.h>

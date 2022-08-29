@@ -33,22 +33,30 @@ local downloads = {
         "https://nchc.dl.sourceforge.net/project/bzip2/bzip2-1.0.6.tar.gz",
     },
     {
-        "openssl",
-        "https://www.openssl.org/source/openssl-3.0.5.tar.gz",
-    },
-    {
-        "ssh2",
-        "https://www.libssh2.org/download/libssh2-1.10.0.tar.gz",
-    },
-    {
         "curl",
-        "https://curl.se/download/curl-7.84.0.zip",
-    }
+        "https://curl.se/windows/dl-7.83.1_2/curl-7.83.1_2-win64-mingw.zip",
+    },
+    {
+        "unibreak",
+        "https://github.com/adah1972/libunibreak/releases/download/libunibreak_5_0/libunibreak-5.0.tar.gz",
+    },
+    {
+        "expat",
+        "https://github.com/libexpat/libexpat/releases/download/R_2_4_8/expat-2.4.8.tar.gz",
+    },
+    {
+        "fribidi",
+        "https://github.com/fribidi/fribidi/releases/download/v1.0.12/fribidi-1.0.12.tar.xz"
+    },
+    {
+        "sqlite3",
+        "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip",
+    },
 }
 
-local downloadDir = path.join(os.scriptdir(), "dowload")
+local downloadDir = path.join(os.scriptdir(), "download")
 local curlBin = find_program("curl")
-local proxyUrl = "socks5://127.0.0.1:10800"
+local proxyUrl = nil --"socks5://127.0.0.1:10800"
 
 local function curlDowload(url, f)
     local argv = {"-L", "-o", f}

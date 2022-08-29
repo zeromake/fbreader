@@ -177,8 +177,10 @@ bool ZLWin32ImageManager::convertImageDirect(const std::string &stringData, ZLIm
 	if (gifConvert(stringData, win32Data, result)) {
 		return result;
 	}
+#ifndef TIFF_UNSUPPORT
 	if (tiffConvert(stringData, win32Data, result)) {
 		return result;
 	}
+#endif
 	return false;
 }

@@ -126,7 +126,7 @@ LRESULT ZLWin32ViewWidget::Callback(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 ZLWin32ViewWidget::ZLWin32ViewWidget(ZLWin32ApplicationWindow &window) : ZLViewWidget((ZLView::Angle)window.application().AngleStateOption.value()), myWindow(window), myMouseCaptured(false), myRotator(0), myHScrollBarIsEnabled(false), myVScrollBarIsEnabled(false) {
 	viewWidgetInstance = this;
 	myHandle = CreateWindow(WC_EDIT, 0, (WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL) & ~WS_BORDER, 0, 0, 0, 0, myWindow.mainWindow(), 0, GetModuleHandle(0), 0);
-	myOriginalCallback = (WndProc)SetWindowLong(myHandle, GWL_WNDPROC, (LONG)ViewWndProc);
+	myOriginalCallback = (WndProc)(uintptr_t)SetWindowLongPtr(myHandle, GWLP_WNDPROC, (LONG_PTR)(uintptr_t)ViewWndProc);
 	ShowScrollBar(myHandle, SB_BOTH, false);
 }
 

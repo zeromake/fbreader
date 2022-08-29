@@ -20,6 +20,7 @@
 #include <ZLibrary.h>
 
 #include "FBReader.h"
+#include <stdio.h>
 
 int main(int argc, char **argv) {
 	if (!ZLibrary::init(argc, argv)) {

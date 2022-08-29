@@ -16,10 +16,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+#ifndef TIFF_UNSUPPORT
 
 #include "ZLWin32ImageManager.h"
 
+extern "C" {
 #include <tiffio.h>
+}
+
 
 #undef min
 
@@ -115,9 +119,10 @@ bool ZLWin32ImageManager::tiffConvert(const std::string &stringData, ZLWin32Imag
 
 	data.init(width, height, true, 0);
 
-	result = TIFFReadRGBAImage(tiff, width, height, (uint32*)data.myArray, 1) != 0;
+	result = TIFFReadRGBAImage(tiff, width, height, (uint32_t*)data.myArray, 1) != 0;
 	data.bgr2rgb();
 
 	TIFFClose(tiff);
 	return true;
 }
+#endif
