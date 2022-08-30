@@ -22,3 +22,4 @@ fbreader/FBReader
 3rd/*
 !3rd/fetch.lua
 !3rd/xmake.lua
+!3rd/pre

@@ -71,9 +71,9 @@
 		<node name="bookInfo" value="书籍信息..." />
 		<node name="toc" value="目录" />
 		<node name="showLibrary" value="打开书库" />
-		<node name="showNetLibrary" toBeTranslated="true" value="Network library" />
-		<node name="addBook" toBeTranslated="true" value="Open file..." />
-		<node name="showRecent" toBeTranslated="true" value="Recent books" />
+		<node name="showNetLibrary" toBeTranslated="true" value="打开网络书库" />
+		<node name="addBook" toBeTranslated="true" value="打开书籍..." />
+		<node name="showRecent" toBeTranslated="true" value="近期书籍" />
 		<node name="library" value="书库">
 			<node name="showLibrary" value="打开" />
 			<node name="previousBook" value="上一本书" />
@@ -112,7 +112,7 @@
 			<node name="toggleFullscreen" value="全屏" />
 			<node name="toggleIndicator" value="切换指示" />
 		</node>
-		<node name="preferences" toBeTranslated="true" value="Last Preferences Dialog..." />
+		<node name="preferences" toBeTranslated="true" value="打开上一次的选项对话框..." />
 		<node name="quit" value="关闭" />
 	</node>
 	<node name="toolbar">
@@ -198,31 +198,31 @@
 			<node name="tooltip" value="筛选" />
 		</node>
 		<node name="preferences">
-			<node name="label" toBeTranslated="true" value="Last Preferences Dialog" />
-			<node name="tooltip" toBeTranslated="true" value="Show Last Opened Preferences Dialog" />
+			<node name="label" toBeTranslated="true" value="上一次的选项对话框" />
+			<node name="tooltip" toBeTranslated="true" value="打开上一次的选项对话框" />
 		</node>
 		<node name="bookInfo">
 			<node name="label" value="书籍信息" />
 			<node name="tooltip" value="书籍信息" />
 		</node>
 		<node name="libraryOptions">
-			<node name="label" toBeTranslated="true" value="Library Preferences" />
-			<node name="tooltip" toBeTranslated="true"  value="Show Library Preferences Dialog" />
+			<node name="label" toBeTranslated="true" value="书库选项" />
+			<node name="tooltip" toBeTranslated="true"  value="打开书库选项对话框" />
 		</node>
 		<node name="networkOptions">
-			<node name="label" toBeTranslated="true" value="Network Preferences" />
+			<node name="label" toBeTranslated="true" value="网络选项" />
 			<node name="tooltip" toBeTranslated="true" value="Show Network Preferences Dialog" />
 		</node>
 		<node name="systemOptions">
-			<node name="label" toBeTranslated="true" value="System Preferences" />
+			<node name="label" toBeTranslated="true" value="系统选项" />
 			<node name="tooltip" toBeTranslated="true" value="Show System Preferences Dialog" />
 		</node>
 		<node name="readingOptions">
-			<node name="label" toBeTranslated="true" value="Reading Preferences" />
+			<node name="label" toBeTranslated="true" value="控制选项" />
 			<node name="tooltip" toBeTranslated="true" value="Show Reading Preferences Dialog" />
 		</node>
 		<node name="lookAndFeelOptions">
-			<node name="label" toBeTranslated="true" value="Look &amp; Feel Preferences" />
+			<node name="label" toBeTranslated="true" value="可视选项" />
 			<node name="tooltip" toBeTranslated="true" value="Show Look &amp; Feel Preferences Dialog" />
 		</node>
 	</node>

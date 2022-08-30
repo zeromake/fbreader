@@ -61,6 +61,11 @@ static std::string getAppDir() {
 	std::string result;
 	ZLUnicodeUtil::ucs2ToUtf8(result, buffer);
 	result.erase(result.rfind('\\'));
+	static std::string BINPattern = "\\bin";
+	if (ZLStringUtil::stringEndsWith(result, BINPattern)) {
+		int offset = 4;
+		result = result.substr(0, result.length() - offset);
+	}
 	return result;
 }
 

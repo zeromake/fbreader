@@ -15,79 +15,181 @@ target("gif")
         add_files(path.join(os.scriptdir(), "gif/giflib-5.2.1", f))
     end
 
-
-package("zlib")
-    add_deps("cmake")
-    set_sourcedir(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
-    on_install(function (package)
-        local configs = {}
-        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-        import("package.tools.cmake").install(package, configs)
+target("zlib")
+    set_kind("static")
+    on_load(function()
+        local libconfig = path.join(os.scriptdir(), "zlib/zlib-1.2.12/zconf.h")
+        if not os.exists(libconfig) then
+            os.cp(path.join(os.scriptdir(), "zlib/zlib-1.2.12/zconf.h.in"), libconfig)
+        end
     end)
-package_end()
+    for _, f in ipairs({
+        "adler32.c",
+        "crc32.c",
+        "deflate.c",
+        "infback.c",
+        "inffast.c",
+        "inflate.c",
+        "inftrees.c",
+        "trees.c",
+        "zutil.c",
+        "compress.c",
+        "uncompr.c",
+        "gzclose.c",
+        "gzlib.c",
+        "gzread.c",
+        "gzwrite.c",
+    }) do
+        add_files(path.join(os.scriptdir(), "zlib/zlib-1.2.12", f))
+    end
 
-package("png")
-    add_deps("cmake")
+target("png")
+    set_kind("static")
     add_deps("zlib")
-    set_sourcedir(path.join(os.scriptdir(), "png/lpng1637"))
-    on_install(function (package)
-        local configs = {}
-        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-        import("package.tools.cmake").install(package, configs)
+    add_includedirs(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
+    on_load(function()
+        local libconfig = path.join(os.scriptdir(), "png/lpng1637/pnglibconf.h")
+        if not os.exists(libconfig) then
+            os.cp(path.join(os.scriptdir(), "pre/png/pnglibconf.h"), libconfig)
+        end
     end)
-package_end()
+    for _, f in ipairs({
+        "png.c",
+        "pngerror.c",
+        "pngget.c",
+        "pngmem.c",
+        "pngpread.c",
+        "pngread.c",
+        "pngrio.c",
+        "pngrtran.c",
+        "pngrutil.c",
+        "pngset.c",
+        "pngtrans.c",
+        "pngwio.c",
+        "pngwrite.c",
+        "pngwtran.c",
+        "pngwutil.c",
+    }) do
+        add_files(path.join(os.scriptdir(), "png/lpng1637", f))
+    end
 
+    if is_arch("arm*") then
+        for _, f in ipairs({
+            "arm/arm_init.c",
+            "arm/filter_neon.S",
+            "arm/filter_neon_intrinsics.c",
+            "arm/palette_neon_intrinsics.c",
+        }) do
+            add_files(path.join(os.scriptdir(), "png/lpng1637", f))
+        end
+    end
 
-package("tiff")
-    add_deps("cmake")
-    set_sourcedir(path.join(os.scriptdir(), "tiff/tiff-4.4.0"))
-    on_install(function (package)
-        local configs = {}
-        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-        table.insert(configs, "-UJPEG_SUPPORT")
-        table.insert(configs, "-UWEBP_SUPPORT")
-        table.insert(configs, "-UZSTD_SUPPORT")
-        import("package.tools.cmake").install(package, configs)
+    if is_arch("mips*") then
+        for _, f in ipairs({
+            "mips/mips_init.c",
+            "mips/filter_msa_intrinsics.c",
+        }) do
+            add_files(path.join(os.scriptdir(), "png/lpng1637", f))
+        end
+    end
+
+    if is_arch("x86_64", "i386") then
+        for _, f in ipairs({
+            "intel/intel_init.c",
+            "intel/filter_sse2_intrinsics.c",
+        }) do
+            add_files(path.join(os.scriptdir(), "png/lpng1637", f))
+        end
+    end
+
+    if is_arch("powerpc*") then
+        for _, f in ipairs({
+            "powerpc/powerpc_init.c",
+            "powerpc/filter_vsx_intrinsics.c",
+        }) do
+            add_files(path.join(os.scriptdir(), "png/lpng1637", f))
+        end
+    end
+
+local tiffSourceDir = path.join(os.scriptdir(), "tiff/tiff-4.4.0/libtiff")
+
+target("tiff")
+    set_kind("static")
+    -- set_kind("shared")
+    add_deps("jpeg", "zlib")
+    add_includedirs(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
+    add_includedirs(path.join(os.scriptdir(), "jpeg/jpeg-6b"))
+    on_load(function()
+        local libconfig = path.join(tiffSourceDir, "tif_config.h")
+        if not os.exists(libconfig) then
+            os.cp(path.join(os.scriptdir(), "pre/tiff/tif_config.h"), libconfig)
+            os.cp(path.join(os.scriptdir(), "pre/tiff/tiffconf.h"), path.join(tiffSourceDir, "tiffconf.h"))
+        end
     end)
-package_end()
+    for _, f in ipairs({
+        "tif_aux.c",
+        "tif_close.c",
+        "tif_codec.c",
+        "tif_color.c",
+        "tif_compress.c",
+        "tif_dir.c",
+        "tif_dirinfo.c",
+        "tif_dirread.c",
+        "tif_dirwrite.c",
+        "tif_dumpmode.c",
+        "tif_error.c",
+        "tif_extension.c",
+        "tif_fax3.c",
+        "tif_fax3sm.c",
+        "tif_flush.c",
+        "tif_getimage.c",
+        "tif_jbig.c",
+        "tif_jpeg.c",
+        "tif_jpeg_12.c",
+        "tif_lerc.c",
+        "tif_luv.c",
+        "tif_lzma.c",
+        "tif_lzw.c",
+        "tif_next.c",
+        "tif_ojpeg.c",
+        "tif_open.c",
+        "tif_packbits.c",
+        "tif_pixarlog.c",
+        "tif_predict.c",
+        "tif_print.c",
+        "tif_read.c",
+        "tif_strip.c",
+        "tif_swab.c",
+        "tif_thunder.c",
+        "tif_tile.c",
+        "tif_version.c",
+        "tif_warning.c",
+        "tif_webp.c",
+        "tif_write.c",
+        "tif_zip.c",
+        "tif_zstd.c",
+    }) do
+        add_files(path.join(tiffSourceDir, f))
+    end
+    if is_plat("windows", "mingw") then
+        add_files(path.join(tiffSourceDir, "tif_win32.c"))
+    else
+        add_files(path.join(tiffSourceDir, "tif_unix.c"))
+    end
 
-package("jpeg-turbo")
-    add_deps("cmake")
-    set_sourcedir(path.join(os.scriptdir(), "jpeg-turbo/libjpeg-turbo-2.1.4"))
-    on_install(function (package)
-        local configs = {}
-        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-        import("package.tools.cmake").install(package, configs)
-    end)
-package_end()
 
-package("expat")
-    add_deps("cmake")
-    set_sourcedir(path.join(os.scriptdir(), "expat/expat-2.4.8"))
-    on_install(function (package)
-        local configs = {}
-        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-        import("package.tools.cmake").install(package, configs)
-    end)
-package_end()
-
-add_requires("zlib", "png", "tiff", "expat")
+local jpegSourceDir = path.join(os.scriptdir(), "jpeg/jpeg-6b")
 
 target("jpeg")
     set_kind("static")
     on_load(function ()
-        local jconfig = path.join(os.scriptdir(), "jpeg/jpeg-6b/jconfig.h")
+        local jconfig = path.join(jpegSourceDir, "jconfig.h")
         if not os.exists(jconfig) then
             local jconfigSource = "jconfig.vc"
             if is_plat("macosx", "mingw") then
                 jconfigSource = "jconfig.mac"
             end
-            os.cp(path.join(os.scriptdir(), "jpeg/jpeg-6b", jconfigSource), jconfig)
+            os.cp(path.join(jpegSourceDir, jconfigSource), jconfig)
         end
     end)
     for _, f in ipairs({
@@ -138,7 +240,7 @@ target("jpeg")
         "jmemmgr.c",
         "jmemnobs.c",
     }) do
-        add_files(path.join(os.scriptdir(), "jpeg/jpeg-6b", f))
+        add_files(path.join(jpegSourceDir, f))
     end
 
 target("bzip2")
@@ -260,3 +362,16 @@ target("sqlite3")
     }) do
         add_files(path.join(os.scriptdir(), "sqlite3/sqlite-amalgamation-3390200", f))
     end
+
+package("expat")
+    add_deps("cmake")
+    set_sourcedir(path.join(os.scriptdir(), "expat/expat-2.4.8"))
+    on_install(function (package)
+        local configs = {}
+        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
+        import("package.tools.cmake").install(package, configs)
+    end)
+package_end()
+
+add_requires("expat", "webp")

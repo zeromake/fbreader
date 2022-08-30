@@ -25,6 +25,7 @@
 #include "../image/ZLWin32ImageManager.h"
 #include "ZLWin32OptionsDialog.h"
 #include "ZLWin32MessageBox.h"
+#include "ZLWin32OpenFileDialog.h"
 
 void ZLWin32DialogManager::createApplicationWindow(ZLApplication *application) const {
 	myApplicationWindow = new ZLWin32ApplicationWindow(application);
@@ -43,7 +44,7 @@ shared_ptr<ZLOptionsDialog> ZLWin32DialogManager::createOptionsDialog(const ZLRe
 }
 
 shared_ptr<ZLOpenFileDialog> ZLWin32DialogManager::createOpenFileDialog(const ZLResourceKey &key, const std::string &directoryPath, const std::string &filePath, const ZLOpenFileDialog::Filter &filter) const {
-	return 0;
+	return new ZLWin32OpenFileDialog(*myApplicationWindow, key, directoryPath);
 }
 
 void ZLWin32DialogManager::informationBox(const std::string &title, const std::string &message) const {

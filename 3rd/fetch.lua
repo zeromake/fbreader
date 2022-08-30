@@ -52,6 +52,16 @@ local downloads = {
         "sqlite3",
         "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip",
     },
+    {
+        "rxcpp",
+        "https://github.com/ReactiveX/RxCpp/archive/refs/tags/v4.1.1.zip",
+        "rxcpp-4.1.1.zip",
+    },
+    -- {
+    --     "webp",
+    --     "https://github.com/webmproject/libwebp/archive/refs/tags/v1.2.4.zip",
+    --     "libwebp-1.2.4.zip",
+    -- },
 }
 
 local downloadDir = path.join(os.scriptdir(), "download")
