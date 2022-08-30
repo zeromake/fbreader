@@ -74,6 +74,22 @@ void ZLStringUtil::append(std::string &str, const std::vector<std::string> &text
 	}
 }
 
+const std::string ZLStringUtil::join(const std::vector<std::string>& arr, const std::string& delim) {
+	std::string str;
+    auto it = arr.begin();
+    const auto itlast = arr.end()-1;
+    for (it = arr.begin(); it != arr.end(); it++)
+    {
+        str += *it;
+        if (it != itlast)
+        {
+            str += delim;
+        }
+    }
+    return str;
+}
+
+
 void ZLStringUtil::stripWhiteSpaces(std::string &str) {
 	size_t counter = 0;
 	size_t length = str.length();

@@ -38,6 +38,10 @@ bool TxtPlugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "txt";
 }
 
+std::string TxtPlugin::accepts() const {
+	return std::string("*.txt,*.text");
+}
+
 bool TxtPlugin::readMetaInfo(Book &book) const {
 	shared_ptr<ZLInputStream> stream = book.file().inputStream();
 	if (stream.isNull()) {

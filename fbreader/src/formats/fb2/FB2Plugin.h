@@ -29,6 +29,7 @@ public:
 	~FB2Plugin();
 	bool providesMetaInfo() const;
 	bool acceptsFile(const ZLFile &file) const;
+	std::string accepts() const;
 	bool readMetaInfo(Book &book) const;
 	bool readModel(BookModel &model) const;
 	shared_ptr<ZLImage> coverImage(const ZLFile &file) const;

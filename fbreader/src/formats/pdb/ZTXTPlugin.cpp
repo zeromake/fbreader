@@ -33,6 +33,10 @@ bool ZTXTPlugin::acceptsFile(const ZLFile &file) const {
 	return PdbPlugin::fileType(file) == "zTXTGPlm";
 }
 
+std::string ZTXTPlugin::accepts() const {
+	return std::string();
+}
+
 shared_ptr<ZLInputStream> ZTXTPlugin::createStream(const ZLFile &file) const {
 	return new ZTXTStream(file);
 }

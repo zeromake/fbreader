@@ -53,6 +53,7 @@ public:
 
 	virtual bool providesMetaInfo() const = 0;
 	virtual bool acceptsFile(const ZLFile &file) const = 0;
+	virtual std::string accepts() const = 0;
 	virtual FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
 
 	virtual const std::string &tryOpen(const ZLFile &file) const;
@@ -82,6 +83,7 @@ private:
 public:
 	shared_ptr<FormatPlugin> plugin(const ZLFile &file, bool strong);
 	shared_ptr<FormatPlugin> plugin(const Book &book);
+	std::vector<std::string> accepts() const;
 
 private:
 	static PluginCollection *ourInstance;

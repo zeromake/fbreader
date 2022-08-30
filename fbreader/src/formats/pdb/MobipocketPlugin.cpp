@@ -35,6 +35,10 @@ bool MobipocketPlugin::acceptsFile(const ZLFile &file) const {
 	return PdbPlugin::fileType(file) == "BOOKMOBI";
 }
 
+std::string MobipocketPlugin::accepts() const {
+	return std::string("*.mobi");
+}
+
 void MobipocketPlugin::readDocumentInternal(const ZLFile &file, BookModel &model, const PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const {
 	MobipocketHtmlBookReader(file, model, format, encoding).readDocument(stream);
 }

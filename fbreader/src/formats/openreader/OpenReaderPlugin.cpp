@@ -38,6 +38,10 @@ bool OpenReaderPlugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "orb";
 }
 
+std::string OpenReaderPlugin::accepts() const {
+	return std::string("*.orb");
+}
+
 bool OpenReaderPlugin::readMetaInfo(Book &book) const {
 	return ORDescriptionReader(book).readMetaInfo();
 }

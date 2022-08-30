@@ -31,6 +31,10 @@ bool FB2Plugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "fb2";
 }
 
+std::string FB2Plugin::accepts() const {
+	return std::string("*.fb2");
+}
+
 bool FB2Plugin::readMetaInfo(Book &book) const {
 	return FB2MetaInfoReader(book).readMetaInfo();
 }

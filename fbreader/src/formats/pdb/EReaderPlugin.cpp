@@ -38,6 +38,10 @@ bool EReaderPlugin::acceptsFile(const ZLFile &file) const {
 	return PdbPlugin::fileType(file) == "PNRdPPrs";
 }
 
+std::string EReaderPlugin::accepts() const {
+	return std::string("*.prc");
+}
+
 void EReaderPlugin::readDocumentInternal(const ZLFile &file, BookModel &model, const PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const {
 	if (!stream.open())	{
 		//TODO maybe anything else opens stream

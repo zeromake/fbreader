@@ -30,6 +30,10 @@ bool PalmDocPlugin::acceptsFile(const ZLFile &file) const {
 	return PdbPlugin::fileType(file) == "TEXtREAd";
 }
 
+std::string PalmDocPlugin::accepts() const {
+	return "*.pdb";
+}
+
 void PalmDocPlugin::readDocumentInternal(const ZLFile &file, BookModel &model, const PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const {
 	stream.open();
 	bool readAsPalmDoc = ((PalmDocStream&)stream).hasExtraSections();

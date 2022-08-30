@@ -24,15 +24,21 @@
 #include "DocBookDescriptionReader.h"
 #include "DocBookBookReader.h"
 #include "../../library/Book.h"
+#include "../../bookmodel/BookModel.h"
 
 bool DocBookPlugin::acceptsFile(const std::string &extension) const {
 	return extension == "xml";
 }
 
+std::string DocBookPlugin::accepts() const {
+	return std::string("*.xml");
+}
+
 bool DocBookPlugin::readMetaInfo(Book &book) const {
-	return DocBookDescriptionReader(book).readMetaInfo(ZLFile(path).inputStream());
+	return DocBookDescriptionReader(book).readMetaInfo(book.file().inputStream());
 }
 
 bool DocBookPlugin::readModel(BookModel &model) const {
-	return DocBookBookReader(model).readDocument(ZLFile(book.fileName()).inputStream());
+	auto f = model.book()->file();
+	return DocBookBookReader(model).readDocument(f.inputStream());
 }

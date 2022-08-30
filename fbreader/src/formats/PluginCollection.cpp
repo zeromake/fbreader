@@ -85,3 +85,20 @@ shared_ptr<FormatPlugin> PluginCollection::plugin(const ZLFile &file, bool stron
 	}
 	return 0;
 }
+
+std::vector<std::string> PluginCollection::accepts() const {
+	std::vector<std::string> result;
+	for (std::vector<shared_ptr<FormatPlugin> >::const_iterator it = myPlugins.begin(); it != myPlugins.end(); ++it) {
+		auto s = (*it)->accepts();
+		while (!s.empty()) {
+			auto i = s.find(',');
+			if (i == 0 || i == std::string::npos) {
+				result.push_back(s);
+				break;
+			}
+			result.push_back(s.substr(0, i));
+			s = s.substr(i + 1, s.size());
+		}
+	}
+	return result;
+}

@@ -41,6 +41,7 @@ class PluckerPlugin : public PdbPlugin {
 public:
 	bool providesMetaInfo() const;
 	bool acceptsFile(const ZLFile &file) const;
+	std::string accepts() const;
 	bool readMetaInfo(Book &book) const;
 	bool readModel(BookModel &model) const;
 };
@@ -70,6 +71,7 @@ class PalmDocPlugin : public PalmDocLikePlugin {
 
 public:
 	bool acceptsFile(const ZLFile &file) const;
+	std::string accepts() const;
 
 	void readDocumentInternal(const ZLFile &file, BookModel &model, const class PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const;
 
@@ -81,6 +83,7 @@ class MobipocketPlugin : public PalmDocLikePlugin {
 
 private:
 	bool acceptsFile(const ZLFile &file) const;
+	std::string accepts() const;
 	bool readMetaInfo(Book &book) const;
 
 	void readDocumentInternal(const ZLFile &file, BookModel &model, const class PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const;
@@ -92,6 +95,7 @@ class EReaderPlugin : public SimplePdbPlugin {
 public:
 	bool providesMetaInfo() const;
 	bool acceptsFile(const ZLFile &file) const;
+	std::string accepts() const;
 	bool readMetaInfo(Book &book) const;
 	const std::string &tryOpen(const ZLFile &file) const;
 
@@ -105,6 +109,7 @@ class ZTXTPlugin : public SimplePdbPlugin {
 public:
 	bool providesMetaInfo() const;
 	bool acceptsFile(const ZLFile &file) const;
+	std::string accepts() const;
 
 protected:
 	shared_ptr<ZLInputStream> createStream(const ZLFile &file) const;

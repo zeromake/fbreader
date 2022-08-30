@@ -159,12 +159,12 @@ int ZLWin32PaintContext::stringWidth(const char *str, int len, bool rtl) const {
 	SIZE size;
 	int utf8len = ZLUnicodeUtil::utf8Length(str, len);
 	if (utf8len == len) {
-		GetTextExtentPointA(myDisplayContext, str, len, &size);
+		GetTextExtentPoint32A(myDisplayContext, str, len, &size);
 	} else {
 		static ZLUnicodeUtil::Ucs2String ucs2Str;
 		ucs2Str.clear();
 		ZLUnicodeUtil::utf8ToUcs2(ucs2Str, str, len, utf8len);
-		GetTextExtentPointW(myDisplayContext, ::wchar(ucs2Str), utf8len, &size);
+		GetTextExtentPoint32W(myDisplayContext, ::wchar(ucs2Str), utf8len, &size);
 	}
 	return size.cx;
 }
@@ -188,20 +188,40 @@ void ZLWin32PaintContext::drawString(int x, int y, const char *str, int len, boo
 	if (myDisplayContext == 0) {
 		return;
 	}
-	y -= stringHeight();
+	auto originX = x;
+	auto originY = y;
+	auto height = stringHeight();
+	y -= height;
 	y += myTextMetric.tmDescent;
 	if (rtl) {
 		x -= 1;
 	}
 	int utf8len = ZLUnicodeUtil::utf8Length(str, len);
+#ifndef WIN32_USE_DRAW_TEXT
 	SetTextAlign(myDisplayContext, rtl ? TA_RTLREADING : 0);
+#else
+	UINT format = DT_SINGLELINE | (rtl ? DT_RTLREADING: 0);
+	RECT rcText;
+	rcText.top = originY - height;
+	rcText.bottom = originY;
+	rcText.left = originX;
+	rcText.right = myWidth;
+#endif
 	if (utf8len == len) {
+#ifndef WIN32_USE_DRAW_TEXT
 		TextOutA(myDisplayContext, x, y, str, len);
+#else
+		DrawTextA(myDisplayContext, (LPCSTR)str, utf8len, &rcText, format);
+#endif
 	} else {
 		static ZLUnicodeUtil::Ucs2String ucs2Str;
 		ucs2Str.clear();
 		ZLUnicodeUtil::utf8ToUcs2(ucs2Str, str, len, utf8len);
+#ifndef WIN32_USE_DRAW_TEXT
 		TextOutW(myDisplayContext, x, y, ::wchar(ucs2Str), utf8len);
+#else
+		DrawTextW(myDisplayContext, (LPCWSTR)::wchar(ucs2Str), utf8len, &rcText, format);
+#endif
 	}
 }
 

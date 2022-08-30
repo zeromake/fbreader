@@ -4,16 +4,20 @@
 
 #include "ZLWin32OpenFileDialog.h"
 #include <ZLDialogManager.h>
+#include <ZLStringUtil.h>
 #include "../../../../core/src/win32/util/W32WCHARUtil.h"
 #include "portable-file-dialogs.h"
 
 
 ZLWin32OpenFileDialog::ZLWin32OpenFileDialog(
     ZLWin32ApplicationWindow &window,
-    const ZLResourceKey &resourceKey,
-    const std::string &filePath): myWindow(window),
-    myResourceKey(resourceKey),
-    myFilePath(filePath) {
+    const std::string &title,
+    const std::string &dir,
+    const ZLOpenFileDialog::Filter &filter):
+    myWindow(window),
+    myTitle(title),
+    myDir(dir),
+    myFilter(filter) {
 }
 
 ZLWin32OpenFileDialog::~ZLWin32OpenFileDialog() {}
@@ -28,20 +32,20 @@ char* wToUtf8(const void *buffer, int bufferlen) {
 }
 
 bool ZLWin32OpenFileDialog::run() {
+    auto filter = ZLStringUtil::join(myFilter.acceptsStr(), ";");
     auto f = pfd::open_file(
-        "Choose files to read",
-        pfd::path::home(),
-        
+        myTitle.empty() ? "select book file": myTitle,
+        myDir.empty() ? pfd::path::home() : myDir,
         {
-            "Text Files (.txt .text)",
-            "*.txt *.text",
-            "All Files",
+            "ebook files "+ filter,
+            filter,
+            "all files (*)",
             "*"},
         pfd::opt::none);
     for (auto const &name : f.result()) {
         selectFilePath = name;
     }
-    return true;
+    return !selectFilePath.empty();
 }
 
 std::string ZLWin32OpenFileDialog::filePath() const {

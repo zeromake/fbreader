@@ -56,6 +56,10 @@ bool OEBPlugin::acceptsFile(const ZLFile &file) const {
 	return extension == OPF || extension == OEBZIP || extension == EPUB;
 }
 
+std::string OEBPlugin::accepts() const {
+	return "*."+OPF+",*."+OEBZIP+",*."+EPUB;
+}
+
 ZLFile OEBPlugin::opfFile(const ZLFile &oebFile) {
 	if (oebFile.extension() == OPF) {
 		return oebFile;

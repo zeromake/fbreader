@@ -40,6 +40,10 @@ bool CHMPlugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "chm";
 }
 
+std::string CHMPlugin::accepts() const {
+	return std::string("*.chm");
+}
+
 class CHMTextStream : public MergedStream {
 
 public:

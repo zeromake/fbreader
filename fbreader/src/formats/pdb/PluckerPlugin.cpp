@@ -33,6 +33,10 @@ bool PluckerPlugin::acceptsFile(const ZLFile &file) const {
 	return PdbPlugin::fileType(file) == "DataPlkr";
 }
 
+std::string PluckerPlugin::accepts() const {
+	return std::string();
+}
+
 bool PluckerPlugin::readMetaInfo(Book &book) const {
 	shared_ptr<ZLInputStream> stream = new PluckerTextStream(book.file());
 	detectEncodingAndLanguage(book, *stream);

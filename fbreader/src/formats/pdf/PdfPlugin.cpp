@@ -24,15 +24,20 @@
 #include "PdfDescriptionReader.h"
 #include "PdfBookReader.h"
 #include "../../library/Book.h"
+#include "../../bookmodel/BookModel.h"
 
 bool PdfPlugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "pdf";
 }
 
+std::string PdfPlugin::accepts() const {
+	return std::string("*.pdf");
+}
+
 bool PdfPlugin::readMetaInfo(Book &book) const {
-	return PdfDescriptionReader(book).readMetaInfo(ZLFile(path).inputStream());
+	return PdfDescriptionReader(book).readMetaInfo(book.file().inputStream());
 }
 
 bool PdfPlugin::readModel(BookModel &model) const {
-	return PdfBookReader(model).readBook(ZLFile(book.fileName()).inputStream());
+	return PdfBookReader(model).readBook(model.book()->file().inputStream());
 }

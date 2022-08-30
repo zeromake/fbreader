@@ -30,10 +30,15 @@ class AddBookAction::FileFilter : public ZLOpenFileDialog::Filter {
 
 private:
 	bool accepts(const ZLFile &file) const;
+	std::vector<std::string> acceptsStr() const;
 };
 
 bool AddBookAction::FileFilter::accepts(const ZLFile &file) const {
 	return file.isArchive() || !PluginCollection::Instance().plugin(file, false).isNull();
+}
+
+std::vector<std::string> AddBookAction::FileFilter::acceptsStr() const {
+	return PluginCollection::Instance().accepts();
 }
 
 static const std::string GROUP_NAME = "OpenFileDialog";

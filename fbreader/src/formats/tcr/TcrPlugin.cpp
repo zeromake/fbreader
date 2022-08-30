@@ -35,6 +35,10 @@ bool TcrPlugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "tcr";
 }
 
+std::string TcrPlugin::accepts() const {
+	return std::string("*.tcr");
+}
+
 bool TcrPlugin::readMetaInfo(Book &book) const {
 	shared_ptr<ZLInputStream> stream = new TcrStream(book.file());
 	detectEncodingAndLanguage(book, *stream);

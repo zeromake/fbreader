@@ -35,6 +35,10 @@ bool HtmlPlugin::acceptsFile(const ZLFile &file) const {
 	return ZLStringUtil::stringEndsWith(extension, "html") || (extension == "htm");
 }
 
+std::string HtmlPlugin::accepts() const {
+	return std::string("*.html,*.htm");
+}
+
 bool HtmlPlugin::readMetaInfo(Book &book) const {
 	shared_ptr<ZLInputStream> stream = book.file().inputStream();
 	if (stream.isNull()) {

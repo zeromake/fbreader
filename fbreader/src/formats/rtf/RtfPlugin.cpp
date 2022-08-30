@@ -37,6 +37,10 @@ bool RtfPlugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "rtf";
 }
 
+std::string RtfPlugin::accepts() const {
+	return std::string("*.rtf");
+}
+
 bool RtfPlugin::readMetaInfo(Book &book) const {
 	shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
 

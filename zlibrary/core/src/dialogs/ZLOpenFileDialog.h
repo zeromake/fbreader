@@ -21,6 +21,7 @@
 #define __ZLOPENFILEDIALOG_H__
 
 #include <string>
+#include <vector>
 
 class ZLFile;
 
@@ -32,6 +33,7 @@ public:
 	public:
 		virtual ~Filter();
 		virtual bool accepts(const ZLFile &file) const = 0;
+		virtual std::vector<std::string> acceptsStr() const = 0;
 	};
 
 public:

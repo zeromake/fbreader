@@ -24,6 +24,7 @@
 #include "DummyMetaInfoReader.h"
 #include "DummyBookReader.h"
 #include "../../library/Book.h"
+#include "../../bookmodel/BookModel.h"
 
 DummyPlugin::DummyPlugin() {
 }
@@ -40,11 +41,15 @@ bool DummyPlugin::acceptsFile(const ZLFile &file) const {
 }
 
 bool DummyPlugin::readMetaInfo(Book &book) const {
-	return DummyMetaInfoReader(book).readMetaInfo(ZLFile(path).inputStream());
+	return DummyMetaInfoReader(book).readMetaInfo(book.file().inputStream());
 }
 
 bool DummyPlugin::readModel(BookModel &model) const {
-	return DummyBookReader(model).readBook(ZLFile(book.fileName()).inputStream());
+	return DummyBookReader(model).readBook(model.book()->file().inputStream());
+}
+
+std::string DummyPlugin::accepts() const {
+	return std::string("*.dummy");
 }
 
 shared_ptr<ZLImage> DummyPlugin::coverImage(const ZLFile &file) const {

@@ -44,7 +44,7 @@ shared_ptr<ZLOptionsDialog> ZLWin32DialogManager::createOptionsDialog(const ZLRe
 }
 
 shared_ptr<ZLOpenFileDialog> ZLWin32DialogManager::createOpenFileDialog(const ZLResourceKey &key, const std::string &directoryPath, const std::string &filePath, const ZLOpenFileDialog::Filter &filter) const {
-	return new ZLWin32OpenFileDialog(*myApplicationWindow, key, directoryPath);
+	return new ZLWin32OpenFileDialog(*myApplicationWindow, dialogTitle(key), directoryPath, filter);
 }
 
 void ZLWin32DialogManager::informationBox(const std::string &title, const std::string &message) const {

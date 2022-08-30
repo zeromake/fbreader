@@ -21,5 +21,6 @@ fbreader/FBReader
 !libs/**/*.dylib
 3rd/*
 !3rd/fetch.lua
+!3rd/copy.lua
 !3rd/xmake.lua
 !3rd/pre
