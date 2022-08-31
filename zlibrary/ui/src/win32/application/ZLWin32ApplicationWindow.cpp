@@ -427,7 +427,7 @@ void ZLWin32ApplicationWindow::addToolbarItem(ZLToolbar::ItemPtr item) {
 			std::string imageFileName = ZLibrary::ApplicationImageDirectory() + ZLibrary::FileNameDelimiter + buttonItem.iconName() + ".ico";
 			ZLFile file(imageFileName);
 			ZLUnicodeUtil::Ucs2String wPath;
-			HICON bitmap = (HICON)LoadImageW(0, ::wchar(::createNTWCHARString(wPath, file.path())), IMAGE_ICON, IconSize, IconSize, LR_LOADFROMFILE);
+			HICON bitmap = (HICON)LoadImageW(0, ::wchar(::createNTWCHARString(wPath, file.path())), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
 			ImageList_AddIcon((HIMAGELIST)SendMessage(tb.hwnd, TB_GETIMAGELIST, 0, 0), bitmap);
     
 			button.iBitmap = tb.ActionCodeById.size();
