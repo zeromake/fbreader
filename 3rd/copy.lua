@@ -115,6 +115,20 @@ local headerFiles = {
             "zconf.h",
         },
     },
+    {
+        "stb/stb-master/",
+        {
+            "*.h",
+        },
+        "stb/",
+    },
+    {
+        "nanosvg/nanosvg-master/src/",
+        {
+            "*.h",
+        },
+        "nanosvg/",
+    }
 }
 
 for _, item in ipairs(headerFiles) do

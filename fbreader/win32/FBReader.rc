@@ -1,0 +1,16 @@
+﻿ApplicationIcon ICON data/icons/application/win32.ico
+
+
+PopupMenu MENU
+{
+	POPUP "选择"
+	{
+		MENUITEM "复制(&C)\tCtrl+C",            0xE100
+		MENUITEM "收藏(&D)\tCtrl+D",            0xE101
+		MENUITEM "字典",                        0xE102
+		MENUITEM "笔记",                        0xE103
+		MENUITEM "分享",                        0xE104
+    }
+}
+
+1 24 ".\\manifest"

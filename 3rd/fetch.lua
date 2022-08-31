@@ -57,6 +57,16 @@ local downloads = {
         "https://github.com/ReactiveX/RxCpp/archive/refs/tags/v4.1.1.zip",
         "rxcpp-4.1.1.zip",
     },
+    {
+        "stb",
+        "https://github.com/nothings/stb/archive/refs/heads/master.zip",
+        "stb.zip",
+    },
+    {
+        "nanosvg",
+        "https://github.com/memononen/nanosvg/archive/refs/heads/master.zip",
+        "nanosvg.zip",
+    },
     -- {
     --     "webp",
     --     "https://github.com/webmproject/libwebp/archive/refs/tags/v1.2.4.zip",

@@ -107,6 +107,7 @@ void ZLWin32PaintContext::setFont(const std::string &family, int size, bool bold
 	// TODO: optimize
 	LOGFONT logicalFont;
 	memset(&logicalFont, 0, sizeof(LOGFONT));
+	// Todo hidpi
 	logicalFont.lfHeight = size;
 	logicalFont.lfWeight = bold ? FW_BOLD : FW_REGULAR;
 	logicalFont.lfItalic = italic;

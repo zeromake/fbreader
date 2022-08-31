@@ -31,5 +31,5 @@ EXTERNAL_INCLUDE = -I $(ROOTDIR)/3rd/include
 
 .resources:
 	@echo -n 'Creating resource object...'
-	@$(RESOURCE_COMPILER) $(ROOTDIR)/zlibrary/ui/src/win32/resource/resource.rc -o $(ROOTDIR)/zlibrary/ui/src/win32/resource/resource.o
+	@$(RESOURCE_COMPILER) win32/$(TARGET).rc -o src/$(TARGET)_rc.o
 	@echo ' OK'

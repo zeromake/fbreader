@@ -58,6 +58,22 @@ LRESULT CALLBACK ZLWin32ApplicationWindow::Callback(HWND hWnd, UINT uMsg, WPARAM
 	return ourApplicationWindow->mainLoopCallback(hWnd, uMsg, wParam, lParam);
 }
 
+// void ShowErrMsg() { 
+//     TCHAR szBuf[80];
+//     LPVOID lpMsgBuf;
+//     DWORD dw = GetLastError();
+//     FormatMessage(
+//         FORMAT_MESSAGE_ALLOCATE_BUFFER |
+//         FORMAT_MESSAGE_FROM_SYSTEM,
+//         NULL,
+//         dw,
+//         MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+//         (LPTSTR) &lpMsgBuf,
+//         0, NULL );
+//     MessageBox(NULL, (LPCWSTR)lpMsgBuf, TEXT("系统错误"), MB_OK|MB_ICONSTOP);
+//     LocalFree(lpMsgBuf);
+// }
+
 LRESULT ZLWin32ApplicationWindow::mainLoopCallback(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
 		case MY_WM_FULLSCREEN:
@@ -481,6 +497,14 @@ void ZLWin32ApplicationWindow::addToolbarItem(ZLToolbar::ItemPtr item) {
 			button.fsStyle = TBSTYLE_SEP;
 			break;
 		}
+		case ZLToolbar::Item::SEARCH_FIELD:
+		{
+			break;
+		}
+		case ZLToolbar::Item::FILL_SEPARATOR:
+		{
+			break;
+		}
 	}
 	SendMessage(tb.hwnd, TB_ADDBUTTONS, 1, (LPARAM)&button);
 
@@ -602,6 +626,14 @@ void ZLWin32ApplicationWindow::setToolbarItemState(ZLToolbar::ItemPtr item, bool
 		case ZLToolbar::Item::SEPARATOR:
 			PostMessage(tb.hwnd, TB_SETSTATE, tb.SeparatorNumbers[item], visible ? 0 : TBSTATE_HIDDEN);
 			break;
+		case ZLToolbar::Item::SEARCH_FIELD:
+		{
+			break;
+		}
+		case ZLToolbar::Item::FILL_SEPARATOR:
+		{
+			break;
+		}
 	}
 }
 
