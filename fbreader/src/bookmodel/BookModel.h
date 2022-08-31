@@ -56,6 +56,7 @@ public:
 
 	public:
 		virtual Label match(const std::map<std::string,Label> &lMap, const std::string &id) const = 0;
+		virtual ~HyperlinkMatcher() {}
 	};
 
 public:

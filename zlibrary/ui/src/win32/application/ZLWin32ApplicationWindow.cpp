@@ -37,6 +37,7 @@
 #include "../view/ZLWin32ViewWidget.h"
 #include "../../../../core/src/win32/util/W32WCHARUtil.h"
 #include "../time/ZLWin32Time.h"
+#include "../resource/resource.h"
 
 #undef max
 #undef min
@@ -170,6 +171,32 @@ LRESULT ZLWin32ApplicationWindow::mainLoopCallback(HWND hWnd, UINT uMsg, WPARAM 
 					break;
 			}
 			return 0;
+		}
+		case WM_CONTEXTMENU: {
+			POINT pt;
+			pt.x = GET_X_LPARAM(lParam);
+			pt.y = GET_Y_LPARAM(lParam);
+			RECT rect;
+			GetClientRect(hWnd, &rect);
+			ScreenToClient(hWnd, &pt);
+			if(PtInRect(&rect, pt)) {
+				auto h = GetModuleHandle(0);
+				HMENU hroot = LoadMenu(h, TEXT("PopupMenu"));
+				if (hroot) {
+					HMENU hpop = GetSubMenu(hroot,0);
+					ClientToScreen(hWnd, &pt);
+					TrackPopupMenu(hpop,
+						TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON,
+						pt.x,
+						pt.y,
+						0,
+						hWnd,
+						NULL);
+					DestroyMenu(hroot);
+				}
+			} else {
+				return DefWindowProc(hWnd, uMsg, wParam, lParam);
+			}
 		}
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);
