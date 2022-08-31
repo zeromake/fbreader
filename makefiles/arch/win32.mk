@@ -31,8 +31,5 @@ EXTERNAL_INCLUDE = -I $(ROOTDIR)/3rd/include
 
 .resources:
 	@echo -n 'Creating resource object...'
-	@echo 'ApplicationIcon ICON data/icons/application/win32.ico' > $(TARGET).rc
-	@echo '1 24 win32/manifest' >> $(TARGET).rc
-	@$(RESOURCE_COMPILER) $(TARGET).rc -o src/$(TARGET)_rc.o
-	@$(RM_QUIET) $(TARGET).rc
+	@$(RESOURCE_COMPILER) $(ROOTDIR)/zlibrary/ui/src/win32/resource/resource.rc -o $(ROOTDIR)/zlibrary/ui/src/win32/resource/resource.o
 	@echo ' OK'
