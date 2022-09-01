@@ -43,6 +43,11 @@ ZLWin32PaintContext::~ZLWin32PaintContext() {
 	}
 }
 
+float ZLWin32PaintContext::scaleDpi(float size) {
+	const static float DPIScale = GetDeviceCaps(myDisplayContext, LOGPIXELSX) / 96.0f;
+	return size * DPIScale;
+}
+
 void ZLWin32PaintContext::updateInfo(HWND window, int width, int height) {
 	if (myBufferBitmap != 0) {
 		if ((myWidth != width) || (myHeight != height)) {
@@ -108,7 +113,7 @@ void ZLWin32PaintContext::setFont(const std::string &family, int size, bool bold
 	LOGFONT logicalFont;
 	memset(&logicalFont, 0, sizeof(LOGFONT));
 	// Todo hidpi
-	logicalFont.lfHeight = size;
+	logicalFont.lfHeight = static_cast<LONG>(scaleDpi(static_cast<float>(size)));
 	logicalFont.lfWeight = bold ? FW_BOLD : FW_REGULAR;
 	logicalFont.lfItalic = italic;
 	logicalFont.lfQuality = 5 /*CLEARTYPE_QUALITY*/;

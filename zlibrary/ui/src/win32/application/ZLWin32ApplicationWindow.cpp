@@ -156,10 +156,10 @@ LRESULT ZLWin32ApplicationWindow::mainLoopCallback(HWND hWnd, UINT uMsg, WPARAM 
 				myWindowStateOption.setValue(NORMAL);
 				RECT rectangle;
 				GetWindowRect(myMainWindow, &rectangle);
-				myXOption.setValue(rectangle.left);
-				myYOption.setValue(rectangle.top);
-				myWidthOption.setValue(rectangle.right - rectangle.left);
-				myHeightOption.setValue(rectangle.bottom - rectangle.top);
+				myXOption.setValue(unScaleDpi(rectangle.left));
+				myYOption.setValue(unScaleDpi(rectangle.top));
+				myWidthOption.setValue(unScaleDpi(rectangle.right - rectangle.left));
+				myHeightOption.setValue(unScaleDpi(rectangle.bottom - rectangle.top));
 			}
 			application().closeView();
 			return 0;
@@ -315,7 +315,19 @@ ZLWin32ApplicationWindow::ZLWin32ApplicationWindow(ZLApplication *application) :
 void ZLWin32ApplicationWindow::init() {
 	const WCHAR *aName = ::wchar(myClassName);
 	const DWORD layoutStyle = ZLLanguageUtil::isRTLLanguage(ZLibrary::Language()) ? WS_EX_LAYOUTRTL : 0;
-	CreateWindowEx(layoutStyle, aName, aName, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, myXOption.value(), myYOption.value(), myWidthOption.value(), myHeightOption.value(), (HWND)0, (HMENU)0, GetModuleHandle(0), 0);
+	CreateWindowEx(
+		layoutStyle,
+		aName,
+		aName,
+		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
+		scaleDpi(myXOption.value()),
+		scaleDpi(myYOption.value()),
+		scaleDpi(myWidthOption.value()),
+		scaleDpi(myHeightOption.value()),
+		(HWND)0,
+		(HMENU)0,
+		GetModuleHandle(0),
+		0);
 
 	// TODO: Hmm, replace SW_SHOWDEFAULT by nCmdShow?
 	ShowWindow(myMainWindow, SW_SHOWDEFAULT);

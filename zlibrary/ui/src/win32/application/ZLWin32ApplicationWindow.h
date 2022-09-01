@@ -88,6 +88,23 @@ public:
 private:
 	LRESULT mainLoopCallback(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+	float getDpi() const {
+		HDC hdc = GetDC(myMainWindow);
+		auto dpi = GetDeviceCaps(hdc, LOGPIXELSX) / 96.0f;
+		ReleaseDC(myMainWindow, hdc);
+		return dpi;
+	}
+
+	float scaleDpi(float size) {
+		const static float DPIScale = getDpi();
+		return size * DPIScale;
+	}
+
+	float unScaleDpi(float size) {
+		const static float DPIScale = getDpi();
+		return size / DPIScale;
+	}
+
 public:
 	void onToolbarButtonRelease(int index);
 

@@ -59,6 +59,8 @@ public:
 
 	void updateInfo(HWND window, int width, int height);
 
+	float scaleDpi(float size);
+
 	HDC displayContext() const;
 	HBITMAP buffer() const;
 
