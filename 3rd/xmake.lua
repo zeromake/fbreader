@@ -1,5 +1,7 @@
 add_rules("mode.debug", "mode.release")
 
+set_languages("c17", "cxx20")
+
 target("gif")
     set_kind("static")
     add_includedirs(path.join(os.scriptdir(),".include"))
@@ -112,13 +114,14 @@ target("png")
     end
 
 local tiffSourceDir = path.join(os.scriptdir(), "tiff/tiff-4.4.0/libtiff")
+local jpegSourceDir = path.join(os.scriptdir(), "jpeg/jpeg-9e")
 
 target("tiff")
     set_kind("static")
     -- set_kind("shared")
     add_deps("jpeg", "zlib")
     add_includedirs(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
-    add_includedirs(path.join(os.scriptdir(), "jpeg/jpeg-6b"))
+    add_includedirs(jpegSourceDir)
     on_config(function()
         local libconfig = path.join(tiffSourceDir, "tif_config.h")
         if not os.exists(libconfig) then
@@ -172,73 +175,74 @@ target("tiff")
         add_files(path.join(tiffSourceDir, f))
     end
     if is_plat("windows", "mingw") then
+        add_defines("USE_WIN32_FILEIO=1", "HAVE_IO_H=1")
         add_files(path.join(tiffSourceDir, "tif_win32.c"))
     else
         add_files(path.join(tiffSourceDir, "tif_unix.c"))
     end
 
 
-local jpegSourceDir = path.join(os.scriptdir(), "jpeg/jpeg-6b")
 
 target("jpeg")
     set_kind("static")
+    -- set_kind("shared")
     on_config(function ()
         local jconfig = path.join(jpegSourceDir, "jconfig.h")
         if not os.exists(jconfig) then
-            local jconfigSource = "jconfig.vc"
-            if is_plat("macosx", "mingw") then
-                jconfigSource = "jconfig.mac"
+            local jconfigSource = path.join(jpegSourceDir,"jconfig.vc")
+            if is_plat("macosx") then
+                jconfigSource = path.join(os.scriptdir(), "pre/jpeg/jconfig.h")
             end
-            os.cp(path.join(jpegSourceDir, jconfigSource), jconfig)
+            os.cp(jconfigSource, jconfig)
         end
     end)
     for _, f in ipairs({
+        "jaricom.c",
         "jcapimin.c",
         "jcapistd.c",
-        "jctrans.c",
-        "jcparam.c",
-        "jdatadst.c",
-        "jcinit.c",
-        "jcmaster.c",
-        "jcmarker.c",
-        "jcmainct.c",
-        "jcprepct.c",
+        "jcarith.c",
         "jccoefct.c",
         "jccolor.c",
-        "jcsample.c",
-        "jchuff.c",
-        "jcphuff.c",
         "jcdctmgr.c",
-        "jfdctfst.c",
-        "jfdctflt.c",
-        "jfdctint.c",
+        "jchuff.c",
+        "jcinit.c",
+        "jcmainct.c",
+        "jcmarker.c",
+        "jcmaster.c",
+        "jcomapi.c",
+        "jcparam.c",
+        "jcprepct.c",
+        "jcsample.c",
+        "jctrans.c",
         "jdapimin.c",
         "jdapistd.c",
-        "jdtrans.c",
+        "jdarith.c",
+        "jdatadst.c",
         "jdatasrc.c",
-        "jdmaster.c",
-        "jdinput.c",
-        "jdmarker.c",
-        "jdhuff.c",
-        "jdphuff.c",
-        "jdmainct.c",
         "jdcoefct.c",
-        "jdpostct.c",
-        "jddctmgr.c",
-        "jidctfst.c",
-        "jidctflt.c",
-        "jidctint.c",
-        "jidctred.c",
-        "jdsample.c",
         "jdcolor.c",
+        "jddctmgr.c",
+        "jdhuff.c",
+        "jdinput.c",
+        "jdmainct.c",
+        "jdmarker.c",
+        "jdmaster.c",
+        "jdmerge.c",
+        "jdpostct.c",
+        "jdsample.c",
+        "jdtrans.c",
+        "jerror.c",
+        "jfdctflt.c",
+        "jfdctfst.c",
+        "jfdctint.c",
+        "jidctflt.c",
+        "jidctfst.c",
+        "jidctint.c",
         "jquant1.c",
         "jquant2.c",
-        "jdmerge.c",
-        "jcomapi.c",
         "jutils.c",
-        "jerror.c",
         "jmemmgr.c",
-        "jmemnobs.c",
+        "jmemansi.c",
     }) do
         add_files(path.join(jpegSourceDir, f))
     end

@@ -62,7 +62,7 @@ local headerFiles = {
         },
     },
     {
-        "jpeg/jpeg-6b/",
+        "jpeg/jpeg-9e/",
         {
             "jconfig.h",
             "jpeglib.h",

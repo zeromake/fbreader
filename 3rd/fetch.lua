@@ -13,7 +13,7 @@ local downloads = {
     },
     {
         "jpeg",
-        "https://download.sourceforge.net/project/libjpeg/libjpeg/6b/jpegsr6.zip",
+        "http://www.ijg.org/files/jpegsr9e.zip",
     },
     {
         "jpeg-turbo",

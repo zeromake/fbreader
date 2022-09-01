@@ -47,7 +47,7 @@
 #define HAVE_GL_GL_H 1
 
 /* Define to 1 if you have the <io.h> header file. */
-#define HAVE_IO_H 1
+// #define HAVE_IO_H 1
 
 /* Define to 1 if you have the `jbg_newlen' function. */
 /* #undef HAVE_JBG_NEWLEN */
@@ -111,9 +111,6 @@
 
 /* Default size of the strip in bytes (when strip chopping enabled) */
 #define STRIP_SIZE_DEFAULT 8192
-
-/* define to use win32 IO system */
-#define USE_WIN32_FILEIO 1
 
 /* Version number of package */
 #define VERSION "4.4.0"
