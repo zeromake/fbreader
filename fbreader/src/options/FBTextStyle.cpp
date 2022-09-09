@@ -34,6 +34,12 @@ FBTextStyle &FBTextStyle::Instance() {
 	return (FBTextStyle&)*InstanceAsPtr();
 }
 
+const std::vector<std::string> &FBTextStyle::fontFamilies() const {
+	std::vector<std::string> *v = new std::vector<std::string>();
+	v->push_back(FontFamilyOption.value());
+	return *v;
+}
+
 static const std::string GROUP = "Style";
 
 FBTextStyle::FBTextStyle() :

@@ -44,7 +44,7 @@ public:
 	bool italic() const;
 
 	const std::string &colorStyle() const;
-
+	const std::vector<std::string> &fontFamilies() const;
 	short spaceBefore(const ZLTextStyleEntry::Metrics &metrics) const;
 	short spaceAfter(const ZLTextStyleEntry::Metrics &metrics) const;
 	short lineStartIndent(const ZLTextStyleEntry::Metrics &metrics, bool rtl) const;

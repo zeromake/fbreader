@@ -39,6 +39,7 @@ public:
 	static void appendNumber(std::string &str, unsigned int n);
 	static void append(std::string &str, const std::vector<std::string> &buffer);
 	static bool stripWhiteSpaces(std::string &str);
+	static const std::string join(const std::vector<std::string>& arr, const std::string& s);
 	static std::vector<std::string> splitString(const char *str, const char* delim);
 	static std::vector<std::string> splitString(const std::string &str, const char* delim);
 	static void replaceAll(std::string &str, const std::string &find, const std::string &replaceWith);
