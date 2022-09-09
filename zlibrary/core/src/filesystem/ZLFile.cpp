@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +33,37 @@
 
 const ZLFile ZLFile::NO_FILE;
 
-std::map<std::string,weak_ptr<ZLInputStream> > ZLFile::ourPlainStreamCache;
+typedef std::map<std::string,weak_ptr<ZLInputStream> > ZLFilePlainStreamCache;
+
+#ifndef FBREADER_THREAD_LOCAL_ZLFILE_PLAIN_STREAM_CACHE
+#  define FBREADER_THREAD_LOCAL_ZLFILE_PLAIN_STREAM_CACHE 0
+#endif
+
+#if FBREADER_THREAD_LOCAL_ZLFILE_PLAIN_STREAM_CACHE
+static pthread_key_t plainStreamCacheKey = (pthread_key_t)0;
+static void ZLFilePlainStreamCacheDestructor(void *value) {
+	delete ((ZLFilePlainStreamCache*)value);
+	pthread_setspecific(plainStreamCacheKey, NULL);
+}
+#else
+static ZLFilePlainStreamCache ourPlainStreamCache;
+#endif
+
+void ZLFile::initCache() {
+#if FBREADER_THREAD_LOCAL_ZLFILE_PLAIN_STREAM_CACHE
+	pthread_key_create(&plainStreamCacheKey, ZLFilePlainStreamCacheDestructor);
+#endif
+}
+
+void ZLFile::flushCache() {
+#if FBREADER_THREAD_LOCAL_ZLFILE_PLAIN_STREAM_CACHE
+	ZLFilePlainStreamCache *cache = (ZLFilePlainStreamCache*)pthread_getspecific(plainStreamCacheKey);
+	if (cache) {
+		delete cache;
+		pthread_setspecific(plainStreamCacheKey, NULL);
+	}
+#endif
+}
 
 ZLFile::ZLFile() : myMimeTypeIsUpToDate(true), myInfoIsFilled(true) {
 }
@@ -102,6 +133,14 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 	
 	int index = ZLFSManager::Instance().findArchiveFileNameDelimiter(myPath);
 	if (index == -1) {
+#if FBREADER_THREAD_LOCAL_ZLFILE_PLAIN_STREAM_CACHE
+		ZLFilePlainStreamCache *cache = (ZLFilePlainStreamCache*)pthread_getspecific(plainStreamCacheKey);
+		if (!cache) {
+			cache = new ZLFilePlainStreamCache;
+			pthread_setspecific(plainStreamCacheKey, cache);
+		}
+		ZLFilePlainStreamCache &ourPlainStreamCache = *cache;
+#endif
 		stream = ourPlainStreamCache[myPath];
 		if (stream.isNull()) {
 			if (isDirectory()) {
@@ -111,7 +150,7 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 			stream = envelopeCompressedStream(stream);
 			ourPlainStreamCache[myPath] = stream;
 		}
-	} else {
+    } else {
 		ZLFile baseFile(myPath.substr(0, index));
 		shared_ptr<ZLInputStream> base = baseFile.inputStream();
 		if (!base.isNull()) {

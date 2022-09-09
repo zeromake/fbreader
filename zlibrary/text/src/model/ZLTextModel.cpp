@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015-2017 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -186,7 +187,7 @@ void ZLTextModel::addText(const std::vector<std::string> &text) {
 			memcpy(myLastEntryStart + offset, it->data(), it->length());
 			offset += it->length();
 		}
-	} else {
+	} else if (!myParagraphs.empty()) {
 		myLastEntryStart = myAllocator.allocate(len + sizeof(size_t) + 1);
 		*myLastEntryStart = ZLTextParagraphEntry::TEXT_ENTRY;
 		memcpy(myLastEntryStart + 1, &len, sizeof(size_t));
@@ -214,28 +215,60 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 }
 
 void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
-	int len = sizeof(int) + 5 + ZLTextStyleEntry::NUMBER_OF_LENGTHS * (sizeof(short) + 1);
-	if (entry.fontFamilySupported()) {
-		len += entry.fontFamily().length() + 1;
+	int len = sizeof(int) + 2;
+	const int mask = entry.myMask;
+	if (mask & ((1 << ZLTextStyleEntry::NUMBER_OF_LENGTHS) - 1)) {
+		for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
+			if (mask & (1 << i)) {
+				len += (sizeof(short) + 1);
+			}
+		}
 	}
+	if (mask & ZLTextStyleEntry::SUPPORT_OPACITY) ++len;
+	if (mask & ZLTextStyleEntry::SUPPORT_ALIGNMENT_TYPE) ++len;
+	if (entry.supportedFontModifier()) ++len;
+	if (mask & ZLTextStyleEntry::SUPPORT_FONT_SIZE) ++len;
+	if (mask & ZLTextStyleEntry::SUPPORT_FONT_FAMILIES) {
+		const unsigned char n = entry.myFontFamilies.size();
+		len += 1; // Number of entries
+		for (unsigned int i = 0; i < n; ++i) {
+			len += entry.myFontFamilies.at(i).length() + 1;
+		}
+	}
+	if (mask & ZLTextStyleEntry::SUPPORT_COLOR) len += 3;
 	myLastEntryStart = myAllocator.allocate(len);
 	char *address = myLastEntryStart;
 	*address++ = ZLTextParagraphEntry::STYLE_ENTRY;
-	memcpy(address, &entry.myMask, sizeof(int));
-	address += sizeof(int);
-	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
-		*address++ = entry.myLengths[i].Unit;
-		memcpy(address, &entry.myLengths[i].Size, sizeof(short));
-		address += sizeof(short);
-	}
 	*address++ = entry.mySupportedFontModifier;
-	*address++ = entry.myFontModifier;
-	*address++ = entry.myAlignmentType;
-	*address++ = entry.myFontSizeMag;
-	if (entry.fontFamilySupported()) {
-		memcpy(address, entry.fontFamily().data(), entry.fontFamily().length());
-		address += entry.fontFamily().length();
-		*address++ = '\0';
+	memcpy(address, &mask, sizeof(int));
+	address += sizeof(int);
+	if (mask & ((1 << ZLTextStyleEntry::NUMBER_OF_LENGTHS) - 1)) {
+		for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
+			if (mask & (1 << i)) {
+				*address++ = entry.myLengths[i].Unit;
+				memcpy(address, &entry.myLengths[i].Size, sizeof(short));
+				address += sizeof(short);
+			}
+		}
+	}
+	if (mask & ZLTextStyleEntry::SUPPORT_OPACITY) *address++ = entry.myOpacity;
+	if (mask & ZLTextStyleEntry::SUPPORT_ALIGNMENT_TYPE) *address++ = entry.myAlignmentType;
+	if (entry.supportedFontModifier()) *address++ = entry.myFontModifier;
+	if (mask & ZLTextStyleEntry::SUPPORT_FONT_SIZE) *address++ = entry.myFontSizeMag;
+	if (mask & ZLTextStyleEntry::SUPPORT_FONT_FAMILIES) {
+		const unsigned char n = entry.myFontFamilies.size();
+		*address++ = n;
+		for (unsigned int i = 0; i < n; ++i) {
+			const std::string &font = entry.myFontFamilies.at(i);
+			const unsigned int nbytes = font.length() + 1;
+			memcpy(address, font.c_str(), nbytes);
+			address += nbytes;
+		}
+	}
+	if (mask & ZLTextStyleEntry::SUPPORT_COLOR) {
+		*address++ = entry.myColor.Red;
+		*address++ = entry.myColor.Green;
+		*address++ = entry.myColor.Blue;
 	}
 	myParagraphs.back()->addEntry(myLastEntryStart);
 }
@@ -265,5 +298,17 @@ void ZLTextModel::addImage(const std::string &id, const ZLImageMap &imageMap, sh
 void ZLTextModel::addBidiReset() {
 	myLastEntryStart = myAllocator.allocate(1);
 	*myLastEntryStart = ZLTextParagraphEntry::RESET_BIDI_ENTRY;
+	myParagraphs.back()->addEntry(myLastEntryStart);
+}
+
+void ZLTextModel::addLineBreak() {
+	myLastEntryStart = myAllocator.allocate(1);
+	*myLastEntryStart = ZLTextParagraphEntry::LINE_BREAK_ENTRY;
+	myParagraphs.back()->addEntry(myLastEntryStart);
+}
+
+void ZLTextModel::addEmpty() {
+	myLastEntryStart = myAllocator.allocate(1);
+	*myLastEntryStart = ZLTextParagraphEntry::EMPTY_ENTRY;
 	myParagraphs.back()->addEntry(myLastEntryStart);
 }

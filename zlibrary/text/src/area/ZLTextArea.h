@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2016-2017 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +28,7 @@
 
 #include <ZLTextParagraphCursor.h>
 #include <ZLTextRectangle.h>
+#include <ZLTextModel.h>
 
 class ZLPaintContext;
 class ZLMirroredPaintContext;
@@ -38,6 +40,13 @@ class ZLTextLineInfoPtr;
 struct ZLTextTreeNodeInfo;
 class ZLTextSelectionModel;
 
+struct ZLSize {
+	int myWidth, myHeight;
+
+	ZLSize();
+	bool isEmpty() const;
+};
+
 class ZLTextArea {
 
 public:
@@ -46,14 +55,14 @@ public:
 	class Properties {
 
 	public:
-		~Properties();
+		virtual ~Properties();
 		virtual shared_ptr<ZLTextStyle> baseStyle() const = 0;
 		virtual ZLColor color(const std::string &style = std::string()) const = 0;
 		virtual bool isSelectionEnabled() const = 0;
 	};
 
 public:
-	ZLTextArea(ZLPaintContext &context, const Properties &properties);
+	ZLTextArea(ZLPaintContext &context, const Properties &properties, ZLTextParagraphCursorCache *cache);
 	~ZLTextArea();
 
 public:
@@ -73,14 +82,17 @@ public:
 	const ZLTextWordCursor &startCursor() const;
 	const ZLTextWordCursor &endCursor() const;
 	bool isEmpty() const;
+	bool isVisible() const;
 
 	const ZLTextElementRectangle *elementByCoordinates(int x, int y, bool absolute = true) const;
 	const ZLTextTreeNodeRectangle *treeNodeByCoordinates(int x, int y, bool absolute = true) const;
 	int paragraphIndexByCoordinates(int x, int y, bool absolute = true) const;
 
 	ZLTextSelectionModel &selectionModel();
+	bool selectionIsEmpty() const;
+	void clearSelection() const;
 
-	void paint();
+	void paint(ZLSize *size = 0);
 
 private:
 	void clear();
@@ -124,12 +136,14 @@ private:
 	ZLTextTreeNodeMap myTreeNodeMap;
 
 	shared_ptr<ZLTextSelectionModel> mySelectionModel;
+	ZLTextParagraphCursorCache* myParagraphCursorCache;
 
 friend class ZLTextAreaController;
 friend class ZLTextSelectionModel;
 };
 
-inline ZLTextArea::Properties::~Properties() {}
+inline ZLSize::ZLSize() : myWidth(0), myHeight(0) {}
+inline bool ZLSize::isEmpty() const { return myWidth <= 0 || myHeight <= 0; }
 
 inline ZLPaintContext &ZLTextArea::context() const { return myMirroredContext.isNull() ? myContext : (ZLPaintContext&)*myMirroredContext; }
 inline void ZLTextArea::setSize(size_t width, size_t height) { myWidth = width; myHeight = height; }

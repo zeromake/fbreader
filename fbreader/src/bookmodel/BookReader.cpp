@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2016-2019 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +32,8 @@ BookReader::BookReader(BookModel &model) : myModel(model) {
 
 	myTextParagraphExists = false;
 	myContentsParagraphExists = false;
+	myBookTextParagraphExists = false;
+	myBookContentsParagraphExists = false;
 
 	myInsideTitle = false;
 	mySectionContainsRegularContents = false;
@@ -40,16 +43,34 @@ BookReader::~BookReader() {
 }
 
 void BookReader::setMainTextModel() {
-	myCurrentTextModel = myModel.myBookTextModel;
+	if (myCurrentTextModel != myModel.myBookTextModel) {
+		myCurrentTextModel = myModel.myBookTextModel;
+		myTextParagraphExists = myBookTextParagraphExists;
+		myContentsParagraphExists = myBookContentsParagraphExists;
+	}
 }
 
 void BookReader::setFootnoteTextModel(const std::string &id) {
+	if (myCurrentTextModel == myModel.myBookTextModel) {
+		myBookTextParagraphExists = myTextParagraphExists;
+		myBookContentsParagraphExists = myContentsParagraphExists;
+	}
+	myTextParagraphExists = false;
+	myContentsParagraphExists = false;
 	std::map<std::string,shared_ptr<ZLTextModel> >::iterator it = myModel.myFootnotes.find(id);
 	if (it != myModel.myFootnotes.end()) {
 		myCurrentTextModel = (*it).second;
 	} else {
 		myCurrentTextModel = new ZLTextPlainModel(myModel.myBookTextModel->language(), 8192);
 		myModel.myFootnotes.insert(std::make_pair(id, myCurrentTextModel));
+	}
+}
+
+void BookReader::setFootnoteTextModel(const std::string &id, const std::string &alt)
+{
+	setFootnoteTextModel(id);
+	if (!alt.empty() && myModel.myFootnotes.find(alt) == myModel.myFootnotes.end()) {
+		myModel.myFootnotes.insert(std::make_pair(alt, myCurrentTextModel));
 	}
 }
 
@@ -105,7 +126,22 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 
 void BookReader::addFixedHSpace(unsigned char length) {
 	if (myTextParagraphExists) {
+		flushTextBufferToParagraph();
 		myCurrentTextModel->addFixedHSpace(length);
+	}
+}
+
+void BookReader::addLineBreak() {
+	if (myTextParagraphExists) {
+		flushTextBufferToParagraph();
+		myCurrentTextModel->addLineBreak();
+	}
+}
+
+void BookReader::addEmpty() {
+	if (myTextParagraphExists) {
+		flushTextBufferToParagraph();
+		myCurrentTextModel->addEmpty();
 	}
 }
 
@@ -120,8 +156,10 @@ void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) 
 	myHyperlinkKind = kind;
 	switch (myHyperlinkKind) {
 		case INTERNAL_HYPERLINK:
-		case FOOTNOTE:
 			myHyperlinkType = "internal";
+			break;
+		case FOOTNOTE:
+			myHyperlinkType = "footnote";
 			break;
 		case EXTERNAL_HYPERLINK:
 			myHyperlinkType = "external";
@@ -181,7 +219,7 @@ void BookReader::addContentsData(const std::string &data) {
 
 void BookReader::flushTextBufferToParagraph() {
 	myCurrentTextModel->addText(myBuffer);
-	myBuffer.clear();
+	myBuffer.resize(0);
 }
 
 void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image) {
@@ -231,7 +269,7 @@ void BookReader::beginContentsParagraph(int referenceNumber) {
 		ZLTextTreeParagraph *peek = myTOCStack.empty() ? 0 : myTOCStack.top();
 		if (!myContentsBuffer.empty()) {
 			contentsModel.addText(myContentsBuffer);
-			myContentsBuffer.clear();
+			myContentsBuffer.resize(0);
 			myLastTOCParagraphIsEmpty = false;
 		}
 		if (myLastTOCParagraphIsEmpty) {
@@ -251,7 +289,7 @@ void BookReader::endContentsParagraph() {
 		ContentsModel &contentsModel = (ContentsModel&)*myModel.myContentsModel;
 		if (!myContentsBuffer.empty()) {
 			contentsModel.addText(myContentsBuffer);
-			myContentsBuffer.clear();
+			myContentsBuffer.resize(0);
 			myLastTOCParagraphIsEmpty = false;
 		}
 		if (myLastTOCParagraphIsEmpty) {

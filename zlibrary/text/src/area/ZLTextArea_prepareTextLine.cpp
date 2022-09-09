@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015-2020 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +67,28 @@ void ZLTextArea::prepareTextLine(Style &style, const ZLTextLineInfo &info, int y
 	const bool endOfParagraph = info.End.isEndOfParagraph();
 	bool wordOccured = false;
 
+	bool endsWithLineBreak = false;
+	bool onlyImage = false;
+	if (info.RealStart < info.End) {
+		ZLTextWordCursor last(info.End);
+		last.previousWord();
+		while (last.element().kind() == ZLTextElement::CONTROL_ELEMENT && info.RealStart < last) {
+			last.previousWord();
+		}
+		switch (last.element().kind()) {
+			case ZLTextElement::LINE_BREAK_ELEMENT:
+				endsWithLineBreak = true;
+				break;
+			case ZLTextElement::IMAGE_ELEMENT:
+				if (last == info.RealStart) {
+					onlyImage = true;
+				}
+				break;
+			default:
+				break;
+		}
+	}
+
 	int x = info.StartIndent;
 
 	const int fontSize = style.textStyle()->fontSize();
@@ -85,13 +108,17 @@ void ZLTextArea::prepareTextLine(Style &style, const ZLTextLineInfo &info, int y
 			break;
 		case ALIGN_LINESTART:
 			break;
+		case ALIGN_JUSTIFY:
+			if (!onlyImage) {
+				if (!endsWithLineBreak && !endOfParagraph && info.End.element().kind() != ZLTextElement::AFTER_PARAGRAPH_ELEMENT) {
+					fullCorrection = metrics.FullWidth - style.textStyle()->lineEndIndent(metrics, isRtl()) - info.Width;
+				}
+				break;
+			}
+			// Fall through to center "justified" images
+			/* fallthrough */
 		case ALIGN_CENTER:
 			x += (metrics.FullWidth - style.textStyle()->lineEndIndent(metrics, isRtl()) - info.Width) / 2;
-			break;
-		case ALIGN_JUSTIFY:
-			if (!endOfParagraph && (info.End.element().kind() != ZLTextElement::AFTER_PARAGRAPH_ELEMENT)) {
-				fullCorrection = metrics.FullWidth - style.textStyle()->lineEndIndent(metrics, isRtl()) - info.Width;
-			}
 			break;
 		case ALIGN_UNDEFINED:
 			break;
@@ -140,7 +167,9 @@ void ZLTextArea::prepareTextLine(Style &style, const ZLTextLineInfo &info, int y
 			case ZLTextElement::BEFORE_PARAGRAPH_ELEMENT:
 			case ZLTextElement::AFTER_PARAGRAPH_ELEMENT:
 			case ZLTextElement::EMPTY_LINE_ELEMENT:
+			case ZLTextElement::LINE_BREAK_ELEMENT:
 			case ZLTextElement::FIXED_HSPACE_ELEMENT:
+			case ZLTextElement::EMPTY_ELEMENT:
 				break;
 			case ZLTextElement::START_REVERSED_SEQUENCE_ELEMENT:
 				//context().setColor(ZLColor(0, 255, 0));

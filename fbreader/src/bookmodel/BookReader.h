@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2016-2019 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +41,7 @@ public:
 
 	void setMainTextModel();
 	void setFootnoteTextModel(const std::string &id);
+	void setFootnoteTextModel(const std::string &id, const std::string &alt);
 	void unsetTextModel();
 
 	void insertEndOfSectionParagraph();
@@ -58,6 +60,8 @@ public:
 	void addHyperlinkLabel(const std::string &label);
 	void addHyperlinkLabel(const std::string &label, int paragraphNumber);
 	void addFixedHSpace(unsigned char length);
+	void addLineBreak();
+	void addEmpty();
 
 	void addImageReference(const std::string &id, short vOffset = 0);
 	void addImage(const std::string &id, shared_ptr<const ZLImage> image);
@@ -89,6 +93,8 @@ private:
 
 	bool myTextParagraphExists;
 	bool myContentsParagraphExists;
+	bool myBookTextParagraphExists;
+	bool myBookContentsParagraphExists;
 	std::stack<ZLTextTreeParagraph*> myTOCStack;
 	bool myLastTOCParagraphIsEmpty;
 

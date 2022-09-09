@@ -72,6 +72,8 @@ public:
 	void addImage(const std::string &id, const ZLImageMap &imageMap, short vOffset);
 	void addFixedHSpace(unsigned char length);
 	void addBidiReset();
+	void addLineBreak();
+	void addEmpty();
 
 protected:
 	void addParagraphInternal(ZLTextParagraph *paragraph);

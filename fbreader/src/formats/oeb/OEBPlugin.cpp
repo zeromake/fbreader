@@ -25,6 +25,7 @@
 #include <ZLLogger.h>
 #include <ZLMimeType.h>
 
+#include "OCFContainerReader.h"
 #include "OEBPlugin.h"
 #include "OEBMetaInfoReader.h"
 #include "OEBBookReader.h"
@@ -36,6 +37,7 @@
 static const std::string OPF = "opf";
 static const std::string OEBZIP = "oebzip";
 static const std::string EPUB = "epub";
+static const std::string CONTAINER_XML = "META-INF/container.xml";
 
 OEBPlugin::~OEBPlugin() {
 }
@@ -51,7 +53,7 @@ bool OEBPlugin::acceptsFile(const ZLFile &file) const {
 		return 
 			mimeType == ZLMimeType::APPLICATION_EPUB_ZIP ||
 			(mimeType == ZLMimeType::APPLICATION_XML && extension == OPF) ||
-			(mimeType == ZLMimeType::APPLICATION_ZIP && extension == OEBZIP);
+			(mimeType == ZLMimeType::APPLICATION_ZIP && (extension == OEBZIP || extension == EPUB));
 	}
 	return extension == OPF || extension == OEBZIP || extension == EPUB;
 }
@@ -72,6 +74,16 @@ ZLFile OEBPlugin::opfFile(const ZLFile &oebFile) {
 		ZLLogger::Instance().println("epub", "Couldn't open zip archive");
 		return ZLFile::NO_FILE;
 	}
+
+	OCFContainerReader ocfReader;
+	ZLFile containerXml(zipDir->itemPath(CONTAINER_XML));
+	if (ocfReader.readContainer(containerXml)) {
+		const std::string &opf = ocfReader.opfFile();
+		if (!opf.empty()) {
+			return ZLFile(zipDir->itemPath(opf));
+		}
+	}
+
 	std::vector<std::string> fileNames;
 	zipDir->collectFiles(fileNames, false);
 	for (std::vector<std::string>::const_iterator it = fileNames.begin(); it != fileNames.end(); ++it) {
