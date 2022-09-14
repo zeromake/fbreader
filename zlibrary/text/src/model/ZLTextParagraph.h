@@ -416,7 +416,10 @@ inline void ZLTextStyleEntry::setFontSizeMag(signed char fontSizeMag) { myFontSi
 
 inline bool ZLTextStyleEntry::fontFamiliesSupported() const { return (myMask & SUPPORT_FONT_FAMILIES) == SUPPORT_FONT_FAMILIES; }
 inline const std::vector<std::string> &ZLTextStyleEntry::fontFamilies() const { return myFontFamilies; }
-inline void ZLTextStyleEntry::setFontFamilies(const std::vector<std::string> &fontFamilies) { myFontFamilies = fontFamilies; myMask |= SUPPORT_FONT_FAMILIES; }
+inline void ZLTextStyleEntry::setFontFamilies(const std::vector<std::string> &fontFamilies) {
+	myFontFamilies = fontFamilies;
+	myMask |= SUPPORT_FONT_FAMILIES;
+}
 
 inline bool ZLTextStyleEntry::colorSupported() const { return (myMask & SUPPORT_COLOR) != 0; }
 inline const ZLColor &ZLTextStyleEntry::color() const { return myColor; }

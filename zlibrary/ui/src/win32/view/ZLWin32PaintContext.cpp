@@ -109,6 +109,7 @@ void ZLWin32PaintContext::setFont(const std::string &family, int size, bool bold
 	if (myDisplayContext == 0) {
 		return;
 	}
+	// printf("setFont: %s\n", family.c_str(), family.length());
 	// TODO: optimize
 	LOGFONT logicalFont;
 	memset(&logicalFont, 0, sizeof(LOGFONT));
@@ -194,6 +195,7 @@ void ZLWin32PaintContext::drawString(int x, int y, const char *str, int len, boo
 	if (myDisplayContext == 0) {
 		return;
 	}
+	// printf("drawString: %s\n", str);
 	auto originX = x;
 	auto originY = y;
 	auto height = stringHeight();

@@ -137,7 +137,9 @@ short ZLTextPartialDecoratedStyle::firstLineIndentDelta(const ZLTextStyleEntry::
 ZLTextFullDecoratedStyle::ZLTextFullDecoratedStyle(const shared_ptr<ZLTextStyle> base, const ZLTextFullStyleDecoration &decoration) :
 	ZLTextDecoratedStyle(base), myDecoration(decoration) {
 	const std::string &family = myDecoration.FontFamilyOption.value();
-	if (!family.empty()) myFontFamilies.push_back(family);
+	if (!family.empty()) {
+		myFontFamilies.push_back(family);
+	}
 }
 
 short ZLTextFullDecoratedStyle::firstLineIndentDelta(const ZLTextStyleEntry::Metrics &metrics) const {

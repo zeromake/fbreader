@@ -155,7 +155,7 @@ void ZLTextStyleEntry::apply(const ZLTextStyleEntry &other) {
 	if (other.myMask & SUPPORT_FONT_SIZE) {
 		setFontSizeMag(other.myFontSizeMag);
 	}
-	if (other.myMask & SUPPORT_FONT_FAMILIES) {
+	if (other.myMask & SUPPORT_FONT_FAMILIES && !other.myFontFamilies.empty()) {
 		setFontFamilies(other.myFontFamilies);
 	}
 	if (other.myMask & SUPPORT_COLOR) {
@@ -184,7 +184,7 @@ void ZLTextStyleEntry::inherit(const ZLTextStyleEntry &other) {
 		setFontSizeMag(other.myFontSizeMag);
 	}
 	// font-family
-	if (other.myMask & SUPPORT_FONT_FAMILIES) {
+	if (other.myMask & SUPPORT_FONT_FAMILIES && !other.myFontFamilies.empty()) {
 		setFontFamilies(other.myFontFamilies);
 	}
 	// color
