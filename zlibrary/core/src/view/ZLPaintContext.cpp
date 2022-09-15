@@ -35,10 +35,11 @@ std::string ZLPaintContext::pickFontFamily(const std::vector<std::string> &fonts
 		if (fonts.size() > 1) {
 			const std::vector<std::string> &available = fontFamilies();
 			for (std::vector<std::string>::const_iterator it = fonts.begin(); it != fonts.end(); ++it) {
+				auto fontName = *it;
 				const std::vector<std::string>::const_iterator found =
-					std::lower_bound(available.begin(), available.end(), *it,
+					std::lower_bound(available.begin(), available.end(), fontName,
 					ZLStringUtil::caseInsensitiveSort);
-				if (found != available.end() && ZLStringUtil::caseInsensitiveEqual(*found, *it)) {
+				if (found != available.end() && ZLStringUtil::caseInsensitiveEqual(*found, fontName)) {
 					return *found;
 				}
 			}
