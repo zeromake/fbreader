@@ -128,7 +128,14 @@ local headerFiles = {
             "*.h",
         },
         "nanosvg/",
-    }
+    },
+    {
+        "expat/expat-2.4.8/",
+        {
+            "lib/expat.h",
+            "lib/expat_external.h",
+        },
+    },
 }
 
 for _, item in ipairs(headerFiles) do

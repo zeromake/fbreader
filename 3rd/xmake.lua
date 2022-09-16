@@ -367,15 +367,30 @@ target("sqlite3")
         add_files(path.join(os.scriptdir(), "sqlite3/sqlite-amalgamation-3390200", f))
     end
 
-package("expat")
-    add_deps("cmake")
-    set_sourcedir(path.join(os.scriptdir(), "expat/expat-2.4.8"))
-    on_install(function (package)
-        local configs = {}
-        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-        import("package.tools.cmake").install(package, configs)
-    end)
-package_end()
+target("expat")
+    set_kind("static")
+    add_includedirs(path.join(os.scriptdir(), "pre/expat"))
+    for _, f in ipairs({
+        "lib/xmlparse.c",
+        "lib/xmlrole.c",
+        "lib/xmltok.c",
+    }) do
+        add_files(path.join(os.scriptdir(), "expat/expat-2.4.8", f))
+    end
+    -- if is_plat("windows", "mingw") then
+    --     add_defines("VER_FILEVERSION=248")
+    --     add_files(path.join(os.scriptdir(), "expat/expat-2.4.8", "win32/version.rc"))
+    -- end
 
-add_requires("expat")
+-- package("expat")
+--     add_deps("cmake")
+--     set_sourcedir(path.join(os.scriptdir(), "expat/expat-2.4.8"))
+--     on_install(function (package)
+--         local configs = {}
+--         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+--         table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
+--         import("package.tools.cmake").install(package, configs)
+--     end)
+-- package_end()
+
+-- add_requires("expat")
