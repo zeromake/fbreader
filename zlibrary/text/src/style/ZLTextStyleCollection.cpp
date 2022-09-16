@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +28,7 @@
 #include "ZLTextStyle.h"
 #include "ZLTextStyleCollection.h"
 #include "ZLTextDecoratedStyle.h"
+#include "ZLStringUtil.h"
 
 ZLTextStyleCollection *ZLTextStyleCollection::ourInstance = 0;
 
@@ -52,6 +54,7 @@ public:
 	void startElementHandler(const char *tag, const char **attributes);
 
 private:
+	int lengthValue(const char **attributes, const char *name, ZLTextStyleEntry::SizeUnit &unit, int defaultValue = 0);
 	int intValue(const char **attributes, const char *name, int defaultValue = 0);
 	bool booleanValue(const char **attributes, const char *name);
 	ZLBoolean3 b3Value(const char **attributes, const char *name);
@@ -61,6 +64,23 @@ private:
 };
 
 static const std::string TRUE_STRING = "true";
+
+int ZLTextStyleReader::lengthValue(const char **attributes, const char *name, ZLTextStyleEntry::SizeUnit &unit, int defaultValue) {
+	const char *stringValue = attributeValue(attributes, name);
+	if (stringValue) {
+		short size;
+		if (ZLTextStyleEntry::parseLength(stringValue, size, unit)) {
+			return size;
+		} else {
+			long number;
+			if (ZLStringUtil::stringToLong(stringValue, number)) {
+				unit = ZLTextStyleEntry::SIZE_UNIT_PIXEL;
+				return number;
+			}
+		}
+	}
+	return defaultValue;
+}
 
 inline int ZLTextStyleReader::intValue(const char **attributes, const char *name, int defaultValue) {
 	const char *stringValue = attributeValue(attributes, name);
@@ -95,12 +115,25 @@ void ZLTextStyleReader::startElementHandler(const char *tag, const char **attrib
 
 			if (booleanValue(attributes, "partial")) {
 				decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, verticalShift, allowHyphenations);
+				const char *indentValue = attributeValue(attributes, "firstLineIndentDelta");
+				if (indentValue) {
+					short size;
+					ZLTextStyleEntry::SizeUnit unit;
+					if (ZLTextStyleEntry::parseLength(indentValue, size, unit)) {
+						decoration->setFirstLineIndentDelta(size, unit);
+					}
+				}
 			} else {
-				int spaceBefore = intValue(attributes, "spaceBefore");
-				int spaceAfter = intValue(attributes, "spaceAfter");
-				int leftIndent = intValue(attributes, "leftIndent");
-				int rightIndent = intValue(attributes, "rightIndent");
-				int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta");
+				ZLTextStyleEntry::SizeUnit spaceBeforeUnit(ZLTextStyleEntry::SIZE_UNIT_PIXEL);
+				ZLTextStyleEntry::SizeUnit spaceAfterUnit(ZLTextStyleEntry::SIZE_UNIT_PIXEL);
+				ZLTextStyleEntry::SizeUnit leftIndentUnit(ZLTextStyleEntry::SIZE_UNIT_PIXEL);
+				ZLTextStyleEntry::SizeUnit rightIndentUnit(ZLTextStyleEntry::SIZE_UNIT_PIXEL);
+				ZLTextStyleEntry::SizeUnit firstLineIndentDeltaUnit(ZLTextStyleEntry::SIZE_UNIT_PIXEL);
+				int spaceBefore = lengthValue(attributes, "spaceBefore", spaceBeforeUnit);
+				int spaceAfter = lengthValue(attributes, "spaceAfter", spaceAfterUnit);
+				int leftIndent = lengthValue(attributes, "leftIndent", leftIndentUnit);
+				int rightIndent = lengthValue(attributes, "rightIndent", rightIndentUnit);
+				int firstLineIndentDelta = lengthValue(attributes, "firstLineIndentDelta", firstLineIndentDeltaUnit);
 
 				ZLTextAlignmentType alignment = ALIGN_UNDEFINED;
 				const char *alignmentString = attributeValue(attributes, "alignment");
@@ -120,7 +153,13 @@ void ZLTextStyleReader::startElementHandler(const char *tag, const char **attrib
 				const int lineSpacingPercent = intValue(attributes, "lineSpacingPercent", -1);
 				const double lineSpace = (lineSpacingPercent == -1) ? 0.0 : (lineSpacingPercent / 100.0);
 
-				decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpace, allowHyphenations);
+				ZLTextFullStyleDecoration *dec = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpace, allowHyphenations);
+				dec->SpaceBeforeOptionUnit = spaceBeforeUnit;
+				dec->SpaceAfterOptionUnit = spaceAfterUnit;
+				dec->LineStartIndentOptionUnit = leftIndentUnit;
+				dec->LineEndIndentOptionUnit = rightIndentUnit;
+				dec->FirstLineIndentDeltaOptionUnit = firstLineIndentDeltaUnit;
+				decoration = dec;
 			}
 			const char *hyperlink = attributeValue(attributes, "hyperlink");
 			if (hyperlink != 0) {

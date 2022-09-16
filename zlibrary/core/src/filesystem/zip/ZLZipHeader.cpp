@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +24,8 @@
 #include "ZLZDecompressor.h"
 #include "../ZLInputStream.h"
 
-const int ZLZipHeader::SignatureLocalFile = 0x04034B50;
-const int ZLZipHeader::SignatureData = 0x08074B50;
+const unsigned long ZLZipHeader::SignatureLocalFile = 0x04034B50;
+const unsigned long ZLZipHeader::SignatureData = 0x08074B50;
 
 bool ZLZipHeader::readFrom(ZLInputStream &stream) {
 	size_t startOffset = stream.offset();
@@ -63,7 +64,8 @@ void ZLZipHeader::skipEntry(ZLInputStream &stream, ZLZipHeader &header) {
 		default:
 			break;
 		case SignatureLocalFile:
-			if (header.Flags & 0x08) {
+			// Only DEFLATED entries can have EXT descriptor
+			if (header.CompressionMethod != ZLZipHeader::MethodStored && (header.Flags & 0x08)) {
 				stream.seek(header.ExtraLength, false);
 				ZLZDecompressor decompressor((size_t)-1);
 				size_t size;
@@ -80,12 +82,21 @@ void ZLZipHeader::skipEntry(ZLInputStream &stream, ZLZipHeader &header) {
 }
 
 unsigned short ZLZipHeader::readShort(ZLInputStream &stream) {
+#if defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN
+	u_int16_t result;
+	return (stream.read((char*)&result, 2) == 2) ? result : 0;
+#else
 	char buffer[2];
 	stream.read(buffer, 2);
 	return ((((unsigned short)buffer[1]) & 0xFF) << 8) + ((unsigned short)buffer[0] & 0xFF);
+#endif
 }
 
 unsigned long ZLZipHeader::readLong(ZLInputStream &stream) {
+#if defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN
+	u_int32_t result;
+	return (stream.read((char*)&result, 4) == 4) ? result : 0;
+#else
 	char buffer[4];
 	stream.read(buffer, 4);
 
@@ -94,4 +105,5 @@ unsigned long ZLZipHeader::readLong(ZLInputStream &stream) {
 		((((unsigned long)buffer[2]) & 0xFF) << 16) +
 		((((unsigned long)buffer[1]) & 0xFF) << 8) +
 		((unsigned long)buffer[0] & 0xFF);
+#endif
 }

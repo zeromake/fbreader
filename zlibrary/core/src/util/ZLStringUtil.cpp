@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015-2019 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +21,11 @@
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
+
 #include <locale.h>
+#include <string.h>
+#include <limits.h>
+#include <errno.h>
 
 #include "ZLStringUtil.h"
 
@@ -42,6 +47,14 @@ bool ZLStringUtil::stringStartsWith(const std::string &str, const std::string &s
 #else
 		(str.compare(0, start.length(), start) == 0);
 #endif
+}
+
+bool ZLStringUtil::caseInsensitiveEqual(const std::string &str1, const std::string &str2) {
+	return !strcasecmp(str1.c_str(), str2.c_str());
+}
+
+bool ZLStringUtil::caseInsensitiveSort(const std::string &str1, const std::string &str2) {
+	return strcasecmp(str1.c_str(), str2.c_str()) < 0;
 }
 
 void ZLStringUtil::appendNumber(std::string &str, unsigned int n) {
@@ -89,21 +102,52 @@ const std::string ZLStringUtil::join(const std::vector<std::string>& arr, const 
     return str;
 }
 
+// Returns true if there's anything left
+bool ZLStringUtil::stripWhiteSpaces(std::string &str) {
+	const size_t old_length = str.length();
+	if (old_length > 0) {
+		size_t end = old_length;
+		while ((end > 0) && isspace((unsigned char)str[end - 1])) {
+			end--;
+		}
+		if (end < old_length) {
+			str.erase(end, old_length - end);
+		}
 
-void ZLStringUtil::stripWhiteSpaces(std::string &str) {
-	size_t counter = 0;
-	size_t length = str.length();
-	while ((counter < length) && isspace((unsigned char)str[counter])) {
-		counter++;
+		size_t start = 0;
+		while ((start < end) && isspace((unsigned char)str[start])) {
+			start++;
+		}
+		if (start > 0) {
+			str.erase(0, start);
+		}
+		return !str.empty();
+	} else {
+		return false;
 	}
-	str.erase(0, counter);
-	length -= counter;
+}
 
-	size_t r_counter = length;
-	while ((r_counter > 0) && isspace((unsigned char)str[r_counter - 1])) {
-		r_counter--;
+std::vector<std::string> ZLStringUtil::splitString(const char *str, const char* delim) {
+	std::vector<std::string> tokens;
+	if (str != 0) {
+		char *buf = strdup(str);
+		char *saveptr;
+		char *token = strtok_r(buf, delim, &saveptr);
+		while (token) {
+			tokens.push_back(std::string(token));
+			token = strtok_r(NULL, delim, &saveptr);
+		}
+		free(buf);
 	}
-	str.erase(r_counter, length - r_counter);
+	return tokens;
+}
+
+void ZLStringUtil::replaceAll(std::string &str, const std::string &find, const std::string &replaceWith) {
+	size_t pos = 0;
+	while ((pos = str.find(find, pos)) != std::string::npos) {
+		str.replace(pos, find.length(), replaceWith);
+		pos += replaceWith.length();
+	}
 }
 
 std::string ZLStringUtil::printf(const std::string &format, const std::string &arg0) {
@@ -128,4 +172,26 @@ double ZLStringUtil::stringToDouble(const std::string &value, double defaultValu
 	} else {
 		return defaultValue;
 	}
+}
+
+bool ZLStringUtil::stringToLong(const char *s, long &result) {
+	while (*s && isspace(*s)) s++;
+	char* endptr = NULL;
+	long number = strtol(s, &endptr, 10);
+	if (endptr && endptr != s) {
+		if ((number != LONG_MAX && number != LONG_MIN) || (errno != ERANGE)) {
+			while (*endptr && isspace(*endptr)) endptr++;
+			if (!*endptr) {
+				result = number;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+int ZLStringUtil::fromHex(char hex) {
+	return (hex >= '0' && hex <= '9') ? (hex - '0') :
+	       (hex >= 'a' && hex <= 'z') ? (hex - 'a' + 10) :
+	       (hex >= 'A' && hex <= 'Z') ? (hex - 'A' + 10) : -1;
 }

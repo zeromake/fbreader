@@ -28,6 +28,8 @@ class ZLFile;
 class ZLOpenFileDialog {
 
 public:
+	virtual ~ZLOpenFileDialog() {}
+
 	class Filter {
 
 	public:
@@ -40,7 +42,6 @@ public:
 	virtual bool run() = 0;
 	virtual std::string filePath() const = 0;
 	virtual std::string directoryPath() const = 0;
-	virtual ~ZLOpenFileDialog() {};
 };
 
 #endif /* __ZLOPENFILEDIALOG_H__ */

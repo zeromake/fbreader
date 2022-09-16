@@ -34,7 +34,7 @@ void ZLOption::unsetConfigValue() const {
 }
 
 void ZLOption::setConfigValue(const std::string &value) const {
-	if (myCategory != ZLCategoryKey::EMPTY) {
+	if (myCategory != ZLCategoryKey::EMPTY) { 
 		ourConfig->setValue(myGroupName, myOptionName, value, myCategory.Name);
 	}
 }

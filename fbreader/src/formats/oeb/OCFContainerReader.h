@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
  * Copyright (C) 2015 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,17 +17,36 @@
  * 02110-1301, USA.
  */
 
-#include <stdio.h>
+#ifndef __OCFCONTANERREADER_H__
+#define __OCFCONTANERREADER_H__
 
-#include "ZLTextStyle.h"
+#include <ZLXMLReader.h>
 
-const std::string ZLTextStyle::REGULAR_TEXT = "";
-const std::string ZLTextStyle::SELECTION_BACKGROUND = "selectionBackground";
-const std::string ZLTextStyle::HIGHLIGHTED_TEXT = "highlightedText";
-const std::string ZLTextStyle::TREE_LINES = "treeLines";
+#include <stack>
 
-std::string ZLTextStyle::colorStyle(ZLColor color) {
-	char buf[8];
-	snprintf(buf, sizeof(buf), "#%02x%02x%02x", color.Red, color.Green, color.Blue);
-	return std::string(buf);
-}
+class OCFContainerReader : public ZLXMLReader {
+public:
+	OCFContainerReader() {}
+
+	bool readContainer(const ZLFile &file);
+	const std::string &opfFile() const;
+
+private:
+	void startElementHandler(const char *tag, const char **attr);
+	void endElementHandler(const char *tag);
+
+private:
+	enum State {
+		STATE_CONTAINER,
+		STATE_ROOTFILES,
+		STATE_ROOTFILE,
+		STATE_IGNORE
+	};
+
+	std::stack<State> myStateStack;
+	std::string myOpfFile;
+};
+
+inline const std::string &OCFContainerReader::opfFile() const { return myOpfFile; }
+
+#endif /* __OCFCONTANERREADER_H__ */

@@ -18,6 +18,10 @@
  */
 
 #include "ZLPaintContext.h"
+#include "ZLStringUtil.h"
+
+#include <algorithm>
+#include <strings.h>
 
 ZLPaintContext::ZLPaintContext() {
 }
@@ -25,9 +29,30 @@ ZLPaintContext::ZLPaintContext() {
 ZLPaintContext::~ZLPaintContext() {
 }
 
+std::string ZLPaintContext::pickFontFamily(const std::vector<std::string> &fonts) const
+{
+	if (!fonts.empty()) {
+		if (fonts.size() > 1) {
+			const std::vector<std::string> &available = fontFamilies();
+			for (std::vector<std::string>::const_iterator it = fonts.begin(); it != fonts.end(); ++it) {
+				auto fontName = *it;
+				const std::vector<std::string>::const_iterator found =
+					std::lower_bound(available.begin(), available.end(), fontName,
+					ZLStringUtil::caseInsensitiveSort);
+				if (found != available.end() && ZLStringUtil::caseInsensitiveEqual(*found, fontName)) {
+					return *found;
+				}
+			}
+		}
+		return fonts.front();
+	}
+	return std::string();
+}
+
 const std::vector<std::string> &ZLPaintContext::fontFamilies() const {
 	if (myFamilies.empty()) {
 		fillFamiliesList(myFamilies);
+		std::sort(myFamilies.begin(), myFamilies.end(), ZLStringUtil::caseInsensitiveSort);
 	}
 	return myFamilies;
 }

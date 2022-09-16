@@ -109,10 +109,12 @@ void ZLWin32PaintContext::setFont(const std::string &family, int size, bool bold
 	if (myDisplayContext == 0) {
 		return;
 	}
+	// const std::string family = "微软雅黑";
+	// printf("setFont: %s\n", family.c_str());
 	// TODO: optimize
 	LOGFONT logicalFont;
 	memset(&logicalFont, 0, sizeof(LOGFONT));
-	// Todo hidpi
+	// hidpi
 	logicalFont.lfHeight = static_cast<LONG>(scaleDpi(static_cast<float>(size)));
 	logicalFont.lfWeight = bold ? FW_BOLD : FW_REGULAR;
 	logicalFont.lfItalic = italic;
@@ -194,6 +196,7 @@ void ZLWin32PaintContext::drawString(int x, int y, const char *str, int len, boo
 	if (myDisplayContext == 0) {
 		return;
 	}
+	// printf("drawString: %s\n", str);
 	auto originX = x;
 	auto originY = y;
 	auto height = stringHeight();

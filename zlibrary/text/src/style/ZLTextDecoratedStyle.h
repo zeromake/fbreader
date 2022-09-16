@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +47,7 @@ public:
 	ZLTextForcedStyle(shared_ptr<ZLTextStyle> base, const ZLTextStyleEntry &entry);
 	~ZLTextForcedStyle();
 
-	const std::string &fontFamily() const;
+	const std::vector<std::string> &fontFamilies() const;
 	int fontSize() const;
 
 	bool bold() const;
@@ -67,6 +68,7 @@ public:
 
 private:
 	const ZLTextStyleEntry &myEntry;
+	std::string myColorStyle;
 };
 
 class ZLTextPartialDecoratedStyle : public ZLTextDecoratedStyle {
@@ -77,7 +79,7 @@ private:
 
 public:
 	virtual ~ZLTextPartialDecoratedStyle();
-	const std::string &fontFamily() const;
+	const std::vector<std::string> &fontFamilies() const;
 	int fontSize() const;
 	bool bold() const;
 	bool italic() const;
@@ -98,6 +100,7 @@ public:
 
 private:
 	const ZLTextStyleDecoration &myDecoration;
+	std::vector<std::string> myFontFamilies;
 };
 
 class ZLTextFullDecoratedStyle : public ZLTextDecoratedStyle {
@@ -108,7 +111,7 @@ private:
 
 public:
 	~ZLTextFullDecoratedStyle();
-	const std::string &fontFamily() const;
+	const std::vector<std::string> &fontFamilies() const;
 	int fontSize() const;
 	bool bold() const;
 	bool italic() const;
@@ -129,6 +132,7 @@ public:
 
 private:
 	const ZLTextFullStyleDecoration &myDecoration;
+	std::vector<std::string> myFontFamilies;
 };
 
 inline ZLTextDecoratedStyle::ZLTextDecoratedStyle(const shared_ptr<ZLTextStyle> base) : myBase(base) {}
@@ -136,30 +140,21 @@ inline ZLTextDecoratedStyle::~ZLTextDecoratedStyle() {}
 inline bool ZLTextDecoratedStyle::isDecorated() const { return true; }
 inline const shared_ptr<ZLTextStyle> ZLTextDecoratedStyle::base() const { return myBase; }
 
-inline ZLTextForcedStyle::ZLTextForcedStyle(shared_ptr<ZLTextStyle> base, const ZLTextStyleEntry &entry) : ZLTextDecoratedStyle(base), myEntry(entry) {}
 inline ZLTextForcedStyle::~ZLTextForcedStyle() {}
-inline const std::string &ZLTextForcedStyle::colorStyle() const { return base()->colorStyle(); }
 inline int ZLTextForcedStyle::verticalShift() const { return base()->verticalShift(); }
 inline double ZLTextForcedStyle::lineSpace() const { return base()->lineSpace(); }
 inline bool ZLTextForcedStyle::allowHyphenations() const { return base()->allowHyphenations(); }
 
-inline ZLTextPartialDecoratedStyle::ZLTextPartialDecoratedStyle(const shared_ptr<ZLTextStyle> base, const ZLTextStyleDecoration &decoration) : ZLTextDecoratedStyle(base), myDecoration(decoration) {}
 inline ZLTextPartialDecoratedStyle::~ZLTextPartialDecoratedStyle() {}
 inline short ZLTextPartialDecoratedStyle::spaceBefore(const ZLTextStyleEntry::Metrics &metrics) const { return base()->spaceBefore(metrics); }
 inline short ZLTextPartialDecoratedStyle::spaceAfter(const ZLTextStyleEntry::Metrics &metrics) const { return base()->spaceAfter(metrics); }
 inline short ZLTextPartialDecoratedStyle::lineStartIndent(const ZLTextStyleEntry::Metrics &metrics, bool rtl) const { return base()->lineStartIndent(metrics, rtl); }
 inline short ZLTextPartialDecoratedStyle::lineEndIndent(const ZLTextStyleEntry::Metrics &metrics, bool rtl) const { return base()->lineEndIndent(metrics, rtl); }
-inline short ZLTextPartialDecoratedStyle::firstLineIndentDelta(const ZLTextStyleEntry::Metrics &metrics) const { return base()->firstLineIndentDelta(metrics); }
 inline int ZLTextPartialDecoratedStyle::verticalShift() const { return base()->verticalShift() + myDecoration.VerticalShiftOption.value(); }
 inline ZLTextAlignmentType ZLTextPartialDecoratedStyle::alignment() const { return base()->alignment(); }
 inline double ZLTextPartialDecoratedStyle::lineSpace() const { return base()->lineSpace(); }
 
-inline ZLTextFullDecoratedStyle::ZLTextFullDecoratedStyle(const shared_ptr<ZLTextStyle> base, const ZLTextFullStyleDecoration &decoration) : ZLTextDecoratedStyle(base), myDecoration(decoration) {}
 inline ZLTextFullDecoratedStyle::~ZLTextFullDecoratedStyle() {}
-inline short ZLTextFullDecoratedStyle::spaceBefore(const ZLTextStyleEntry::Metrics&) const { return myDecoration.SpaceBeforeOption.value(); }
-inline short ZLTextFullDecoratedStyle::spaceAfter(const ZLTextStyleEntry::Metrics&) const { return myDecoration.SpaceAfterOption.value(); }
-inline short ZLTextFullDecoratedStyle::lineStartIndent(const ZLTextStyleEntry::Metrics &metrics, bool rtl) const { return base()->lineStartIndent(metrics, rtl) + myDecoration.LineStartIndentOption.value(); }
-inline short ZLTextFullDecoratedStyle::lineEndIndent(const ZLTextStyleEntry::Metrics &metrics, bool rtl) const { return base()->lineEndIndent(metrics, rtl) + myDecoration.LineEndIndentOption.value(); }
 inline int ZLTextFullDecoratedStyle::verticalShift() const { return base()->verticalShift() + myDecoration.VerticalShiftOption.value(); }
 inline double ZLTextFullDecoratedStyle::lineSpace() const {
 	const int spacing = myDecoration.LineSpacePercentOption.value();

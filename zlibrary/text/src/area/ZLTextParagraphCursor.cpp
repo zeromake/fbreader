@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2016 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,24 +21,20 @@
 #include <algorithm>
 
 #include <ZLTextParagraph.h>
+#include <ZLTextModel.h>
 
 #include "ZLTextParagraphCursor.h"
 #include "ZLTextWord.h"
 #include "ZLTextParagraphBuilder.h"
 
-ZLTextElementPool ZLTextElementPool::Pool;
-
-std::map<const ZLTextParagraph*, weak_ptr<ZLTextParagraphCursor> > ZLTextParagraphCursorCache::ourCache;
-ZLTextParagraphCursorPtr ZLTextParagraphCursorCache::ourLastAdded;
-
 ZLTextElementVector::~ZLTextElementVector() {
 	for (ZLTextElementVector::const_iterator it = begin(); it != end(); ++it) {
 		switch ((*it)->kind()) {
 			case ZLTextElement::WORD_ELEMENT:
-				ZLTextElementPool::Pool.storeWord((ZLTextWord*)*it);
+				myTextElementPool->storeWord((ZLTextWord*)*it);
 				break;
 			case ZLTextElement::CONTROL_ELEMENT:
-				ZLTextElementPool::Pool.storeControlElement((ZLTextControlElement*)*it);
+				myTextElementPool->storeControlElement((ZLTextControlElement*)*it);
 				break;
 			case ZLTextElement::IMAGE_ELEMENT:
 			case ZLTextElement::FORCED_CONTROL_ELEMENT:
@@ -50,8 +47,10 @@ ZLTextElementVector::~ZLTextElementVector() {
 			case ZLTextElement::BEFORE_PARAGRAPH_ELEMENT:
 			case ZLTextElement::AFTER_PARAGRAPH_ELEMENT:
 			case ZLTextElement::EMPTY_LINE_ELEMENT:
+			case ZLTextElement::LINE_BREAK_ELEMENT:
 			case ZLTextElement::START_REVERSED_SEQUENCE_ELEMENT:
 			case ZLTextElement::END_REVERSED_SEQUENCE_ELEMENT:
+			case ZLTextElement::EMPTY_ELEMENT:
 				break;
 		}
 	}
@@ -63,8 +62,10 @@ ZLTextElementPool::ZLTextElementPool() {
 	BeforeParagraphElement = new ZLTextSpecialElement(ZLTextElement::BEFORE_PARAGRAPH_ELEMENT);
 	AfterParagraphElement = new ZLTextSpecialElement(ZLTextElement::AFTER_PARAGRAPH_ELEMENT);
 	EmptyLineElement = new ZLTextSpecialElement(ZLTextElement::EMPTY_LINE_ELEMENT);
+	LineBreakElement = new ZLTextSpecialElement(ZLTextElement::LINE_BREAK_ELEMENT);
 	StartReversedSequenceElement = new ZLTextSpecialElement(ZLTextElement::START_REVERSED_SEQUENCE_ELEMENT);
 	EndReversedSequenceElement = new ZLTextSpecialElement(ZLTextElement::END_REVERSED_SEQUENCE_ELEMENT);
+	EmptyElement = new ZLTextSpecialElement(ZLTextElement::EMPTY_ELEMENT);
 }
 
 ZLTextElementPool::~ZLTextElementPool() {
@@ -73,24 +74,33 @@ ZLTextElementPool::~ZLTextElementPool() {
 	delete BeforeParagraphElement;
 	delete AfterParagraphElement;
 	delete EmptyLineElement;
+	delete LineBreakElement;
 	delete StartReversedSequenceElement;
 	delete EndReversedSequenceElement;
+	delete EmptyElement;
 }
 
-ZLTextParagraphCursorPtr ZLTextParagraphCursor::cursor(const ZLTextModel &model, size_t index) {
-	ZLTextParagraphCursorPtr result = ZLTextParagraphCursorCache::get(model[index]);
+ZLTextParagraphCursorPtr ZLTextParagraphCursorCache::cursor(const ZLTextModel &model, size_t index) {
+	const ZLTextParagraph *paragraph = model[index];
+	ZLTextParagraphCursorPtr result = ourCache[paragraph];
 	if (result.isNull()) {
 		if (model.kind() == ZLTextModel::TREE_MODEL) {
-			result = new ZLTextTreeParagraphCursor((const ZLTextTreeModel&)model, index);
+			result = new ZLTextTreeParagraphCursor((const ZLTextTreeModel&)model, index, this);
 		} else {
-			result = new ZLTextPlainParagraphCursor((const ZLTextPlainModel&)model, index);
+			result = new ZLTextPlainParagraphCursor(model, index, this);
 		}
-		ZLTextParagraphCursorCache::put(model[index], result);
+		ourCache[paragraph] = result;
 	}
 	return result;
 }
 
-ZLTextParagraphCursor::ZLTextParagraphCursor(const ZLTextModel &model, size_t index) : myModel(model) {
+ZLTextPlainParagraphCursor::ZLTextPlainParagraphCursor(const ZLTextModel &model, size_t index, ZLTextParagraphCursorCache *cache) : ZLTextParagraphCursor(model, index, cache) {
+}
+
+ZLTextTreeParagraphCursor::ZLTextTreeParagraphCursor(const ZLTextTreeModel &model, size_t index, ZLTextParagraphCursorCache *cache) : ZLTextParagraphCursor(model, index, cache) {
+}
+
+ZLTextParagraphCursor::ZLTextParagraphCursor(const ZLTextModel &model, size_t index, ZLTextParagraphCursorCache *cache) : myModel(model), myElements(cache->elementPool()), myParagraphCursorCache(cache) {
 	myIndex = std::min(index, myModel.paragraphsNumber() - 1);
 	fill();
 }
@@ -99,7 +109,7 @@ ZLTextParagraphCursor::~ZLTextParagraphCursor() {
 }
 
 ZLTextParagraphCursorPtr ZLTextPlainParagraphCursor::previous() const {
-	return isFirst() ? 0 : cursor(myModel, myIndex - 1);
+	return isFirst() ? 0 : myParagraphCursorCache->cursor(myModel, myIndex - 1);
 }
 
 ZLTextParagraphCursorPtr ZLTextTreeParagraphCursor::previous() const {
@@ -121,11 +131,11 @@ ZLTextParagraphCursorPtr ZLTextTreeParagraphCursor::previous() const {
 			--index;
 		}
 	}
-	return cursor(myModel, index);
+	return myParagraphCursorCache->cursor(myModel, index);
 }
 
 ZLTextParagraphCursorPtr ZLTextPlainParagraphCursor::next() const {
-	return isLast() ? 0 : cursor(myModel, myIndex + 1);
+	return isLast() ? 0 : myParagraphCursorCache->cursor(myModel, myIndex + 1);
 }
 
 ZLTextParagraphCursorPtr ZLTextTreeParagraphCursor::next() const {
@@ -134,7 +144,7 @@ ZLTextParagraphCursorPtr ZLTextTreeParagraphCursor::next() const {
 	}
 	const ZLTextTreeParagraph *current = (const ZLTextTreeParagraph*)myModel[myIndex];
 	if (!current->children().empty() && current->isOpen()) {
-		return cursor(myModel, myIndex + 1);
+		return myParagraphCursorCache->cursor(myModel, myIndex + 1);
 	}
 
 	const ZLTextTreeParagraph *parent = current->parent();
@@ -147,7 +157,7 @@ ZLTextParagraphCursorPtr ZLTextTreeParagraphCursor::next() const {
 		while (((const ZLTextTreeParagraph*)myModel[index])->parent() != parent) {
 			++index;
 		}
-		return cursor(myModel, index);
+		return myParagraphCursorCache->cursor(myModel, index);
 	}
 	return 0;
 }
@@ -185,6 +195,10 @@ bool ZLTextTreeParagraphCursor::isLast() const {
 	return true;
 }
 
+const ZLTextParagraph &ZLTextParagraphCursor::paragraph() const {
+	return *myModel[myIndex];
+}
+
 bool ZLTextParagraphCursor::isEndOfSection() const {
 	return myModel[myIndex]->kind() == ZLTextParagraph::END_OF_SECTION_PARAGRAPH;
 }
@@ -207,7 +221,7 @@ ZLTextMark ZLTextWordCursor::position() const {
 
 void ZLTextParagraphCursor::processControlParagraph(const ZLTextParagraph &paragraph) {
 	for (ZLTextParagraph::Iterator it = paragraph; !it.isEnd(); it.next()) {
-		myElements.push_back(ZLTextElementPool::Pool.getControlElement(it.entry()));
+		myElements.push_back(elementPool()->getControlElement(it.entry()));
 	}
 }
 
@@ -223,15 +237,15 @@ void ZLTextParagraphCursor::fill() {
 		}
 		case ZLTextParagraph::EMPTY_LINE_PARAGRAPH:
 			processControlParagraph(paragraph);
-			myElements.push_back(ZLTextElementPool::Pool.EmptyLineElement);
+			myElements.push_back(elementPool()->EmptyLineElement);
 			break;
 		case ZLTextParagraph::BEFORE_SKIP_PARAGRAPH:
 			processControlParagraph(paragraph);
-			myElements.push_back(ZLTextElementPool::Pool.BeforeParagraphElement);
+			myElements.push_back(elementPool()->BeforeParagraphElement);
 			break;
 		case ZLTextParagraph::AFTER_SKIP_PARAGRAPH:
 			processControlParagraph(paragraph);
-			myElements.push_back(ZLTextElementPool::Pool.AfterParagraphElement);
+			myElements.push_back(elementPool()->AfterParagraphElement);
 			break;
 		case ZLTextParagraph::END_OF_SECTION_PARAGRAPH:
 		case ZLTextParagraph::END_OF_TEXT_PARAGRAPH:
@@ -243,17 +257,7 @@ void ZLTextParagraphCursor::clear() {
 	myElements.clear();
 }
 
-void ZLTextParagraphCursorCache::put(const ZLTextParagraph *paragraph, ZLTextParagraphCursorPtr cursor) {
-	ourCache[paragraph] = cursor;
-	ourLastAdded = cursor;
-}
-
-ZLTextParagraphCursorPtr ZLTextParagraphCursorCache::get(const ZLTextParagraph *paragraph) {
-	return ourCache[paragraph];
-}
-
 void ZLTextParagraphCursorCache::clear() {
-	ourLastAdded.reset();
 	ourCache.clear();
 }
 
@@ -316,7 +320,7 @@ const ZLTextWordCursor &ZLTextWordCursor::operator = (ZLTextParagraphCursorPtr p
 
 void ZLTextWordCursor::moveToParagraph(int paragraphIndex) {
 	if (!isNull() && (paragraphIndex != (int)myParagraphCursor->index())) {
-		myParagraphCursor = ZLTextParagraphCursor::cursor(myParagraphCursor->myModel, paragraphIndex);
+		myParagraphCursor = myParagraphCursor->cursor(paragraphIndex);
 		moveToParagraphStart();
 	}
 }

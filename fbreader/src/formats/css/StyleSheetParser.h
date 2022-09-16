@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2015 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,8 @@
 
 #include "StyleSheetTable.h"
 
+#include <stack>
+
 class ZLInputStream;
 
 class StyleSheetParser {
@@ -36,27 +39,41 @@ public:
 	void parse(const char *text, int len, bool final = false);
 
 protected:
-	virtual void storeData(const std::string &tagName, const std::string &className, const StyleSheetTable::AttributeMap &map);
+	virtual void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
 
 private:
-	bool isControlSymbol(const char symbol);
-	void processWord(std::string &word);
-	void processWordWithoutComments(const std::string &word);
-	void processControl(const char control);
+	enum ReadState {
+		COMMENT,
+		SELECTOR,
+		ATTRIBUTE_NAME,
+		ATTRIBUTE_VALUE,
+		ATTRIBUTE_VALUE_SPACE,
+		ATTRIBUTE_VALUE_COMMA,
+		ATTRIBUTE_IGNORE,
+		STRING_LITERAL_SINGLE = '\'',
+		STRING_LITERAL_DOUBLE = '"',
+		SKIP_BLOCK_CURLY = '}',
+		SKIP_BLOCK_SQUARE = ']'
+	};
+
+	void reset(ReadState state);
+	void processChar1(char c);
+	void processChar2(char c);
+	void processChar3(char c);
+	void processChar4(char c);
+	void finishRule();
+	void finishAttribute();
+	void finishAttributeValue();
 
 private:
 	std::string myWord;
 	std::string myAttributeName;
-	enum {
-		TAG_NAME,
-		ATTRIBUTE_NAME,
-		ATTRIBUTE_VALUE,
-		BROKEN,
-	} myReadState;
-	bool myInsideComment;
-	std::string myTagName;
-	std::string myClassName;
+	std::stack<ReadState> myStateStack;
+	std::vector<std::string> mySelectors;
 	StyleSheetTable::AttributeMap myMap;
+	char myBuffer1;
+	char myBuffer2;
+	char myBuffer3;
 
 friend class StyleSheetSingleStyleParser;
 };
@@ -67,7 +84,7 @@ public:
 	StyleSheetTableParser(StyleSheetTable &table);
 
 private:
-	void storeData(const std::string &tagName, const std::string &className, const StyleSheetTable::AttributeMap &map);
+	void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
 
 private:
 	StyleSheetTable &myTable;
@@ -76,7 +93,9 @@ private:
 class StyleSheetSingleStyleParser : public StyleSheetParser {
 
 public:
-	shared_ptr<ZLTextStyleEntry> parseString(const char *text);
+	StyleSheetTable::Style parseString(const char *text);
 };
+
+inline void StyleSheetParser::reset() { reset(SELECTOR); }
 
 #endif /* __STYLESHEETPARSER_H__ */

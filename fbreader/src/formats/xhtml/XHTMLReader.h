@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2016-2019 Slava Monich <slava.monich@jolla.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +26,13 @@
 #include <vector>
 
 #include <ZLXMLReader.h>
+#include <ZLTextParagraph.h>
 
 #include "../css/StyleSheetTable.h"
 #include "../css/StyleSheetParser.h"
 
 class ZLFile;
+class ZLTextStyleDecoration;
 
 class BookReader;
 class XHTMLReader;
@@ -38,9 +41,9 @@ class XHTMLTagAction {
 
 public:
 	virtual ~XHTMLTagAction();
-	
-	virtual void doAtStart(XHTMLReader &reader, const char **xmlattributes) = 0;
-	virtual void doAtEnd(XHTMLReader &reader) = 0;
+
+	virtual void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	virtual void doAtEnd(XHTMLReader &reader);
 
 protected:
 	static BookReader &bookReader(XHTMLReader &reader);	
@@ -54,16 +57,29 @@ class XHTMLReader : public ZLXMLReader {
 public:
 	static XHTMLTagAction *addAction(const std::string &tag, XHTMLTagAction *action);
 	static void fillTagTable();
+	static void clearTagTable();
 
 private:
-	static std::map<std::string,XHTMLTagAction*> ourTagActions;
+	typedef std::map<std::string,XHTMLTagAction*> ActionMap;
+	static ActionMap ourTagActions;
 
 public:
 	XHTMLReader(BookReader &modelReader);
 	bool readFile(const ZLFile &file, const std::string &referenceName);
 
 private:
-	void startElementHandler(const char *tag, const char **attributes);
+    struct ParseContext {
+        int kind;
+        int styleIndex;
+        unsigned char opacity;
+        bool haveContent;
+        bool stylesApplied;
+        bool bottomMarginApplied;
+        const ZLTextStyleDecoration *decoration;
+        ParseContext() : kind(-1), styleIndex(-1), opacity(255), haveContent(false), stylesApplied(false), bottomMarginApplied(false), decoration(NULL) {}
+    };
+
+    void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, size_t len);
 
@@ -71,23 +87,28 @@ private:
 
 	bool processNamespaces() const;
 
+	void haveContent();
 	void beginParagraph();
 	void endParagraph();
-	void addStyleEntry(const std::string &tag, const std::string &aClass);
+	void applyStyles(ParseContext &context);
+	void addStyleParagraph(const ZLTextStyleEntry &style);
+	void addBottomMargin(short size, ZLTextStyleEntry::SizeUnit unit);
+	bool elementHasTopMargin(const ParseContext &context) const;
+	bool elementHasBottomMargin(const ParseContext &context) const;
+	void applyBottomMargins();
+	void addPageBreak();
 
 private:
 	BookReader &myModelReader;
 	std::string myPathPrefix;
 	std::string myReferenceName;
 	std::string myReferenceDirName;
-	bool myPreformatted;
-	bool myNewParagraphInProgress;
+	int myPreformatted;
 	StyleSheetTable myStyleSheetTable;
-	std::vector<int> myCSSStack;
-	std::vector<shared_ptr<ZLTextStyleEntry> > myStyleEntryStack;
-	int myStylesToRemove;
-	std::vector<bool> myDoPageBreakAfterStack;
-	bool myCurrentParagraphIsEmpty;
+	StyleSheetTable::ElementList myElementStack;
+	StyleSheetTable::StyleList myStyleStack;
+	std::vector<ParseContext> myParseStack;
+	std::vector<ZLTextStyleEntry> myBottomMargins;
 	StyleSheetSingleStyleParser myStyleParser;
 	shared_ptr<StyleSheetTableParser> myTableParser;
 	enum {
@@ -101,9 +122,11 @@ private:
 	friend class XHTMLTagLinkAction;
 	friend class XHTMLTagHyperlinkAction;
 	friend class XHTMLTagPreAction;
-	friend class XHTMLTagParagraphAction;
+	friend class XHTMLTagControlAction;
+	friend class XHTMLTagParagraphWithControlAction;
 	friend class XHTMLTagBodyAction;
-	friend class XHTMLTagRestartParagraphAction;
+	friend class XHTMLTagImageAction;
+	friend class XHTMLTagFootnoteAction;
 };
 
 #endif /* __XHTMLREADER_H__ */

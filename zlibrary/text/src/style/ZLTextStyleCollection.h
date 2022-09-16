@@ -24,6 +24,9 @@
 
 #include <ZLOptions.h>
 #include <ZLTextStyle.h>
+#include <ZLTextParagraph.h>
+
+class ZLTextFullStyleDecoration;
 
 class ZLTextStyleDecoration {
 
@@ -33,12 +36,17 @@ public:
 
 	virtual bool isFullDecoration() const;
 
+	virtual const ZLTextFullStyleDecoration *fullDecoration() const;
+
 	virtual shared_ptr<ZLTextStyle> createDecoratedStyle(const shared_ptr<ZLTextStyle> base) const;
 
 	const std::string &name() const;
 
 	const std::string &colorStyle() const;
 	void setColorStyle(const std::string &colorStyle);
+
+	void setFirstLineIndentDelta(int indent, ZLTextStyleEntry::SizeUnit unit);
+	int* firstLineIndentDelta(ZLTextStyleEntry::SizeUnit &unit) const;
 
 public:
 	ZLStringOption FontFamilyOption;
@@ -54,6 +62,8 @@ private:
 	std::string myName;
 
 	std::string myColorStyle;
+	int* myFirstLineIndentDelta;
+	ZLTextStyleEntry::SizeUnit myFirstLineIndentDeltaUnit;
 };
 
 class ZLTextFullStyleDecoration : public ZLTextStyleDecoration {
@@ -61,9 +71,12 @@ class ZLTextFullStyleDecoration : public ZLTextStyleDecoration {
 public:
 	ZLTextFullStyleDecoration(const std::string &name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, short spaceBefore, short spaceAfter, short lineStartIndent, short lineEndIndent, short firstLineIndentDelta, int verticalShift, ZLTextAlignmentType alignment, double lineSpace, ZLBoolean3 allowHyphenations);
 	~ZLTextFullStyleDecoration();
-
+	
 	virtual bool isFullDecoration() const;
 
+	int firstLineIndentDelta(const ZLTextStyleEntry::Metrics &metrics) const;
+
+	const ZLTextFullStyleDecoration *fullDecoration() const;
 	shared_ptr<ZLTextStyle> createDecoratedStyle(const shared_ptr<ZLTextStyle> base) const;
 
 public:
@@ -71,12 +84,19 @@ public:
 	ZLIntegerRangeOption SpaceAfterOption;
 	ZLIntegerRangeOption LineStartIndentOption;
 	ZLIntegerRangeOption LineEndIndentOption;
-	ZLIntegerRangeOption FirstLineIndentDeltaOption;
 
 	ZLIntegerOption AlignmentOption;
 
 	ZLDoubleOption LineSpaceOption;
 	ZLIntegerOption LineSpacePercentOption;
+	ZLIntegerRangeOption FirstLineIndentDeltaOption;
+
+public:
+	ZLTextStyleEntry::SizeUnit SpaceBeforeOptionUnit;
+	ZLTextStyleEntry::SizeUnit SpaceAfterOptionUnit;
+	ZLTextStyleEntry::SizeUnit LineStartIndentOptionUnit;
+	ZLTextStyleEntry::SizeUnit LineEndIndentOptionUnit;
+	ZLTextStyleEntry::SizeUnit FirstLineIndentDeltaOptionUnit;
 };
 
 class ZLTextStyleCollection {
@@ -103,9 +123,15 @@ private:
 friend class ZLTextStyleReader;
 };
 
-inline ZLTextStyleDecoration::~ZLTextStyleDecoration() {}
+inline ZLTextStyleDecoration::~ZLTextStyleDecoration() { delete myFirstLineIndentDelta; }
 inline bool ZLTextStyleDecoration::isFullDecoration() const { return false; }
 inline const std::string &ZLTextStyleDecoration::name() const { return myName; }
+inline int* ZLTextStyleDecoration::firstLineIndentDelta(ZLTextStyleEntry::SizeUnit &unit) const {
+	unit = myFirstLineIndentDeltaUnit; return myFirstLineIndentDelta;
+}
+inline void ZLTextStyleDecoration::setFirstLineIndentDelta(int indent, ZLTextStyleEntry::SizeUnit unit) {
+	delete myFirstLineIndentDelta; myFirstLineIndentDelta = new int(indent); myFirstLineIndentDeltaUnit = unit;
+}
 
 inline ZLTextFullStyleDecoration::~ZLTextFullStyleDecoration() {}
 inline bool ZLTextFullStyleDecoration::isFullDecoration() const { return true; }
