@@ -394,3 +394,103 @@ target("expat")
 -- package_end()
 
 -- add_requires("expat")
+
+target("wolfssl")
+    -- set_kind("static")
+    set_kind("shared")
+    add_defines("BUILDING_WOLFSSL", "WOLFSSL_DLL")
+    add_defines("WOLFSSL_LIB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
+    add_includedirs(
+        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
+        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"))
+    add_links("ws2_32")
+    for _, f in ipairs({
+        "src/crl.c",
+        "src/dtls13.c",
+        "src/dtls.c",
+        "src/internal.c",
+        "src/wolfio.c",
+        "src/keys.c",
+        "src/ocsp.c",
+        "src/ssl.c",
+        "src/tls.c",
+        "src/tls13.c",
+        "wolfcrypt/src/aes.c",
+        "wolfcrypt/src/arc4.c",
+        "wolfcrypt/src/asn.c",
+        "wolfcrypt/src/blake2b.c",
+        "wolfcrypt/src/blake2s.c",
+        "wolfcrypt/src/camellia.c",
+        "wolfcrypt/src/chacha.c",
+        "wolfcrypt/src/chacha20_poly1305.c",
+        "wolfcrypt/src/cmac.c",
+        "wolfcrypt/src/coding.c",
+        "wolfcrypt/src/curve25519.c",
+        "wolfcrypt/src/curve448.c",
+        "wolfcrypt/src/cpuid.c",
+        "wolfcrypt/src/des3.c",
+        "wolfcrypt/src/dh.c",
+        "wolfcrypt/src/dsa.c",
+        "wolfcrypt/src/ecc.c",
+        "wolfcrypt/src/ed25519.c",
+        "wolfcrypt/src/ed448.c",
+        "wolfcrypt/src/error.c",
+        "wolfcrypt/src/fe_448.c",
+        "wolfcrypt/src/fe_low_mem.c",
+        "wolfcrypt/src/fe_operations.c",
+        "wolfcrypt/src/ge_448.c",
+        "wolfcrypt/src/ge_low_mem.c",
+        "wolfcrypt/src/ge_operations.c",
+        "wolfcrypt/src/hash.c",
+        "wolfcrypt/src/hmac.c",
+        "wolfcrypt/src/integer.c",
+        "wolfcrypt/src/kdf.c",
+        "wolfcrypt/src/logging.c",
+        "wolfcrypt/src/md2.c",
+        "wolfcrypt/src/md4.c",
+        "wolfcrypt/src/md5.c",
+        "wolfcrypt/src/memory.c",
+        "wolfcrypt/src/pkcs7.c",
+        "wolfcrypt/src/pkcs12.c",
+        "wolfcrypt/src/poly1305.c",
+        "wolfcrypt/src/pwdbased.c",
+        "wolfcrypt/src/random.c",
+        "wolfcrypt/src/rc2.c",
+        "wolfcrypt/src/ripemd.c",
+        "wolfcrypt/src/rsa.c",
+        "wolfcrypt/src/sha.c",
+        "wolfcrypt/src/sha256.c",
+        "wolfcrypt/src/sha3.c",
+        "wolfcrypt/src/sha512.c",
+        "wolfcrypt/src/signature.c",
+        "wolfcrypt/src/sp_c32.c",
+        "wolfcrypt/src/sp_c64.c",
+        "wolfcrypt/src/sp_int.c",
+        "wolfcrypt/src/sp_x86_64.c",
+        "wolfcrypt/src/srp.c",
+        "wolfcrypt/src/tfm.c",
+        "wolfcrypt/src/wc_encrypt.c",
+        "wolfcrypt/src/wc_pkcs11.c",
+        "wolfcrypt/src/wc_port.c",
+        "wolfcrypt/src/wolfmath.c",
+        "wolfcrypt/src/wolfevent.c",
+    }) do
+        add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
+    end
+    if is_plat("windows") then
+        add_links("advapi32")
+        for _, f in ipairs({
+            "wolfcrypt/src/aes_asm.asm",
+            "wolfcrypt/src/sp_x86_64_asm.asm",
+            "wolfssl.rc",
+        }) do
+            add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
+        end
+    else
+        for _, f in ipairs({
+            "wolfcrypt/src/aes_asm.S",
+            "wolfcrypt/src/sp_x86_64_asm.S",
+        }) do
+            add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
+        end
+    end

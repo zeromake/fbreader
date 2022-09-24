@@ -67,11 +67,10 @@ local downloads = {
         "https://github.com/memononen/nanosvg/archive/refs/heads/master.zip",
         "nanosvg.zip",
     },
-    -- {
-    --     "webp",
-    --     "https://github.com/webmproject/libwebp/archive/refs/tags/v1.2.4.zip",
-    --     "libwebp-1.2.4.zip",
-    -- },
+    {
+        "wolfssl",
+        "https://github.com/wolfSSL/wolfssl/archive/refs/tags/v5.5.0-stable.tar.gz",
+    },
 }
 
 local downloadDir = path.join(os.scriptdir(), "download")
