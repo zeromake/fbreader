@@ -21,7 +21,12 @@
 #include "ZLStringUtil.h"
 
 #include <algorithm>
+
+#ifdef _MSC_VER
+#include <string.h>
+#else
 #include <strings.h>
+#endif
 
 ZLPaintContext::ZLPaintContext() {
 }

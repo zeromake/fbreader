@@ -1,4 +1,4 @@
-﻿ApplicationIcon ICON data/icons/application/win32.ico
+﻿ApplicationIcon ICON "../data/icons/application/win32.ico"
 
 
 PopupMenu MENU
@@ -13,4 +13,4 @@ PopupMenu MENU
     }
 }
 
-1 24 ".\\manifest"
+1 24 "./manifest"

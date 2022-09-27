@@ -26,3 +26,5 @@ fbreader/FBReader
 !3rd/pre
 !3rd/.include
 .vscode/settings.json
+.vscode/compile_commands.json
+.xmake
