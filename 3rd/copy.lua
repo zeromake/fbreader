@@ -10,7 +10,7 @@ for _, dir in ipairs(os.dirs("build/.packages/**/include")) do
     os.cp(path.join(d, "lib/*.a"), "lib/")
 end
 
-os.cp("curl/curl-7.83.1_2-win64-mingw/lib/*.a", "lib/")
+-- os.cp("curl/curl-7.83.1_2-win64-mingw/lib/*.a", "lib/")
 
 local headerFiles = {
     {
@@ -20,7 +20,7 @@ local headerFiles = {
         }
     },
     {
-        "curl/curl-7.83.1_2-win64-mingw/include/",
+        "libcurl/curl-7.85.0/include/",
         {
             "curl"
         }

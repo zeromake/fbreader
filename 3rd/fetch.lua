@@ -32,10 +32,10 @@ local downloads = {
         "bzip2",
         "https://nchc.dl.sourceforge.net/project/bzip2/bzip2-1.0.6.tar.gz",
     },
-    {
-        "curl",
-        "https://curl.se/windows/dl-7.83.1_2/curl-7.83.1_2-win64-mingw.zip",
-    },
+    -- {
+    --     "curl",
+    --     "https://curl.se/windows/dl-7.83.1_2/curl-7.83.1_2-win64-mingw.zip",
+    -- },
     {
         "unibreak",
         "https://github.com/adah1972/libunibreak/releases/download/libunibreak_5_0/libunibreak-5.0.tar.gz",
@@ -70,6 +70,10 @@ local downloads = {
     {
         "wolfssl",
         "https://github.com/wolfSSL/wolfssl/archive/refs/tags/v5.5.0-stable.tar.gz",
+    },
+    {
+        "libcurl",
+        "https://curl.se/download/curl-7.85.0.zip",
     },
 }
 

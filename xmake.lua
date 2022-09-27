@@ -2,10 +2,11 @@ add_rules("mode.debug", "mode.release")
 
 set_languages("c17", "cxx20")
 
-local VERSION = "0.14.0"
+local VERSION = "0.15.0"
 local SHAREDIR = "/share"
 local IMAGEDIR = SHAREDIR.."/icons"
 
+local FilePathSep = "\\\\"
 local SHAREDIR_MACRO = "~~\\\\share"
 local IMAGEDIR_MACRO = SHAREDIR_MACRO.."\\\\icons"
 local APPIMAGEDIR_MACRO = IMAGEDIR_MACRO
@@ -27,16 +28,15 @@ if is_plat("windows", "mingw") then
         "UNICODE",
         "_WIN32_IE=0x0501",
         "_WIN32_WINNT=0x0501",
-        "WINVER=0x0500",
-        "XMLCONFIGHOMEDIR=\"~\\\\..\"",
+        "WINVER=0x0501",
         "XMD_H",
         "FRIBIDI_LIB_STATIC",
         "CURL_STATICLIB",
         "PFD_HAS_IFILEDIALOG=0",
         "WIN32_USE_DRAW_TEXT"
     )
-    -- add_ldflags("-mwindows")
-    add_ldflags("-mconsole")
+    add_ldflags("-mwindows")
+    -- add_ldflags("-mconsole")
 end
 
 if is_plat("windows") then
@@ -192,15 +192,21 @@ target("fbreader")
     add_linkdirs("3rd/lib")
     add_includedirs("zlibrary/core/include", "zlibrary/text/include", "3rd/include")
     add_deps("zlcore", "zltext", "zlui")
+    -- 3rd link
+    add_links("bzip2", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl", "expat")
     if is_plat("windows", "mingw") then
+        -- windows lib link
         add_links("png", "gif", "tiff", "jpeg")
-        add_links("gdi32","comctl32", "comdlg32", "ws2_32", "crypt32", "wldap32")
+        add_links("gdi32","comctl32", "comdlg32", "ws2_32", "crypt32", "wldap32", "bcrypt")
         add_links("zlib")
+        -- windows rc
         add_files("fbreader/win32/FBReader.rc")
     else
         add_links("z")
     end
-    add_links("bzip2", "fribidi", "unibreak", "sqlite3", "curl", "expat")
+    if is_plat("mingw") then
+        add_ldflags("-static-libgcc", "-static-libstdc++")
+    end
     for _, sub in ipairs(fbreaderSubDirs) do
         add_files(path.join("fbreader", sub, "*.cpp"))
     end

@@ -396,10 +396,9 @@ target("expat")
 -- add_requires("expat")
 
 target("wolfssl")
-    -- set_kind("static")
-    set_kind("shared")
-    add_defines("BUILDING_WOLFSSL", "WOLFSSL_DLL")
-    add_defines("WOLFSSL_LIB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
+    set_kind("static")
+    -- set_kind("shared")
+    add_defines("WOLFSSL_LIB", "WOLFSSL_DES_ECB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
     add_includedirs(
         path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
         path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"))
@@ -494,3 +493,34 @@ target("wolfssl")
             add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
         end
     end
+
+local libcurlDir = "libcurl/curl-7.85.0"
+
+target("curl")
+    set_kind("static")
+    -- set_kind("shared")
+    -- add_cxflags("/D UNICODE")
+    add_files(path.join(os.scriptdir(), libcurlDir, "lib/*.c"))
+    add_files(path.join(os.scriptdir(), libcurlDir, "lib/vtls/*.c"))
+    add_files(path.join(os.scriptdir(), libcurlDir, "lib/vauth/*.c"))
+    add_includedirs(
+        path.join(os.scriptdir(), libcurlDir, "lib"),
+        path.join(os.scriptdir(), libcurlDir, "include"),
+        path.join(os.scriptdir(), "zlib/zlib-1.2.12"),
+        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
+        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN")
+    )
+    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
+    add_defines(
+        "WIN32",
+        "BUILDING_LIBCURL",
+        "CURL_STATICLIB",
+        "HAVE_LIBZ",
+        "HAVE_ZLIB_H",
+        "USE_WOLFSSL",
+        "UNICODE",
+        "_UNICODE",
+        "USE_WIN32_LDAP"
+    )
+    add_links("ws2_32", "wldap32", "crypt32", "bcrypt")
+    add_deps("wolfssl", "zlib")
