@@ -15,6 +15,7 @@ local INSTALLDIR_MACRO = ""
 add_includedirs("3rd/.include")
 
 add_defines(
+    "XML_STATIC",
     "INSTALLDIR=\""..INSTALLDIR_MACRO.."\"",
     "BASEDIR=\""..SHAREDIR_MACRO.."\"",
     "LIBDIR=\"\"",
@@ -35,7 +36,7 @@ if is_plat("windows", "mingw") then
         "PFD_HAS_IFILEDIALOG=0",
         "WIN32_USE_DRAW_TEXT"
     )
-    add_ldflags("-mwindows")
+    -- add_ldflags("-mwindows")
     -- add_ldflags("-mconsole")
 end
 
@@ -193,11 +194,11 @@ target("fbreader")
     add_includedirs("zlibrary/core/include", "zlibrary/text/include", "3rd/include")
     add_deps("zlcore", "zltext", "zlui")
     -- 3rd link
-    add_links("bzip2", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl", "expat")
+    add_links( "expat", "bzip2", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl")
     if is_plat("windows", "mingw") then
         -- windows lib link
         add_links("png", "gif", "tiff", "jpeg")
-        add_links("gdi32","comctl32", "comdlg32", "ws2_32", "crypt32", "wldap32", "bcrypt")
+        add_links("user32", "gdi32", "shell32", "comctl32", "comdlg32", "ws2_32", "crypt32", "advapi32", "wldap32", "bcrypt")
         add_links("zlib")
         -- windows rc
         add_files("fbreader/win32/FBReader.rc")

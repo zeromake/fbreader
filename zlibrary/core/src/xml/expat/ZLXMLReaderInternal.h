@@ -20,7 +20,9 @@
 #ifndef __ZLXMLREADERINTERNAL_H__
 #define __ZLXMLREADERINTERNAL_H__
 
+extern "C" {
 #include <expat.h>
+}
 
 #include <set>
 

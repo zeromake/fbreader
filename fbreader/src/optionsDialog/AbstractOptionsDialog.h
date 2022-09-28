@@ -24,7 +24,7 @@
 #include <shared_ptr.h>
 
 class ZLOptionsDialog;
-class ZLResourceKey;
+struct ZLResourceKey;
 class ProgramCollection;
 class ZLOption;
 class ZLOptionEntry;

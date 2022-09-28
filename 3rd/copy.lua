@@ -2,6 +2,7 @@ os.mkdir("include")
 os.mkdir("lib")
 
 os.cp("build/mingw/x86_64/release/*.a", "lib/")
+os.cp("build/windows/x64/release/*.lib", "lib/")
 
 
 for _, dir in ipairs(os.dirs("build/.packages/**/include")) do

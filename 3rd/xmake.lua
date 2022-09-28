@@ -25,6 +25,7 @@ target("zlib")
             os.cp(path.join(os.scriptdir(), "zlib/zlib-1.2.12/zconf.h.in"), libconfig)
         end
     end)
+    add_includedirs(path.join(os.scriptdir(), ".include"))
     for _, f in ipairs({
         "adler32.c",
         "crc32.c",
@@ -122,6 +123,7 @@ target("tiff")
     add_deps("jpeg", "zlib")
     add_includedirs(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
     add_includedirs(jpegSourceDir)
+    add_includedirs(path.join(os.scriptdir(), ".include"))
     on_config(function()
         local libconfig = path.join(tiffSourceDir, "tif_config.h")
         if not os.exists(libconfig) then
@@ -280,6 +282,9 @@ target("unibreak")
 target("fribidi")
     set_kind("static")
     add_defines("FRIBIDI_BUILD", "FRIBIDI_LIB_STATIC", "HAVE_CONFIG_H")
+    if is_plat("mingw") then
+        add_defines("HAVE_STRINGS_H=1")
+    end
     add_includedirs(path.join(os.scriptdir(), "fribidi/fribidi-1.0.12/lib"))
     add_includedirs(path.join(os.scriptdir(), "fribidi/fribidi-1.0.12"))
     on_config(function ()
@@ -295,7 +300,6 @@ target("fribidi")
 #define HAVE_STDLIB_H 1
 #define HAVE_STRDUP 1
 #define HAVE_STRINGIZE 1
-#define HAVE_STRINGS_H 1
 #define HAVE_STRING_H 1
 #define HAVE_SYS_STAT_H 1
 #define HAVE_SYS_TYPES_H 1
@@ -398,7 +402,14 @@ target("expat")
 target("wolfssl")
     set_kind("static")
     -- set_kind("shared")
-    add_defines("WOLFSSL_LIB", "WOLFSSL_DES_ECB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
+    on_config(function ()
+        local sourceConfig = path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/wolfssl/options.h.in")
+        local targetConfig = path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/wolfssl/options.h")
+        if not os.exists(targetConfig) then
+            os.cp(sourceConfig, targetConfig)
+        end
+    end)
+    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB", "WOLFSSL_USER_SETTINGS", "CYASSL_USER_SETTINGS")
     add_includedirs(
         path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
         path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"))
@@ -500,26 +511,28 @@ target("curl")
     set_kind("static")
     -- set_kind("shared")
     -- add_cxflags("/D UNICODE")
+
+    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB", "WOLFSSL_USER_SETTINGS", "CYASSL_USER_SETTINGS")
     add_files(path.join(os.scriptdir(), libcurlDir, "lib/*.c"))
     add_files(path.join(os.scriptdir(), libcurlDir, "lib/vtls/*.c"))
     add_files(path.join(os.scriptdir(), libcurlDir, "lib/vauth/*.c"))
     add_includedirs(
+        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
+        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"),
         path.join(os.scriptdir(), libcurlDir, "lib"),
         path.join(os.scriptdir(), libcurlDir, "include"),
-        path.join(os.scriptdir(), "zlib/zlib-1.2.12"),
-        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
-        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN")
+        path.join(os.scriptdir(), "zlib/zlib-1.2.12")
     )
-    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
+    -- add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
     add_defines(
+        "USE_WOLFSSL",
         "WIN32",
         "BUILDING_LIBCURL",
         "CURL_STATICLIB",
         "HAVE_LIBZ",
         "HAVE_ZLIB_H",
-        "USE_WOLFSSL",
-        "UNICODE",
-        "_UNICODE",
+        -- "UNICODE",
+        -- "_UNICODE",
         "USE_WIN32_LDAP"
     )
     add_links("ws2_32", "wldap32", "crypt32", "bcrypt")
