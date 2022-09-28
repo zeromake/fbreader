@@ -2,45 +2,45 @@
 <fbgenrestransfer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://alexs.ru/fb2/genrestable/GT.xsd">
 	<genre value="sf">
 		<root-descr lang="en" genre-title="SF, Fantasy" detailed="Alternate History, Cyberpunk, Fantasy, Science Fiction"/>
-		<root-descr lang="ru" genre-title="æÁÎÔÁÓÔÉËÁ, æÜÎÔÅÚÉ" detailed="îæ, æÜÎÔÅÚÉ, íÉÓÔÉËÁ, ëÉÂÅÒÐÁÎË"/>
+		<root-descr lang="ru" genre-title="Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘, Ð¶Ð¬ÐžÐ¤Ð•ÐªÐ™" detailed="Ð¾Ð¶, Ð¶Ð¬ÐžÐ¤Ð•ÐªÐ™, Ð½Ð™Ð£Ð¤Ð™Ð›Ð‘, Ð»Ð™Ð’Ð•Ð¢Ð Ð‘ÐžÐ›"/>
 		<subgenres>
 			<subgenre value="sf_history">
 				<genre-descr lang="en" title="Alternative history"/>
-				<genre-descr lang="ru" title="áÌØÔÅÒÎÁÔÉ×ÎÁÑ ÉÓÔÏÒÉÑ"/>
+				<genre-descr lang="ru" title="Ð±ÐœÐ¨Ð¤Ð•Ð¢ÐžÐ‘Ð¤Ð™Ð§ÐžÐ‘Ð¡ Ð™Ð£Ð¤ÐŸÐ¢Ð™Ð¡"/>
 				<genre-alt value="fantasy_alt_hist" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sf_action">
 				<genre-descr lang="en" title="Action SF"/>
-				<genre-descr lang="ru" title="âÏÅ×ÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð²ÐŸÐ•Ð§Ð‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sf_epic">
 				<genre-descr lang="en" title="Epic SF"/>
-				<genre-descr lang="ru" title="üÐÉÞÅÓËÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="ÑŒÐ Ð™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sf_heroic">
 				<genre-descr lang="en" title="Heroic SF"/>
-				<genre-descr lang="ru" title="çÅÒÏÉÞÅÓËÁÑ ÆÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð·Ð•Ð¢ÐŸÐ™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ð–Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sf_detective">
 				<genre-descr lang="en" title="Detective SF"/>
-				<genre-descr lang="ru" title="äÅÔÅËÔÉ×ÎÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§ÐžÐ‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sf_cyberpunk">
 				<genre-descr lang="en" title="Cyberpunk"/>
-				<genre-descr lang="ru" title="ëÉÂÅÒÐÁÎË"/>
+				<genre-descr lang="ru" title="Ð»Ð™Ð’Ð•Ð¢Ð Ð‘ÐžÐ›"/>
 				<genre-alt value="sf_cyber_punk" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sf_space">
 				<genre-descr lang="en" title="Space SF"/>
-				<genre-descr lang="ru" title="ëÏÓÍÉÞÅÓËÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð»ÐŸÐ£ÐÐ™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sf_social">
 				<genre-descr lang="en" title="Social SF"/>
-				<genre-descr lang="ru" title="óÏÃÉÁÌØÎÁÑ ÆÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="ÑƒÐŸÐ“Ð™Ð‘ÐœÐ¨ÐžÐ‘Ð¡ Ð–Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sf_horror">
 				<genre-descr lang="en" title="Horror &amp; Mystic"/>
-				<genre-descr lang="ru" title="õÖÁÓÙ É íÉÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ñ…Ð¦Ð‘Ð£Ð© Ð™ Ð½Ð™Ð£Ð¤Ð™Ð›Ð‘"/>
 				<genre-alt value="gay_mystery" format="fb2.0"/>
 				<genre-alt value="horror" format="fb2.0"/>
 				<genre-alt value="horror_antology" format="fb2.0"/>
@@ -57,105 +57,105 @@
 			</subgenre>
 			<subgenre value="sf_humor">
 				<genre-descr lang="en" title="Humor SF"/>
-				<genre-descr lang="ru" title="àÍÏÒÉÓÔÉÞÅÓËÁÑ ÆÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð°ÐÐŸÐ¢Ð™Ð£Ð¤Ð™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ð–Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sf_fantasy">
 				<genre-descr lang="en" title="Fantasy"/>
-				<genre-descr lang="ru" title="æÜÎÔÅÚÉ"/>
+				<genre-descr lang="ru" title="Ð¶Ð¬ÐžÐ¤Ð•ÐªÐ™"/>
 				<genre-alt value="romance_fantasy" format="fb2.0"/>
 				<genre-alt value="romance_sf" format="fb2.0"/>
 				<genre-alt value="romance_time_travel" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sf">
 				<genre-descr lang="en" title="Science Fiction"/>
-				<genre-descr lang="ru" title="îÁÕÞÎÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð¾Ð‘Ð¥Ð®ÐžÐ‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 				<genre-alt value="gaming" format="fb2.0"/>
 				<genre-alt value="sf_writing" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="child_sf">
 				<genre-descr lang="en" title="Science Fiction for Kids"/>
-				<genre-descr lang="ru" title="äÅÔÓËÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 				<genre-alt value="teens_sf" format="fb2.0"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="detective">
 		<root-descr lang="en" genre-title="Detectives, Thrillers" detailed="Police Stories, Ironical, Espionage, Crime"/>
-		<root-descr lang="ru" genre-title="äÅÔÅËÔÉ×Ù, âÏÅ×ÉËÉ" detailed="ðÏÌÉÃÅÊÓËÉÅ, ÉÒÏÎÉÞÅÓËÉÅ, ÛÐÉÏÎÓËÉÅ, ËÒÉÍÉÎÁÌØÎÙÅ"/>
+		<root-descr lang="ru" genre-title="Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§Ð©, Ð²ÐŸÐ•Ð§Ð™Ð›Ð™" detailed="Ñ€ÐŸÐœÐ™Ð“Ð•ÐšÐ£Ð›Ð™Ð•, Ð™Ð¢ÐŸÐžÐ™Ð®Ð•Ð£Ð›Ð™Ð•, Ð«Ð Ð™ÐŸÐžÐ£Ð›Ð™Ð•, Ð›Ð¢Ð™ÐÐ™ÐžÐ‘ÐœÐ¨ÐžÐ©Ð•"/>
 		<subgenres>
 			<subgenre value="det_classic">
 				<genre-descr lang="en" title="Classical Detective"/>
-				<genre-descr lang="ru" title="ëÌÁÓÓÉÞÅÓËÉÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ð»ÐœÐ‘Ð£Ð£Ð™Ð®Ð•Ð£Ð›Ð™Ðš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 			</subgenre>
 			<subgenre value="det_police">
 				<genre-descr lang="en" title="Police Stories"/>
-				<genre-descr lang="ru" title="ðÏÌÉÃÅÊÓËÉÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ñ€ÐŸÐœÐ™Ð“Ð•ÐšÐ£Ð›Ð™Ðš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 				<genre-alt value="thriller_police" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="det_action">
 				<genre-descr lang="en" title="Action"/>
-				<genre-descr lang="ru" title="âÏÅ×ÉËÉ"/>
+				<genre-descr lang="ru" title="Ð²ÐŸÐ•Ð§Ð™Ð›Ð™"/>
 			</subgenre>
 			<subgenre value="det_irony">
 				<genre-descr lang="en" title="Ironical Detective"/>
-				<genre-descr lang="ru" title="éÒÏÎÉÞÅÓËÉÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ð¹Ð¢ÐŸÐžÐ™Ð®Ð•Ð£Ð›Ð™Ðš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 			</subgenre>
 			<subgenre value="det_history">
 				<genre-descr lang="en" title="Historical Detective"/>
-				<genre-descr lang="ru" title="éÓÔÏÒÉÞÅÓËÉÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ð¹Ð£Ð¤ÐŸÐ¢Ð™Ð®Ð•Ð£Ð›Ð™Ðš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 			</subgenre>
 			<subgenre value="det_espionage">
 				<genre-descr lang="en" title="Espionage Detective"/>
-				<genre-descr lang="ru" title="ûÐÉÏÎÓËÉÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ñ‹Ð Ð™ÐŸÐžÐ£Ð›Ð™Ðš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 			</subgenre>
 			<subgenre value="det_crime">
 				<genre-descr lang="en" title="Crime Detective"/>
-				<genre-descr lang="ru" title="ëÒÉÍÉÎÁÌØÎÙÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ð»Ð¢Ð™ÐÐ™ÐžÐ‘ÐœÐ¨ÐžÐ©Ðš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 			</subgenre>
 			<subgenre value="det_political">
 				<genre-descr lang="en" title="Political Detective"/>
-				<genre-descr lang="ru" title="ðÏÌÉÔÉÞÅÓËÉÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ñ€ÐŸÐœÐ™Ð¤Ð™Ð®Ð•Ð£Ð›Ð™Ðš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 			</subgenre>
 			<subgenre value="det_maniac">
 				<genre-descr lang="en" title="Maniacs"/>
-				<genre-descr lang="ru" title="íÁÎØÑËÉ"/>
+				<genre-descr lang="ru" title="Ð½Ð‘ÐžÐ¨Ð¡Ð›Ð™"/>
 			</subgenre>
 			<subgenre value="det_hard">
 				<genre-descr lang="en" title="Hard-boiled Detective"/>
-				<genre-descr lang="ru" title="ëÒÕÔÏÊ äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ð»Ð¢Ð¥Ð¤ÐŸÐš Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 			</subgenre>
 			<subgenre value="thriller">
 				<genre-descr lang="en" title="Thrillers"/>
-				<genre-descr lang="ru" title="ôÒÉÌÌÅÒÙ"/>
+				<genre-descr lang="ru" title="Ñ„Ð¢Ð™ÐœÐœÐ•Ð¢Ð©"/>
 				<genre-alt value="thriller_mystery" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="detective">
 				<genre-descr lang="en" title="Detective"/>
-				<genre-descr lang="ru" title="äÅÔÅËÔÉ×"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§"/>
 				<genre-alt value="mystery" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sf_detective">
 				<genre-descr lang="en" title="Detective SF"/>
-				<genre-descr lang="ru" title="äÅÔÅËÔÉ×ÎÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§ÐžÐ‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 				<genre-alt value="teens_mysteries" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="child_det">
 				<genre-descr lang="en" title="Detectives &amp; Thrillers"/>
-				<genre-descr lang="ru" title="äÅÔÓËÉÅ ïÓÔÒÏÓÀÖÅÔÎÙÅ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð™Ð• Ð¿Ð£Ð¤Ð¢ÐŸÐ£ÐÐ¦Ð•Ð¤ÐžÐ©Ð•"/>
 			</subgenre>
 			<subgenre value="love_detective">
 				<genre-descr lang="en" title="Detective Romance"/>
-				<genre-descr lang="ru" title="ïÓÔÒÏÓÀÖÅÔÎÙÅ ìÀÂÏ×ÎÙÅ òÏÍÁÎÙ"/>
+				<genre-descr lang="ru" title="Ð¿Ð£Ð¤Ð¢ÐŸÐ£ÐÐ¦Ð•Ð¤ÐžÐ©Ð• Ð¼ÐÐ’ÐŸÐ§ÐžÐ©Ð• Ñ‚ÐŸÐÐ‘ÐžÐ©"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="prose">
 		<root-descr lang="en" genre-title="Prose" detailed="Classical, History, Contemporary"/>
-		<root-descr lang="ru" genre-title="ðÒÏÚÁ" detailed="ëÌÁÓÓÉËÁ, ÉÓÔÏÒÉÞÅÓËÁÑ, ÓÏ×ÒÅÍÅÎÎÁÑ"/>
+		<root-descr lang="ru" genre-title="Ñ€Ð¢ÐŸÐªÐ‘" detailed="Ð»ÐœÐ‘Ð£Ð£Ð™Ð›Ð‘, Ð™Ð£Ð¤ÐŸÐ¢Ð™Ð®Ð•Ð£Ð›Ð‘Ð¡, Ð£ÐŸÐ§Ð¢Ð•ÐÐ•ÐžÐžÐ‘Ð¡"/>
 		<subgenres>
 			<subgenre value="prose_classic">
 				<genre-descr lang="en" title="Classics Prose"/>
-				<genre-descr lang="ru" title="ëÌÁÓÓÉÞÅÓËÁÑ ðÒÏÚÁ"/>
+				<genre-descr lang="ru" title="Ð»ÐœÐ‘Ð£Ð£Ð™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ñ€Ð¢ÐŸÐªÐ‘"/>
 				<genre-alt value="literature" format="fb2.0"/>
 				<genre-alt value="literature_books" format="fb2.0"/>
 				<genre-alt value="literature_british" format="fb2.0"/>
@@ -170,51 +170,51 @@
 			</subgenre>
 			<subgenre value="prose_history">
 				<genre-descr lang="en" title="Historical Prose"/>
-				<genre-descr lang="ru" title="éÓÔÏÒÉÞÅÓËÁÑ ðÒÏÚÁ"/>
+				<genre-descr lang="ru" title="Ð¹Ð£Ð¤ÐŸÐ¢Ð™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ñ€Ð¢ÐŸÐªÐ‘"/>
 				<genre-alt value="literature_history" format="fb2.0"/>
 				<genre-alt value="literature_critic" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="prose_contemporary">
 				<genre-descr lang="en" title="Contemporary Prose"/>
-				<genre-descr lang="ru" title="óÏ×ÒÅÍÅÎÎÁÑ ðÒÏÚÁ"/>
+				<genre-descr lang="ru" title="ÑƒÐŸÐ§Ð¢Ð•ÐÐ•ÐžÐžÐ‘Ð¡ Ñ€Ð¢ÐŸÐªÐ‘"/>
 				<genre-alt value="literature_political" format="fb2.0"/>
 				<genre-alt value="literature_war" format="fb2.0"/>
 				<genre-alt value="ref_writing" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="prose_counter">
 				<genre-descr lang="en" title="Counterculture"/>
-				<genre-descr lang="ru" title="ëÏÎÔÒËÕÌØÔÕÒÁ"/>
+				<genre-descr lang="ru" title="Ð»ÐŸÐžÐ¤Ð¢Ð›Ð¥ÐœÐ¨Ð¤Ð¥Ð¢Ð‘"/>
 				<genre-alt value="literature_gay" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="prose_rus_classsic">
 				<genre-descr lang="en" title="Russian Classics"/>
-				<genre-descr lang="ru" title="òÕÓÓËÁÑ ëÌÁÓÓÉËÁ"/>
+				<genre-descr lang="ru" title="Ñ‚Ð¥Ð£Ð£Ð›Ð‘Ð¡ Ð»ÐœÐ‘Ð£Ð£Ð™Ð›Ð‘"/>
 				<genre-alt value="literature_rus_classsic" format="fb2.0"/>
 				<genre-alt value="prose_rus_classic" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="prose_su_classics">
 				<genre-descr lang="en" title="Soviet Classics"/>
-				<genre-descr lang="ru" title="óÏ×ÅÔÓËÁÑ ëÌÁÓÓÉËÁ"/>
+				<genre-descr lang="ru" title="ÑƒÐŸÐ§Ð•Ð¤Ð£Ð›Ð‘Ð¡ Ð»ÐœÐ‘Ð£Ð£Ð™Ð›Ð‘"/>
 				<genre-alt value="literature_su_classics" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="humor_prose">
 				<genre-descr lang="en" title="Humor Prose"/>
-				<genre-descr lang="ru" title="àÍÏÒÉÓÔÉÞÅÓËÁÑ ðÒÏÚÁ"/>
+				<genre-descr lang="ru" title="Ð°ÐÐŸÐ¢Ð™Ð£Ð¤Ð™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ñ€Ð¢ÐŸÐªÐ‘"/>
 			</subgenre>
 			<subgenre value="child_prose">
 				<genre-descr lang="en" title="Prose"/>
-				<genre-descr lang="ru" title="äÅÔÓËÁÑ ðÒÏÚÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð‘Ð¡ Ñ€Ð¢ÐŸÐªÐ‘"/>
 				<genre-alt value="teens_literature" format="fb2.0"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="love">
 		<root-descr lang="en" genre-title="Romance" detailed="Historical, Contemporary, Detective"/>
-		<root-descr lang="ru" genre-title="ìÀÂÏ×ÎÙÅ ÒÏÍÁÎÙ" detailed="éÓÔÏÒÉÞÅÓËÉÅ, ÓÏ×ÒÅÍÅÎÎÙÅ, ÏÓÔÒÏÓÀÖÅÔÎÙÅ"/>
+		<root-descr lang="ru" genre-title="Ð¼ÐÐ’ÐŸÐ§ÐžÐ©Ð• Ð¢ÐŸÐÐ‘ÐžÐ©" detailed="Ð¹Ð£Ð¤ÐŸÐ¢Ð™Ð®Ð•Ð£Ð›Ð™Ð•, Ð£ÐŸÐ§Ð¢Ð•ÐÐ•ÐžÐžÐ©Ð•, ÐŸÐ£Ð¤Ð¢ÐŸÐ£ÐÐ¦Ð•Ð¤ÐžÐ©Ð•"/>
 		<subgenres>
 			<subgenre value="love_contemporary">
 				<genre-descr lang="en" title="Contemporary Romance"/>
-				<genre-descr lang="ru" title="óÏ×ÒÅÍÅÎÎÙÅ ìÀÂÏ×ÎÙÅ òÏÍÁÎÙ"/>
+				<genre-descr lang="ru" title="ÑƒÐŸÐ§Ð¢Ð•ÐÐ•ÐžÐžÐ©Ð• Ð¼ÐÐ’ÐŸÐ§ÐžÐ©Ð• Ñ‚ÐŸÐÐ‘ÐžÐ©"/>
 				<genre-alt value="romance" format="fb2.0"/>
 				<genre-alt value="romance_multicultural" format="fb2.0"/>
 				<genre-alt value="romance_series" format="fb2.0"/>
@@ -225,50 +225,50 @@
 			</subgenre>
 			<subgenre value="love_history">
 				<genre-descr lang="en" title="Historical Romance"/>
-				<genre-descr lang="ru" title="éÓÔÏÒÉÞÅÓËÉÅ ìÀÂÏ×ÎÙÅ òÏÍÁÎÙ"/>
+				<genre-descr lang="ru" title="Ð¹Ð£Ð¤ÐŸÐ¢Ð™Ð®Ð•Ð£Ð›Ð™Ð• Ð¼ÐÐ’ÐŸÐ§ÐžÐ©Ð• Ñ‚ÐŸÐÐ‘ÐžÐ©"/>
 				<genre-alt value="romance_regency" format="fb2.0"/>
 				<genre-alt value="romance_historical" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="love_detective">
 				<genre-descr lang="en" title="Detective Romance"/>
-				<genre-descr lang="ru" title="ïÓÔÒÏÓÀÖÅÔÎÙÅ ìÀÂÏ×ÎÙÅ òÏÍÁÎÙ"/>
+				<genre-descr lang="ru" title="Ð¿Ð£Ð¤Ð¢ÐŸÐ£ÐÐ¦Ð•Ð¤ÐžÐ©Ð• Ð¼ÐÐ’ÐŸÐ§ÐžÐ©Ð• Ñ‚ÐŸÐÐ‘ÐžÐ©"/>
 			</subgenre>
 			<subgenre value="love_short">
 				<genre-descr lang="en" title="Short Romance"/>
-				<genre-descr lang="ru" title="ëÏÒÏÔËÉÅ ìÀÂÏ×ÎÙÅ òÏÍÁÎÙ"/>
+				<genre-descr lang="ru" title="Ð»ÐŸÐ¢ÐŸÐ¤Ð›Ð™Ð• Ð¼ÐÐ’ÐŸÐ§ÐžÐ©Ð• Ñ‚ÐŸÐÐ‘ÐžÐ©"/>
 			</subgenre>
 			<subgenre value="love_erotica">
 				<genre-descr lang="en" title="Erotica"/>
-				<genre-descr lang="ru" title="üÒÏÔÉËÁ"/>
+				<genre-descr lang="ru" title="ÑŒÐ¢ÐŸÐ¤Ð™Ð›Ð‘"/>
 				<genre-alt value="literature_erotica" format="fb2.0"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="adventure">
 		<root-descr lang="en" genre-title="Adventure" detailed="Western, Historical, Sea"/>
-		<root-descr lang="ru" genre-title="ðÒÉËÌÀÞÅÎÉÑ" detailed="÷ÅÓÔÅÒÎÙ, ÉÓÔÏÒÉÞÅÓËÉÅ, ÍÏÒÓËÉÅ"/>
+		<root-descr lang="ru" genre-title="Ñ€Ð¢Ð™Ð›ÐœÐÐ®Ð•ÐžÐ™Ð¡" detailed="Ñ‡Ð•Ð£Ð¤Ð•Ð¢ÐžÐ©, Ð™Ð£Ð¤ÐŸÐ¢Ð™Ð®Ð•Ð£Ð›Ð™Ð•, ÐÐŸÐ¢Ð£Ð›Ð™Ð•"/>
 		<subgenres>
 			<subgenre value="adv_western">
 				<genre-descr lang="en" title="Western"/>
-				<genre-descr lang="ru" title="÷ÅÓÔÅÒÎÙ"/>
+				<genre-descr lang="ru" title="Ñ‡Ð•Ð£Ð¤Ð•Ð¢ÐžÐ©"/>
 				<genre-alt value="literature_western" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="adv_history">
 				<genre-descr lang="en" title="History"/>
-				<genre-descr lang="ru" title="éÓÔÏÒÉÞÅÓËÉÅ ðÒÉËÌÀÞÅÎÉÑ"/>
+				<genre-descr lang="ru" title="Ð¹Ð£Ð¤ÐŸÐ¢Ð™Ð®Ð•Ð£Ð›Ð™Ð• Ñ€Ð¢Ð™Ð›ÐœÐÐ®Ð•ÐžÐ™Ð¡"/>
 			</subgenre>
 			<subgenre value="adv_indian">
 				<genre-descr lang="en" title="Indians"/>
-				<genre-descr lang="ru" title="éÎÄÅÊÃÙ"/>
+				<genre-descr lang="ru" title="Ð¹ÐžÐ”Ð•ÐšÐ“Ð©"/>
 			</subgenre>
 			<subgenre value="adv_maritime">
 				<genre-descr lang="en" title="Maritime Fiction"/>
-				<genre-descr lang="ru" title="íÏÒÓËÉÅ ðÒÉËÌÀÞÅÎÉÑ"/>
+				<genre-descr lang="ru" title="Ð½ÐŸÐ¢Ð£Ð›Ð™Ð• Ñ€Ð¢Ð™Ð›ÐœÐÐ®Ð•ÐžÐ™Ð¡"/>
 				<genre-alt value="literature_sea" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="adv_geo">
 				<genre-descr lang="en" title="Travel &amp; Geography"/>
-				<genre-descr lang="ru" title="ðÕÔÅÛÅÓÔ×ÉÑ É çÅÏÇÒÁÆÉÑ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¥Ð¤Ð•Ð«Ð•Ð£Ð¤Ð§Ð™Ð¡ Ð™ Ð·Ð•ÐŸÐ—Ð¢Ð‘Ð–Ð™Ð¡"/>
 				<genre-alt value="gay_travel" format="fb2.0"/>
 				<genre-alt value="outdoors_travel" format="fb2.0"/>
 				<genre-alt value="travel" format="fb2.0"/>
@@ -289,38 +289,38 @@
 			</subgenre>
 			<subgenre value="adv_animal">
 				<genre-descr lang="en" title="Nature &amp; Animals"/>
-				<genre-descr lang="ru" title="ðÒÉÒÏÄÁ É öÉ×ÏÔÎÙÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢Ð™Ð¢ÐŸÐ”Ð‘ Ð™ Ñ†Ð™Ð§ÐŸÐ¤ÐžÐ©Ð•"/>
 				<genre-alt value="child_animals" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="adventure">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="literature_adv" format="fb2.0"/>
 				<genre-alt value="literature_men_advent" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="child_adv">
 				<genre-descr lang="en" title="Adventures for Kids"/>
-				<genre-descr lang="ru" title="äÅÔÓËÉÅ ðÒÉËÌÀÞÅÎÉÑ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð™Ð• Ñ€Ð¢Ð™Ð›ÐœÐÐ®Ð•ÐžÐ™Ð¡"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="children">
 		<root-descr lang="en" genre-title="Children's" detailed="Fairy Tales, Fantasy, Detectives..."/>
-		<root-descr lang="ru" genre-title="ëÎÉÇÉ ÄÌÑ ÄÅÔÅÊ" detailed="óËÁÚËÉ, ÆÁÎÔÁÓÔÉËÁ, ÄÅÔÅËÔÉ×Ù..."/>
+		<root-descr lang="ru" genre-title="Ð»ÐžÐ™Ð—Ð™ Ð”ÐœÐ¡ Ð”Ð•Ð¤Ð•Ðš" detailed="ÑƒÐ›Ð‘ÐªÐ›Ð™, Ð–Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘, Ð”Ð•Ð¤Ð•Ð›Ð¤Ð™Ð§Ð©..."/>
 		<subgenres>
 			<subgenre value="child_tale">
 				<genre-descr lang="en" title="Fairy Tales"/>
-				<genre-descr lang="ru" title="óËÁÚËÉ"/>
+				<genre-descr lang="ru" title="ÑƒÐ›Ð‘ÐªÐ›Ð™"/>
 				<genre-alt value="child_3" format="fb2.0"/>
 				<genre-alt value="literature_fairy" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="child_verse">
 				<genre-descr lang="en" title="Verses"/>
-				<genre-descr lang="ru" title="äÅÔÓËÉÅ óÔÉÈÉ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð™Ð• ÑƒÐ¤Ð™Ð˜Ð™"/>
 			</subgenre>
 			<subgenre value="child_prose">
 				<genre-descr lang="en" title="Prose for Kids"/>
-				<genre-descr lang="ru" title="äÅÔÓËÁÑ ðÒÏÚÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð‘Ð¡ Ñ€Ð¢ÐŸÐªÐ‘"/>
 				<genre-alt value="child_4" format="fb2.0"/>
 				<genre-alt value="child_9" format="fb2.0"/>
 				<genre-alt value="child_history" format="fb2.0"/>
@@ -328,27 +328,27 @@
 			</subgenre>
 			<subgenre value="child_sf">
 				<genre-descr lang="en" title="Science Fiction for Kids"/>
-				<genre-descr lang="ru" title="äÅÔÓËÁÑ æÁÎÔÁÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð‘Ð¡ Ð¶Ð‘ÐžÐ¤Ð‘Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="child_det">
 				<genre-descr lang="en" title="Detectives &amp; Thrillers"/>
-				<genre-descr lang="ru" title="äÅÔÓËÉÅ ïÓÔÒÏÓÀÖÅÔÎÙÅ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð™Ð• Ð¿Ð£Ð¤Ð¢ÐŸÐ£ÐÐ¦Ð•Ð¤ÐžÐ©Ð•"/>
 			</subgenre>
 			<subgenre value="child_adv">
 				<genre-descr lang="en" title="Adventures for Kids"/>
-				<genre-descr lang="ru" title="äÅÔÓËÉÅ ðÒÉËÌÀÞÅÎÉÑ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð™Ð• Ñ€Ð¢Ð™Ð›ÐœÐÐ®Ð•ÐžÐ™Ð¡"/>
 				<genre-alt value="teens_history" format="fb2.0"/>
 				<genre-alt value="teens_series" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="child_education">
 				<genre-descr lang="en" title="Education for Kids"/>
-				<genre-descr lang="ru" title="äÅÔÓËÁÑ ïÂÒÁÚÏ×ÁÔÅÌØÎÁÑ ìÉÔÅÒÁÔÕÒÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð‘Ð¡ Ð¿Ð’Ð¢Ð‘ÐªÐŸÐ§Ð‘Ð¤Ð•ÐœÐ¨ÐžÐ‘Ð¡ Ð¼Ð™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘"/>
 				<genre-alt value="child_edu" format="fb2.0"/>
 				<genre-alt value="child_nature" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="children">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="child_art" format="fb2.0"/>
 				<genre-alt value="child_obsessions" format="fb2.0"/>
 				<genre-alt value="child_people" format="fb2.0"/>
@@ -360,66 +360,66 @@
 	</genre>
 	<genre value="poetry">
 		<root-descr lang="en" genre-title="Poetry, Dramaturgy" detailed="Poetry, Dramaturgy"/>
-		<root-descr lang="ru" genre-title="ðÏÜÚÉÑ, äÒÁÍÁÔÕÒÇÉÑ" detailed="ðÏÜÚÉÑ, ÄÒÁÍÁÔÕÒÇÉÑ"/>
+		<root-descr lang="ru" genre-title="Ñ€ÐŸÐ¬ÐªÐ™Ð¡, Ð´Ð¢Ð‘ÐÐ‘Ð¤Ð¥Ð¢Ð—Ð™Ð¡" detailed="Ñ€ÐŸÐ¬ÐªÐ™Ð¡, Ð”Ð¢Ð‘ÐÐ‘Ð¤Ð¥Ð¢Ð—Ð™Ð¡"/>
 		<subgenres>
 			<subgenre value="poetry">
 				<genre-descr lang="en" title="Poetry"/>
-				<genre-descr lang="ru" title="ðÏÜÚÉÑ"/>
+				<genre-descr lang="ru" title="Ñ€ÐŸÐ¬ÐªÐ™Ð¡"/>
 				<genre-alt value="literature_poetry" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="dramaturgy">
 				<genre-descr lang="en" title="Dramaturgy"/>
-				<genre-descr lang="ru" title="äÒÁÍÁÔÕÒÇÉÑ"/>
+				<genre-descr lang="ru" title="Ð´Ð¢Ð‘ÐÐ‘Ð¤Ð¥Ð¢Ð—Ð™Ð¡"/>
 				<genre-alt value="performance" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="humor_verse">
 				<genre-descr lang="en" title="Humor Verses"/>
-				<genre-descr lang="ru" title="àÍÏÒÉÓÔÉÞÅÓËÉÅ óÔÉÈÉ"/>
+				<genre-descr lang="ru" title="Ð°ÐÐŸÐ¢Ð™Ð£Ð¤Ð™Ð®Ð•Ð£Ð›Ð™Ð• ÑƒÐ¤Ð™Ð˜Ð™"/>
 			</subgenre>
 			<subgenre value="child_verse">
 				<genre-descr lang="en" title="Verses"/>
-				<genre-descr lang="ru" title="äÅÔÓËÉÅ óÔÉÈÉ"/>
+				<genre-descr lang="ru" title="Ð´Ð•Ð¤Ð£Ð›Ð™Ð• ÑƒÐ¤Ð™Ð˜Ð™"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="antique">
 		<root-descr lang="en" genre-title="Antique" detailed="Antique literature, Myths, Legends"/>
-		<root-descr lang="ru" genre-title="óÔÁÒÉÎÎÏÅ" detailed="áÎÔÉÞÎÁÑ ÌÉÔÅÒÁÔÕÒÁ, ÍÉÆÙ, ÌÅÇÅÎÄÙ"/>
+		<root-descr lang="ru" genre-title="ÑƒÐ¤Ð‘Ð¢Ð™ÐžÐžÐŸÐ•" detailed="Ð±ÐžÐ¤Ð™Ð®ÐžÐ‘Ð¡ ÐœÐ™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘, ÐÐ™Ð–Ð©, ÐœÐ•Ð—Ð•ÐžÐ”Ð©"/>
 		<subgenres>
 			<subgenre value="antique_ant">
 				<genre-descr lang="en" title="Antique Literature"/>
-				<genre-descr lang="ru" title="áÎÔÉÞÎÁÑ ìÉÔÅÒÁÔÕÒÁ"/>
+				<genre-descr lang="ru" title="Ð±ÐžÐ¤Ð™Ð®ÐžÐ‘Ð¡ Ð¼Ð™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘"/>
 			</subgenre>
 			<subgenre value="antique_european">
 				<genre-descr lang="en" title="European Literature"/>
-				<genre-descr lang="ru" title="å×ÒÏÐÅÊÓËÁÑ óÔÁÒÉÎÎÁÑ ìÉÔÅÒÁÔÕÒÁ"/>
+				<genre-descr lang="ru" title="ÐµÐ§Ð¢ÐŸÐ Ð•ÐšÐ£Ð›Ð‘Ð¡ ÑƒÐ¤Ð‘Ð¢Ð™ÐžÐžÐ‘Ð¡ Ð¼Ð™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘"/>
 			</subgenre>
 			<subgenre value="antique_russian">
 				<genre-descr lang="en" title="Antique Russian Literature"/>
-				<genre-descr lang="ru" title="äÒÅ×ÎÅÒÕÓÓËÁÑ ìÉÔÅÒÁÔÕÒÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð¢Ð•Ð§ÐžÐ•Ð¢Ð¥Ð£Ð£Ð›Ð‘Ð¡ Ð¼Ð™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘"/>
 			</subgenre>
 			<subgenre value="antique_east">
 				<genre-descr lang="en" title="Antique East Literature"/>
-				<genre-descr lang="ru" title="äÒÅ×ÎÅ×ÏÓÔÏÞÎÁÑ ìÉÔÅÒÁÔÕÒÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð¢Ð•Ð§ÐžÐ•Ð§ÐŸÐ£Ð¤ÐŸÐ®ÐžÐ‘Ð¡ Ð¼Ð™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘"/>
 			</subgenre>
 			<subgenre value="antique_myths">
 				<genre-descr lang="en" title="Myths. Legends. Epos"/>
-				<genre-descr lang="ru" title="íÉÆÙ. ìÅÇÅÎÄÙ. üÐÏÓ"/>
+				<genre-descr lang="ru" title="Ð½Ð™Ð–Ð©. Ð¼Ð•Ð—Ð•ÐžÐ”Ð©. ÑŒÐ ÐŸÐ£"/>
 				<genre-alt value="nonfiction_folklor" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="antique">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="science">
 		<root-descr lang="en" genre-title="Science, Education" detailed="Physics, Philosophy, Psychology, Business literature"/>
-		<root-descr lang="ru" genre-title="îÁÕËÁ, ïÂÒÁÚÏ×ÁÎÉÅ" detailed="æÉÚÉËÁ, ÆÉÌÏÓÏÆÉÑ, ÐÓÉÈÏÌÏÇÉÑ, ÄÅÌÏ×ÁÑ ÌÉÔÅÒÁÔÕÒÁ"/>
+		<root-descr lang="ru" genre-title="Ð¾Ð‘Ð¥Ð›Ð‘, Ð¿Ð’Ð¢Ð‘ÐªÐŸÐ§Ð‘ÐžÐ™Ð•" detailed="Ð¶Ð™ÐªÐ™Ð›Ð‘, Ð–Ð™ÐœÐŸÐ£ÐŸÐ–Ð™Ð¡, Ð Ð£Ð™Ð˜ÐŸÐœÐŸÐ—Ð™Ð¡, Ð”Ð•ÐœÐŸÐ§Ð‘Ð¡ ÐœÐ™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘"/>
 		<subgenres>
 			<subgenre value="sci_history">
 				<genre-descr lang="en" title="History"/>
-				<genre-descr lang="ru" title="éÓÔÏÒÉÑ"/>
+				<genre-descr lang="ru" title="Ð¹Ð£Ð¤ÐŸÐ¢Ð™Ð¡"/>
 				<genre-alt value="history_africa" format="fb2.0"/>
 				<genre-alt value="history_america" format="fb2.0"/>
 				<genre-alt value="history_ancient" format="fb2.0"/>
@@ -441,7 +441,7 @@
 			</subgenre>
 			<subgenre value="sci_psychology">
 				<genre-descr lang="en" title="Psychology"/>
-				<genre-descr lang="ru" title="ðÓÉÈÏÌÏÇÉÑ"/>
+				<genre-descr lang="ru" title="Ñ€Ð£Ð™Ð˜ÐŸÐœÐŸÐ—Ð™Ð¡"/>
 				<genre-alt value="health_mental" format="fb2.0"/>
 				<genre-alt value="health_psy" format="fb2.0"/>
 				<genre-alt value="science_behavioral_sciences" format="fb2.0"/>
@@ -450,24 +450,24 @@
 			</subgenre>
 			<subgenre value="sci_culture">
 				<genre-descr lang="en" title="Cultural Science"/>
-				<genre-descr lang="ru" title="ëÕÌØÔÕÒÏÌÏÇÉÑ"/>
+				<genre-descr lang="ru" title="Ð»Ð¥ÐœÐ¨Ð¤Ð¥Ð¢ÐŸÐœÐŸÐ—Ð™Ð¡"/>
 			</subgenre>
 			<subgenre value="sci_religion">
 				<genre-descr lang="en" title="Religious Studies"/>
-				<genre-descr lang="ru" title="òÅÌÉÇÉÏ×ÅÄÅÎÉÅ"/>
+				<genre-descr lang="ru" title="Ñ‚Ð•ÐœÐ™Ð—Ð™ÐŸÐ§Ð•Ð”Ð•ÐžÐ™Ð•"/>
 			</subgenre>
 			<subgenre value="sci_philosophy">
 				<genre-descr lang="en" title="Philosophy"/>
-				<genre-descr lang="ru" title="æÉÌÏÓÏÆÉÑ"/>
+				<genre-descr lang="ru" title="Ð¶Ð™ÐœÐŸÐ£ÐŸÐ–Ð™Ð¡"/>
 				<genre-alt value="nonfiction_philosophy" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sci_politics">
 				<genre-descr lang="en" title="Politics"/>
-				<genre-descr lang="ru" title="ðÏÌÉÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ñ€ÐŸÐœÐ™Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="sci_business">
 				<genre-descr lang="en" title="Business literature"/>
-				<genre-descr lang="ru" title="äÅÌÏ×ÁÑ ÌÉÔÅÒÁÔÕÒÁ"/>
+				<genre-descr lang="ru" title="Ð´Ð•ÐœÐŸÐ§Ð‘Ð¡ ÐœÐ™Ð¤Ð•Ð¢Ð‘Ð¤Ð¥Ð¢Ð‘"/>
 				<genre-alt value="biz_accounting" format="fb2.0"/>
 				<genre-alt value="biz_life" format="fb2.0"/>
 				<genre-alt value="biz_careers" format="fb2.0"/>
@@ -487,17 +487,17 @@
 			</subgenre>
 			<subgenre value="sci_juris">
 				<genre-descr lang="en" title="Jurisprudence"/>
-				<genre-descr lang="ru" title="àÒÉÓÐÒÕÄÅÎÃÉÑ"/>
+				<genre-descr lang="ru" title="Ð°Ð¢Ð™Ð£Ð Ð¢Ð¥Ð”Ð•ÐžÐ“Ð™Ð¡"/>
 				<genre-alt value="nonfiction_law" format="fb2.0"/>
 				<genre-alt value="professional_law" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sci_linguistic">
 				<genre-descr lang="en" title="Linguistics"/>
-				<genre-descr lang="ru" title="ñÚÙËÏÚÎÁÎÉÅ"/>
+				<genre-descr lang="ru" title="ÑÐªÐ©Ð›ÐŸÐªÐžÐ‘ÐžÐ™Ð•"/>
 			</subgenre>
 			<subgenre value="sci_medicine">
 				<genre-descr lang="en" title="Medicine"/>
-				<genre-descr lang="ru" title="íÅÄÉÃÉÎÁ"/>
+				<genre-descr lang="ru" title="Ð½Ð•Ð”Ð™Ð“Ð™ÐžÐ‘"/>
 				<genre-alt value="health_aging" format="fb2.0"/>
 				<genre-alt value="health_alt_medicine" format="fb2.0"/>
 				<genre-alt value="health_cancer" format="fb2.0"/>
@@ -506,22 +506,22 @@
 			</subgenre>
 			<subgenre value="sci_phys">
 				<genre-descr lang="en" title="Physics"/>
-				<genre-descr lang="ru" title="æÉÚÉËÁ"/>
+				<genre-descr lang="ru" title="Ð¶Ð™ÐªÐ™Ð›Ð‘"/>
 				<genre-alt value="science_physics" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sci_math">
 				<genre-descr lang="en" title="Mathematics"/>
-				<genre-descr lang="ru" title="íÁÔÅÍÁÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð½Ð‘Ð¤Ð•ÐÐ‘Ð¤Ð™Ð›Ð‘"/>
 				<genre-alt value="science_math" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sci_chem">
 				<genre-descr lang="en" title="Chemistry"/>
-				<genre-descr lang="ru" title="èÉÍÉÑ"/>
+				<genre-descr lang="ru" title="Ð¸Ð™ÐÐ™Ð¡"/>
 				<genre-alt value="science_chemistry" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="sci_biology">
 				<genre-descr lang="en" title="Biology"/>
-				<genre-descr lang="ru" title="âÉÏÌÏÇÉÑ"/>
+				<genre-descr lang="ru" title="Ð²Ð™ÐŸÐœÐŸÐ—Ð™Ð¡"/>
 				<genre-alt value="outdoors_birdwatching" format="fb2.0"/>
 				<genre-alt value="outdoors_ecology" format="fb2.0"/>
 				<genre-alt value="outdoors_ecosystems" format="fb2.0"/>
@@ -534,14 +534,14 @@
 			</subgenre>
 			<subgenre value="sci_tech">
 				<genre-descr lang="en" title="Technical"/>
-				<genre-descr lang="ru" title="ôÅÈÎÉÞÅÓËÉÅ"/>
+				<genre-descr lang="ru" title="Ñ„Ð•Ð˜ÐžÐ™Ð®Ð•Ð£Ð›Ð™Ð•"/>
 				<genre-alt value="professional_enginering" format="fb2.0"/>
 				<genre-alt value="professional_sci" format="fb2.0"/>
 				<genre-alt value="science_technology" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="science">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="nonfiction_edu" format="fb2.0"/>
 				<genre-alt value="nonfiction_gov" format="fb2.0"/>
 				<genre-alt value="nonfiction_holidays" format="fb2.0"/>
@@ -572,40 +572,40 @@
 	</genre>
 	<genre value="computers">
 		<root-descr lang="en" genre-title="Computers" detailed="Internet, Programming, Hardware"/>
-		<root-descr lang="ru" genre-title="ëÏÍÐØÀÔÅÒÙ" detailed="éÎÔÅÒÎÅÔ, ÐÒÏÇÒÁÍÍÉÒÏ×ÁÎÉÅ, ÖÅÌÅÚÏ"/>
+		<root-descr lang="ru" genre-title="Ð»ÐŸÐÐ Ð¨ÐÐ¤Ð•Ð¢Ð©" detailed="Ð¹ÐžÐ¤Ð•Ð¢ÐžÐ•Ð¤, Ð Ð¢ÐŸÐ—Ð¢Ð‘ÐÐÐ™Ð¢ÐŸÐ§Ð‘ÐžÐ™Ð•, Ð¦Ð•ÐœÐ•ÐªÐŸ"/>
 		<subgenres>
 			<subgenre value="comp_www">
 				<genre-descr lang="en" title="Internet"/>
-				<genre-descr lang="ru" title="éÎÔÅÒÎÅÔ"/>
+				<genre-descr lang="ru" title="Ð¹ÐžÐ¤Ð•Ð¢ÐžÐ•Ð¤"/>
 			</subgenre>
 			<subgenre value="comp_programming">
 				<genre-descr lang="en" title="Programming"/>
-				<genre-descr lang="ru" title="ðÒÏÇÒÁÍÍÉÒÏ×ÁÎÉÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ—Ð¢Ð‘ÐÐÐ™Ð¢ÐŸÐ§Ð‘ÐžÐ™Ð•"/>
 			</subgenre>
 			<subgenre value="comp_hard">
 				<genre-descr lang="en" title="Hardware"/>
-				<genre-descr lang="ru" title="ëÏÍÐØÀÔÅÒÎÏÅ öÅÌÅÚÏ"/>
+				<genre-descr lang="ru" title="Ð»ÐŸÐÐ Ð¨ÐÐ¤Ð•Ð¢ÐžÐŸÐ• Ñ†Ð•ÐœÐ•ÐªÐŸ"/>
 				<genre-alt value="comp_hardware" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="comp_soft">
 				<genre-descr lang="en" title="Software"/>
-				<genre-descr lang="ru" title="ðÒÏÇÒÁÍÍÙ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ—Ð¢Ð‘ÐÐÐ©"/>
 				<genre-alt value="comp_software" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="comp_db">
 				<genre-descr lang="en" title="Databases"/>
-				<genre-descr lang="ru" title="âÁÚÙ äÁÎÎÙÈ"/>
+				<genre-descr lang="ru" title="Ð²Ð‘ÐªÐ© Ð´Ð‘ÐžÐžÐ©Ð˜"/>
 			</subgenre>
 			<subgenre value="comp_osnet">
 				<genre-descr lang="en" title="OS &amp; Networking"/>
-				<genre-descr lang="ru" title="ïó É óÅÔÉ"/>
+				<genre-descr lang="ru" title="Ð¿Ñƒ Ð™ ÑƒÐ•Ð¤Ð™"/>
 				<genre-alt value="comp_microsoft" format="fb2.0"/>
 				<genre-alt value="comp_networking" format="fb2.0"/>
 				<genre-alt value="comp_os" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="computers">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="child_computers" format="fb2.0"/>
 				<genre-alt value="compusers" format="fb2.0"/>
 				<genre-alt value="comp_office" format="fb2.0"/>
@@ -619,21 +619,21 @@
 	</genre>
 	<genre value="reference">
 		<root-descr lang="en" genre-title="Reference" detailed="Reference, Encyclopedias, Dictionaries"/>
-		<root-descr lang="ru" genre-title="óÐÒÁ×ÏÞÎÉËÉ" detailed="óÐÒÁ×ÏÞÎÉËÉ, ÜÎÃÉËÌÏÐÅÄÉÉ, ÓÌÏ×ÁÒÉ"/>
+		<root-descr lang="ru" genre-title="ÑƒÐ Ð¢Ð‘Ð§ÐŸÐ®ÐžÐ™Ð›Ð™" detailed="ÑƒÐ Ð¢Ð‘Ð§ÐŸÐ®ÐžÐ™Ð›Ð™, Ð¬ÐžÐ“Ð™Ð›ÐœÐŸÐ Ð•Ð”Ð™Ð™, Ð£ÐœÐŸÐ§Ð‘Ð¢Ð™"/>
 		<subgenres>
 			<subgenre value="ref_encyc">
 				<genre-descr lang="en" title="Encyclopedias"/>
-				<genre-descr lang="ru" title="üÎÃÉËÌÏÐÅÄÉÉ"/>
+				<genre-descr lang="ru" title="ÑŒÐžÐ“Ð™Ð›ÐœÐŸÐ Ð•Ð”Ð™Ð™"/>
 				<genre-alt value="ref_encyclopedia" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="ref_dict">
 				<genre-descr lang="en" title="Dictionaries"/>
-				<genre-descr lang="ru" title="óÌÏ×ÁÒÉ"/>
+				<genre-descr lang="ru" title="ÑƒÐœÐŸÐ§Ð‘Ð¢Ð™"/>
 				<genre-alt value="ref_dict" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="ref_ref">
 				<genre-descr lang="en" title="Reference"/>
-				<genre-descr lang="ru" title="óÐÒÁ×ÏÞÎÉËÉ"/>
+				<genre-descr lang="ru" title="ÑƒÐ Ð¢Ð‘Ð§ÐŸÐ®ÐžÐ™Ð›Ð™"/>
 				<genre-alt value="ref_almanacs" format="fb2.0"/>
 				<genre-alt value="ref_careers" format="fb2.0"/>
 				<genre-alt value="ref_catalogs" format="fb2.0"/>
@@ -642,12 +642,12 @@
 			</subgenre>
 			<subgenre value="ref_guide">
 				<genre-descr lang="en" title="Guidebooks"/>
-				<genre-descr lang="ru" title="òÕËÏ×ÏÄÓÔ×Á"/>
+				<genre-descr lang="ru" title="Ñ‚Ð¥Ð›ÐŸÐ§ÐŸÐ”Ð£Ð¤Ð§Ð‘"/>
 				<genre-alt value="outdoors_field_guides" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="reference">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="nonfiction_ref" format="fb2.0"/>
 				<genre-alt value="family_ref" format="fb2.0"/>
 				<genre-alt value="references" format="fb2.0"/>
@@ -663,11 +663,11 @@
 	</genre>
 	<genre value="nonfiction">
 		<root-descr lang="en" genre-title="Nonfiction" detailed="Biography, Memoirs, Publicism"/>
-		<root-descr lang="ru" genre-title="äÏËÕÍÅÎÔÁÌØÎÏÅ" detailed="âÉÏÇÒÁÆÉÉ, ÍÅÍÕÁÒÙ, ÐÕÂÌÉÃÉÓÔÉËÁ"/>
+		<root-descr lang="ru" genre-title="Ð´ÐŸÐ›Ð¥ÐÐ•ÐžÐ¤Ð‘ÐœÐ¨ÐžÐŸÐ•" detailed="Ð²Ð™ÐŸÐ—Ð¢Ð‘Ð–Ð™Ð™, ÐÐ•ÐÐ¥Ð‘Ð¢Ð©, Ð Ð¥Ð’ÐœÐ™Ð“Ð™Ð£Ð¤Ð™Ð›Ð‘"/>
 		<subgenres>
 			<subgenre value="nonf_biography">
 				<genre-descr lang="en" title="Biography &amp; Memoirs"/>
-				<genre-descr lang="ru" title="âÉÏÇÒÁÆÉÉ É íÅÍÕÁÒÙ"/>
+				<genre-descr lang="ru" title="Ð²Ð™ÐŸÐ—Ð¢Ð‘Ð–Ð™Ð™ Ð™ Ð½Ð•ÐÐ¥Ð‘Ð¢Ð©"/>
 				<genre-alt value="people" format="fb2.0"/>
 				<genre-alt value="biography" format="fb2.0"/>
 				<genre-alt value="biogr_arts" format="fb2.0"/>
@@ -686,15 +686,15 @@
 			</subgenre>
 			<subgenre value="nonf_publicism">
 				<genre-descr lang="en" title="Publicism"/>
-				<genre-descr lang="ru" title="ðÕÂÌÉÃÉÓÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¥Ð’ÐœÐ™Ð“Ð™Ð£Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="nonf_criticism">
 				<genre-descr lang="en" title="Criticism"/>
-				<genre-descr lang="ru" title="ëÒÉÔÉËÁ"/>
+				<genre-descr lang="ru" title="Ð»Ð¢Ð™Ð¤Ð™Ð›Ð‘"/>
 			</subgenre>
 			<subgenre value="nonfiction">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="gay_nonfiction" format="fb2.0"/>
 				<genre-alt value="nonfiction_avto" format="fb2.0"/>
 				<genre-alt value="nonfiction_crime" format="fb2.0"/>
@@ -713,7 +713,7 @@
 			</subgenre>
 			<subgenre value="design">
 				<genre-descr lang="en" title="Art, Design"/>
-				<genre-descr lang="ru" title="éÓËÕÓÓÔ×Ï, äÉÚÁÊÎ"/>
+				<genre-descr lang="ru" title="Ð¹Ð£Ð›Ð¥Ð£Ð£Ð¤Ð§ÐŸ, Ð´Ð™ÐªÐ‘ÐšÐž"/>
 				<genre-alt value="architecture" format="fb2.0"/>
 				<genre-alt value="art" format="fb2.0"/>
 				<genre-alt value="art_instr" format="fb2.0"/>
@@ -726,11 +726,11 @@
 	</genre>
 	<genre value="religion">
 		<root-descr lang="en" genre-title="Religion" detailed="Religion, Esoterics"/>
-		<root-descr lang="ru" genre-title="òÅÌÉÇÉÑ" detailed="òÅÌÉÇÉÑ, ÜÚÏÔÅÒÉËÁ"/>
+		<root-descr lang="ru" genre-title="Ñ‚Ð•ÐœÐ™Ð—Ð™Ð¡" detailed="Ñ‚Ð•ÐœÐ™Ð—Ð™Ð¡, Ð¬ÐªÐŸÐ¤Ð•Ð¢Ð™Ð›Ð‘"/>
 		<subgenres>
 			<subgenre value="religion_rel">
 				<genre-descr lang="en" title="Religion"/>
-				<genre-descr lang="ru" title="òÅÌÉÇÉÑ"/>
+				<genre-descr lang="ru" title="Ñ‚Ð•ÐœÐ™Ð—Ð™Ð¡"/>
 				<genre-alt value="child_religion" format="fb2.0"/>
 				<genre-alt value="chris_bibles" format="fb2.0"/>
 				<genre-alt value="chris_pravoslavie" format="fb2.0"/>
@@ -762,17 +762,17 @@
 			</subgenre>
 			<subgenre value="religion_esoterics">
 				<genre-descr lang="en" title="Esoterics"/>
-				<genre-descr lang="ru" title="üÚÏÔÅÒÉËÁ"/>
+				<genre-descr lang="ru" title="ÑŒÐªÐŸÐ¤Ð•Ð¢Ð™Ð›Ð‘"/>
 				<genre-alt value="religion_occult" format="fb2.0"/>
 				<genre-alt value="religion_spirituality" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="religion_self">
 				<genre-descr lang="en" title="Self-perfection"/>
-				<genre-descr lang="ru" title="óÁÍÏÓÏ×ÅÒÛÅÎÓÔ×Ï×ÁÎÉÅ"/>
+				<genre-descr lang="ru" title="ÑƒÐ‘ÐÐŸÐ£ÐŸÐ§Ð•Ð¢Ð«Ð•ÐžÐ£Ð¤Ð§ÐŸÐ§Ð‘ÐžÐ™Ð•"/>
 			</subgenre>
 			<subgenre value="religion">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="religion_east" format="fb2.0"/>
 				<genre-alt value="religion_buddhism" format="fb2.0"/>
 				<genre-alt value="religion_earth" format="fb2.0"/>
@@ -783,40 +783,40 @@
 			</subgenre>
 			<subgenre value="sci_religion">
 				<genre-descr lang="en" title="Religious Studies"/>
-				<genre-descr lang="ru" title="òÅÌÉÇÉÏ×ÅÄÅÎÉÅ"/>
+				<genre-descr lang="ru" title="Ñ‚Ð•ÐœÐ™Ð—Ð™ÐŸÐ§Ð•Ð”Ð•ÐžÐ™Ð•"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="humor">
 		<root-descr lang="en" genre-title="Humor" detailed="Prose, Verses, Anecdote"/>
-		<root-descr lang="ru" genre-title="àÍÏÒ" detailed="ðÒÏÚÁ, ÓÔÉÈÉ, ÁÎÅËÄÏÔÙ"/>
+		<root-descr lang="ru" genre-title="Ð°ÐÐŸÐ¢" detailed="Ñ€Ð¢ÐŸÐªÐ‘, Ð£Ð¤Ð™Ð˜Ð™, Ð‘ÐžÐ•Ð›Ð”ÐŸÐ¤Ð©"/>
 		<subgenres>
 			<subgenre value="humor_anecdote">
 				<genre-descr lang="en" title="Anecdote"/>
-				<genre-descr lang="ru" title="áÎÅËÄÏÔÙ"/>
+				<genre-descr lang="ru" title="Ð±ÐžÐ•Ð›Ð”ÐŸÐ¤Ð©"/>
 			</subgenre>
 			<subgenre value="humor_prose">
 				<genre-descr lang="en" title="Humor Prose"/>
-				<genre-descr lang="ru" title="àÍÏÒÉÓÔÉÞÅÓËÁÑ ðÒÏÚÁ"/>
+				<genre-descr lang="ru" title="Ð°ÐÐŸÐ¢Ð™Ð£Ð¤Ð™Ð®Ð•Ð£Ð›Ð‘Ð¡ Ñ€Ð¢ÐŸÐªÐ‘"/>
 			</subgenre>
 			<subgenre value="humor_verse">
 				<genre-descr lang="en" title="Humor Verses"/>
-				<genre-descr lang="ru" title="àÍÏÒÉÓÔÉÞÅÓËÉÅ óÔÉÈÉ"/>
+				<genre-descr lang="ru" title="Ð°ÐÐŸÐ¢Ð™Ð£Ð¤Ð™Ð®Ð•Ð£Ð›Ð™Ð• ÑƒÐ¤Ð™Ð˜Ð™"/>
 			</subgenre>
 			<subgenre value="humor">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="family_humor" format="fb2.0"/>
 			</subgenre>
 		</subgenres>
 	</genre>
 	<genre value="home">
 		<root-descr lang="en" genre-title="Home, Family" detailed="Cooking, Pets, Hobby"/>
-		<root-descr lang="ru" genre-title="äÏÍ, óÅÍØÑ" detailed="ëÕÌÉÎÁÒÉÑ, ÄÏÍÁÛÎÉÅ ÖÉ×ÏÔÎÙÅ, ÈÏÂÂÉ"/>
+		<root-descr lang="ru" genre-title="Ð´ÐŸÐ, ÑƒÐ•ÐÐ¨Ð¡" detailed="Ð»Ð¥ÐœÐ™ÐžÐ‘Ð¢Ð™Ð¡, Ð”ÐŸÐÐ‘Ð«ÐžÐ™Ð• Ð¦Ð™Ð§ÐŸÐ¤ÐžÐ©Ð•, Ð˜ÐŸÐ’Ð’Ð™"/>
 		<subgenres>
 			<subgenre value="home_cooking">
 				<genre-descr lang="en" title="Cooking"/>
-				<genre-descr lang="ru" title="ëÕÌÉÎÁÒÉÑ"/>
+				<genre-descr lang="ru" title="Ð»Ð¥ÐœÐ™ÐžÐ‘Ð¢Ð™Ð¡"/>
 				<genre-alt value="cooking" format="fb2.0"/>
 				<genre-alt value="cook_baking" format="fb2.0"/>
 				<genre-alt value="cook_can" format="fb2.0"/>
@@ -838,18 +838,18 @@
 			</subgenre>
 			<subgenre value="home_pets">
 				<genre-descr lang="en" title="Pets"/>
-				<genre-descr lang="ru" title="äÏÍÁÛÎÉÅ öÉ×ÏÔÎÙÅ"/>
+				<genre-descr lang="ru" title="Ð´ÐŸÐÐ‘Ð«ÐžÐ™Ð• Ñ†Ð™Ð§ÐŸÐ¤ÐžÐ©Ð•"/>
 			</subgenre>
 			<subgenre value="home_crafts">
 				<genre-descr lang="en" title="Hobbies &amp; Crafts"/>
-				<genre-descr lang="ru" title="èÏÂÂÉ, òÅÍÅÓÌÁ"/>
+				<genre-descr lang="ru" title="Ð¸ÐŸÐ’Ð’Ð™, Ñ‚Ð•ÐÐ•Ð£ÐœÐ‘"/>
 				<genre-alt value="home_collect" format="fb2.0"/>
 				<genre-alt value="outdoors_hiking" format="fb2.0"/>
 				<genre-alt value="outdoors_hunt_fish" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="home_entertain">
 				<genre-descr lang="en" title="Entertaining"/>
-				<genre-descr lang="ru" title="òÁÚ×ÌÅÞÅÎÉÑ"/>
+				<genre-descr lang="ru" title="Ñ‚Ð‘ÐªÐ§ÐœÐ•Ð®Ð•ÐžÐ™Ð¡"/>
 				<genre-alt value="entertainment" format="fb2.0"/>
 				<genre-alt value="entert_comics" format="fb2.0"/>
 				<genre-alt value="entert_games" format="fb2.0"/>
@@ -862,7 +862,7 @@
 			</subgenre>
 			<subgenre value="home_health">
 				<genre-descr lang="en" title="Health"/>
-				<genre-descr lang="ru" title="úÄÏÒÏ×ØÅ"/>
+				<genre-descr lang="ru" title="ÑŠÐ”ÐŸÐ¢ÐŸÐ§Ð¨Ð•"/>
 				<genre-alt value="health" format="fb2.0"/>
 				<genre-alt value="health_beauty" format="fb2.0"/>
 				<genre-alt value="family_health" format="fb2.0"/>
@@ -884,11 +884,11 @@
 			</subgenre>
 			<subgenre value="home_garden">
 				<genre-descr lang="en" title="Garden"/>
-				<genre-descr lang="ru" title="óÁÄ É ïÇÏÒÏÄ"/>
+				<genre-descr lang="ru" title="ÑƒÐ‘Ð” Ð™ Ð¿Ð—ÐŸÐ¢ÐŸÐ”"/>
 			</subgenre>
 			<subgenre value="home_diy">
 				<genre-descr lang="en" title="Do it yourself"/>
-				<genre-descr lang="ru" title="óÄÅÌÁÊ óÁÍ"/>
+				<genre-descr lang="ru" title="ÑƒÐ”Ð•ÐœÐ‘Ðš ÑƒÐ‘Ð"/>
 				<genre-alt value="home_expert" format="fb2.0"/>
 				<genre-alt value="home_design" format="fb2.0"/>
 				<genre-alt value="home_howto" format="fb2.0"/>
@@ -896,7 +896,7 @@
 			</subgenre>
 			<subgenre value="home_sport">
 				<genre-descr lang="en" title="Sports"/>
-				<genre-descr lang="ru" title="óÐÏÒÔ"/>
+				<genre-descr lang="ru" title="ÑƒÐ ÐŸÐ¢Ð¤"/>
 				<genre-alt value="literature_sports" format="fb2.0"/>
 				<genre-alt value="outdoors_outdoor_recreation" format="fb2.0"/>
 				<genre-alt value="outdoors_survive" format="fb2.0"/>
@@ -906,13 +906,13 @@
 			</subgenre>
 			<subgenre value="home_sex">
 				<genre-descr lang="en" title="Erotica, Sex"/>
-				<genre-descr lang="ru" title="üÒÏÔÉËÁ, óÅËÓ"/>
+				<genre-descr lang="ru" title="ÑŒÐ¢ÐŸÐ¤Ð™Ð›Ð‘, ÑƒÐ•Ð›Ð£"/>
 				<genre-alt value="health_sex" format="fb2.0"/>
 				<genre-alt value="nonfiction_pornography" format="fb2.0"/>
 			</subgenre>
 			<subgenre value="home">
 				<genre-descr lang="en" title="Other"/>
-				<genre-descr lang="ru" title="ðÒÏÞÅÅ"/>
+				<genre-descr lang="ru" title="Ñ€Ð¢ÐŸÐ®Ð•Ð•"/>
 				<genre-alt value="gay_parenting" format="fb2.0"/>
 				<genre-alt value="home_cottage" format="fb2.0"/>
 				<genre-alt value="home_weddings" format="fb2.0"/>
