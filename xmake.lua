@@ -194,16 +194,13 @@ target("fbreader")
     add_includedirs("zlibrary/core/include", "zlibrary/text/include", "3rd/include")
     add_deps("zlcore", "zltext", "zlui")
     -- 3rd link
-    add_links( "expat", "bzip2", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl")
+    add_links("z", "expat", "bzip2", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl")
     if is_plat("windows", "mingw") then
         -- windows lib link
         add_links("png", "gif", "tiff", "jpeg")
         add_links("user32", "gdi32", "shell32", "comctl32", "comdlg32", "ws2_32", "crypt32", "advapi32", "wldap32", "bcrypt")
-        add_links("zlib")
         -- windows rc
         add_files("fbreader/win32/FBReader.rc")
-    else
-        add_links("z")
     end
     if is_plat("mingw") then
         add_ldflags("-static-libgcc", "-static-libstdc++")

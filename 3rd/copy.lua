@@ -1,14 +1,17 @@
-os.mkdir("include")
-os.mkdir("lib")
+local includeDir = path.join(os.scriptdir(), "include")
+local libDir = path.join(os.scriptdir(), "lib")
 
-os.cp("build/mingw/x86_64/release/*.a", "lib/")
-os.cp("build/windows/x64/release/*.lib", "lib/")
+os.mkdir(includeDir)
+os.mkdir(libDir)
+
+os.cp(path.join(os.scriptdir(), "build/mingw/x86_64/release/*.a"), libDir)
+os.cp(path.join(os.scriptdir(), "build/windows/x64/release/*.lib"), libDir)
 
 
-for _, dir in ipairs(os.dirs("build/.packages/**/include")) do
+for _, dir in ipairs(os.dirs(path.join(os.scriptdir(), "build/.packages/**/include"))) do
     local d = path.directory(dir)
-    os.cp(path.join(dir, "*.h"), "include/")
-    os.cp(path.join(d, "lib/*.a"), "lib/")
+    os.cp(path.join(dir, "*.h"), includeDir.."/")
+    os.cp(path.join(d, "lib/*.a"), libDir.."/")
 end
 
 -- os.cp("curl/curl-7.83.1_2-win64-mingw/lib/*.a", "lib/")
@@ -137,14 +140,20 @@ local headerFiles = {
             "lib/expat_external.h",
         },
     },
+    {
+        "portable-file-dialogs/portable-file-dialogs-main/",
+        {
+            "*.h",
+        },
+    },
 }
 
 for _, item in ipairs(headerFiles) do
-    local target = "include/"
+    local target = includeDir.."/"
     if #item > 2 then
         target = target..item[3]
     end
     for _, f in ipairs(item[2]) do
-        os.cp(item[1]..f, target)
+        os.cp(os.scriptdir().."/"..item[1]..f, target)
     end
 end

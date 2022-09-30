@@ -32,10 +32,6 @@ local downloads = {
         "bzip2",
         "https://nchc.dl.sourceforge.net/project/bzip2/bzip2-1.0.6.tar.gz",
     },
-    -- {
-    --     "curl",
-    --     "https://curl.se/windows/dl-7.83.1_2/curl-7.83.1_2-win64-mingw.zip",
-    -- },
     {
         "unibreak",
         "https://github.com/adah1972/libunibreak/releases/download/libunibreak_5_0/libunibreak-5.0.tar.gz",
@@ -75,6 +71,11 @@ local downloads = {
         "libcurl",
         "https://curl.se/download/curl-7.85.0.zip",
     },
+    {
+        "portable-file-dialogs",
+        "https://github.com/samhocevar/portable-file-dialogs/archive/refs/heads/main.zip",
+        "portable-file-dialogs.zip",
+    },
 }
 
 local downloadDir = path.join(os.scriptdir(), "download")
@@ -105,7 +106,13 @@ for _, item in ipairs(downloads) do
         end
         print("download "..f.." done")
     end
-    if not os.exists(item[1]) then
-        archive.extract(f, path.join(os.scriptdir(), item[1]))
+    local target = path.join(os.scriptdir(), item[1])
+    if not os.exists(target) then
+        if item[2]:endswith(".h") then
+            os.mkdir(target)
+            os.cp(f, target.."/")
+        else
+            archive.extract(f, target)
+        end
     end
 end
