@@ -78,6 +78,8 @@ for _, f in ipairs({
     "build/windows/x64/debug/fbreader.exe",
     "build/windows/x86/release/fbreader.exe",
     "build/windows/x86/debug/fbreader.exe",
+    "build/mingw/x86_64/release/fbreader.exe",
+    "build/mingw/x86_64/debug/fbreader.exe",
 }) do
     f = path.join(os.scriptdir(), f)
     if os.exists(f) then

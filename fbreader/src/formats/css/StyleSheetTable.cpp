@@ -30,7 +30,10 @@
 static const std::string WILDCARD("*");
 
 StyleSheetTable::Element::Element(const std::string &tag, const char *klass, const char* id) :
-	Name(tag), Classes(ZLStringUtil::splitString(klass, ", \n")) {
+	Name(tag), Classes(NULL) {
+	std::vector<std::string> classes;
+	ZLStringUtil::splitString(klass, ", \n", classes);
+	Classes = classes;
 	if (id) Id = id;
 }
 
@@ -521,7 +524,8 @@ bool StyleSheetTable::stringToColor(const std::string &text, ZLColor &color) {
 				ZLStringUtil::stripWhiteSpaces(str);
 				if (ZLStringUtil::startsWith(str, '(') && ZLStringUtil::endsWith(str, ')')) {
 					str = str.substr(1,str.length()-2);
-					std::vector<std::string> rgb = ZLStringUtil::splitString(str, ",");
+					std::vector<std::string> rgb;
+					ZLStringUtil::splitString(str, ",", rgb);
 					if (rgb.size() == 3) {
 						int i;
 						long c[3];

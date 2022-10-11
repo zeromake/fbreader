@@ -28,6 +28,7 @@ add_defines(
 if is_plat("windows", "mingw") then
     add_defines(
         "UNICODE",
+        "_UNICODE",
         "_WIN32_IE=0x0501",
         "_WIN32_WINNT=0x0501",
         "WINVER=0x0501",
@@ -37,12 +38,17 @@ if is_plat("windows", "mingw") then
         "PFD_HAS_IFILEDIALOG=0",
         "WIN32_USE_DRAW_TEXT"
     )
-    -- add_ldflags("-mwindows")
-    -- add_ldflags("-mconsole")
 end
 
 if is_plat("windows") then
-    add_cxxflags("/utf-8")
+    add_cxxflags("/utf-8", "/UNICODE")
+    -- add_ldflags("/SUBSYSTEM:WINDOWS")
+elseif is_plat("mingw") then
+	add_cxxflags("-municode")
+	add_ldflags("-municode", {force = true})
+	-- add_ldflags("-Wl,--subsystem,windows", {force = true})
+    -- add_ldflags("-mwindows")
+    add_defines("PFD_HAS_IFILEDIALOG=0", "PFD_HAS_DUPENV_S=0")
 end
 
 local zlcoreSubDirs = {

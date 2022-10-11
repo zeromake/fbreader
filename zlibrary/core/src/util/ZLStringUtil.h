@@ -47,8 +47,8 @@ public:
 	static void append(std::string &str, const std::vector<std::string> &buffer);
 	static bool stripWhiteSpaces(std::string &str);
 	static const std::string join(const std::vector<std::string>& arr, const std::string& s);
-	static std::vector<std::string> splitString(const char *str, const char* delim);
-	static std::vector<std::string> splitString(const std::string &str, const char* delim);
+	static void splitString(const char *str, const char* delim, std::vector<std::string> &tokens);
+	static void splitString(const std::string &str, const char* delim, std::vector<std::string> &tokens);
 	static void replaceAll(std::string &str, const std::string &find, const std::string &replaceWith);
 
 	static std::string printf(const std::string &format, const std::string &arg0);
@@ -60,8 +60,8 @@ public:
 	static int fromHex(char hex);
 };
 
-inline std::vector<std::string> ZLStringUtil::splitString(const std::string &str, const char* delim) {
-	return ZLStringUtil::splitString(str.c_str(), delim);
+inline void ZLStringUtil::splitString(const std::string &str, const char* delim, std::vector<std::string> &tokens) {
+	return ZLStringUtil::splitString(str.c_str(), delim, tokens);
 }
 inline bool ZLStringUtil::startsWith(const std::string &str, char c) {
     return !str.empty() && str[0] == c;

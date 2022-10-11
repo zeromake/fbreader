@@ -8,11 +8,11 @@ ManifestDPIAwareness "PerMonitorV2,System"
 
 OutFile "FBReaderSetup-${VERSION}.exe"
 
-;!ifdef X64
-;InstallDir $PROGRAMFILES64\FBReader
-;!else
-;InstallDir $PROGRAMFILES\FBReader
-;!endif
+!ifdef X64
+InstallDir $PROGRAMFILES64\FBReader
+!else
+InstallDir $PROGRAMFILES\FBReader
+!endif
 
 InstallDirRegKey HKCU "Software\FBReader" ""
 
@@ -20,17 +20,7 @@ RequestExecutionLevel user
 
 SetCompressor /FINAL lzma
 
-;!define MUI_ABORTWARNING
 !define MUI_LANGDLL_ALLLANGUAGES
-!insertmacro MUI_RESERVEFILE_LANGDLL
-
-;--------------------------------
-;Language Selection Dialog Settings
-
-  ;Remember the installer language
-  !define MUI_LANGDLL_REGISTRY_ROOT "HKCU" 
-  !define MUI_LANGDLL_REGISTRY_KEY "Software\Modern UI Test" 
-  !define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
 
 ;--------------------------------
 ;Pages
@@ -113,6 +103,17 @@ SetCompressor /FINAL lzma
   !insertmacro MUI_LANGUAGE "Corsican"
   !insertmacro MUI_LANGUAGE "Tatar"
   !insertmacro MUI_LANGUAGE "Hindi"
+  !insertmacro MUI_RESERVEFILE_LANGDLL
+
+!ifdef LANGDISPLAY
+Function .onInit
+  !insertmacro MUI_LANGDLL_DISPLAY
+FunctionEnd
+
+Function un.onInit
+  !insertmacro MUI_LANGDLL_DISPLAY
+FunctionEnd
+!endif
 
 Section "FBReader"
   SectionIn RO

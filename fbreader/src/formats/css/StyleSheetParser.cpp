@@ -30,7 +30,9 @@ StyleSheetTableParser::StyleSheetTableParser(StyleSheetTable &table) : myTable(t
 }
 
 void StyleSheetTableParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
-	myTable.addMap(ZLStringUtil::splitString(selector, " \t+"), map);
+	std::vector<std::string> selectors;
+	ZLStringUtil::splitString(selector, " \t+", selectors);
+	myTable.addMap(selectors, map);
 }
 
 StyleSheetTable::Style StyleSheetSingleStyleParser::parseString(const char *text) {

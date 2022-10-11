@@ -127,8 +127,7 @@ bool ZLStringUtil::stripWhiteSpaces(std::string &str) {
 	}
 }
 
-std::vector<std::string> ZLStringUtil::splitString(const char *str, const char* delim) {
-	std::vector<std::string> tokens;
+void ZLStringUtil::splitString(const char *str, const char* delim, std::vector<std::string>& tokens) {
 	if (str != 0) {
 		char *buf = strdup(str);
 		char *saveptr;
@@ -139,7 +138,6 @@ std::vector<std::string> ZLStringUtil::splitString(const char *str, const char* 
 		}
 		free(buf);
 	}
-	return tokens;
 }
 
 void ZLStringUtil::replaceAll(std::string &str, const std::string &find, const std::string &replaceWith) {

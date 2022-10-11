@@ -29,6 +29,7 @@
 #include <ZLDialog.h>
 #include <ZLPaintContext.h>
 #include <ZLPopupData.h>
+#include <ZLStringUtil.h>
 
 #include "ZLWin32ApplicationWindow.h"
 #include "ZLWin32PopupMenu.h"
@@ -809,4 +810,44 @@ void ZLWin32ApplicationWindow::Toolbar::clear() {
 		DeleteBitmap(it->second);
 	}
 	BitmapByIcon.clear();
+}
+
+int main(int argc, char **argv);
+
+int __WinMain(char* cmdLine) {
+	std::vector<std::string> arr;
+	ZLStringUtil::splitString(cmdLine, " ", arr);
+	int argc = arr.size();
+	char** argv = new char*[argc]();
+    for (int i = 0; i < argc; i++) {
+        argv[i] = (char*)arr.at(i).c_str();
+    }
+	free(cmdLine);
+	cmdLine = NULL;
+    return main(argc, argv);
+}
+
+char* _W2UTF8(const wchar_t *buffer, int bufferlen) {
+	int len = WideCharToMultiByte(CP_UTF8, 0, buffer, bufferlen, NULL, 0, NULL, NULL);
+	char* _block = (char*)malloc((len + 1) * sizeof(char));
+	WideCharToMultiByte(CP_UTF8, 0, buffer, bufferlen, (LPSTR)_block, len, NULL, NULL);
+	return _block;
+}
+
+int APIENTRY WinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine,
+    int nCmdShow) {
+	char* cmdLine = lpCmdLine;
+    return __WinMain(cmdLine);
+}
+
+int APIENTRY wWinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPWSTR lpCmdLine,
+    int nCmdShow) {
+	char* cmdLine = _W2UTF8(lpCmdLine, wcslen(lpCmdLine));
+    return __WinMain(cmdLine);
 }
