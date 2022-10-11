@@ -28,3 +28,4 @@ fbreader/FBReader
 .vscode/settings.json
 .vscode/compile_commands.json
 .xmake
+dist

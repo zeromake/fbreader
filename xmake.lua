@@ -12,7 +12,8 @@ local IMAGEDIR_MACRO = SHAREDIR_MACRO.."\\\\icons"
 local APPIMAGEDIR_MACRO = IMAGEDIR_MACRO
 local INSTALLDIR_MACRO = ""
 
-add_includedirs("3rd/.include")
+add_includedirs("3rd/.include", "3rd/include")
+add_linkdirs("3rd/lib")
 
 add_defines(
     "XML_STATIC",
@@ -96,8 +97,7 @@ target("zlcore")
     set_kind("static")
     -- set_kind("shared")
     -- add_links("zlib", "bzip2", "expat", "curl")
-    add_linkdirs("3rd/lib")
-    add_includedirs("zlibrary/core/include", "3rd/include")
+    add_includedirs("zlibrary/core/include")
     for _, sub in ipairs(zlcoreSubDirs) do
         add_files(path.join("zlibrary/core", sub, "*.cpp"))
     end
@@ -105,8 +105,7 @@ target("zlcore")
 
 target("zltext")
     set_kind("static")
-    add_linkdirs("3rd/lib")
-    add_includedirs("zlibrary/text/include", "zlibrary/core/include", "3rd/include")
+    add_includedirs("zlibrary/text/include", "zlibrary/core/include")
     for _, sub in ipairs({
         "src/model",
         "src/area",
@@ -137,8 +136,7 @@ target("zlui")
     set_kind("static")
     -- set_kind("shared")
     -- add_links("gdi32", "comctl32", "comdlg32")
-    add_linkdirs("3rd/lib")
-    add_includedirs("zlibrary/text/include", "zlibrary/core/include", "3rd/include")
+    add_includedirs("zlibrary/text/include", "zlibrary/core/include")
     for _, sub in ipairs(zluiSubDirs) do
         add_files(path.join("zlibrary/ui", sub, "*.cpp"))
     end
@@ -190,8 +188,7 @@ local fbreaderSubDirs = {
 
 target("fbreader")
     set_kind("binary")
-    add_linkdirs("3rd/lib")
-    add_includedirs("zlibrary/core/include", "zlibrary/text/include", "3rd/include")
+    add_includedirs("zlibrary/core/include", "zlibrary/text/include")
     add_deps("zlcore", "zltext", "zlui")
     -- 3rd link
     add_links("z", "expat", "bzip2", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl")
@@ -202,7 +199,7 @@ target("fbreader")
         -- windows rc
         add_files("fbreader/win32/FBReader.rc")
     end
-    if is_plat("mingw") then
+    if is_plat("windows") ~= true then
         add_ldflags("-static-libgcc", "-static-libstdc++")
     end
     for _, sub in ipairs(fbreaderSubDirs) do

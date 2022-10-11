@@ -489,11 +489,19 @@ target("wolfssl")
     end
     if is_plat("windows") then
         add_links("advapi32")
-        for _, f in ipairs({
-            "wolfcrypt/src/aes_asm.asm",
-            "wolfcrypt/src/sp_x86_64_asm.asm",
+        local list = {
             "wolfssl.rc",
-        }) do
+        }
+        if is_arch("x86_64") then
+            table.join2(
+                list,
+                {
+                    "wolfcrypt/src/aes_asm.asm",
+                    "wolfcrypt/src/sp_x86_64_asm.asm",
+                }
+            )
+        end
+        for _, f in ipairs(list) do
             add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
         end
     else
