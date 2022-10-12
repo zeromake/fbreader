@@ -22,7 +22,7 @@ local downloads = {
     },
     {
         "gif",
-        "https://udomain.dl.sourceforge.net/project/giflib/giflib-5.2.1.tar.gz",
+        "https://download.sourceforge.net/giflib/giflib-5.2.1.tar.gz"
     },
     {
         "tiff",
@@ -30,7 +30,7 @@ local downloads = {
     },
     {
         "bzip2",
-        "https://nchc.dl.sourceforge.net/project/bzip2/bzip2-1.0.6.tar.gz",
+        "https://download.sourceforge.net/bzip2/bzip2-1.0.6.tar.gz"
     },
     {
         "unibreak",
