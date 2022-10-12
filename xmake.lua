@@ -2,9 +2,13 @@ add_rules("mode.debug", "mode.release")
 
 set_languages("c17", "cxx20")
 
-local VERSION = "0.15.0"
+local VERSION = os.getenv("VERSION") or "v0.0.0"
 local SHAREDIR = "/share"
 local IMAGEDIR = SHAREDIR.."/icons"
+
+if VERSION:startswith("v") then
+    VERSION = VERSION:sub(2)
+end
 
 local FilePathSep = "\\\\"
 local SHAREDIR_MACRO = "~~\\\\share"

@@ -76,6 +76,10 @@ local downloads = {
         "https://github.com/samhocevar/portable-file-dialogs/archive/refs/heads/main.zip",
         "portable-file-dialogs.zip",
     },
+    {
+        "minizip",
+        "https://github.com/zlib-ng/minizip-ng/releases/download/3.0.6/minizip-ng-windows.zip",
+    },
 }
 
 local downloadDir = path.join(os.scriptdir(), "download")

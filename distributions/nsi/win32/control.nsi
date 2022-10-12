@@ -6,7 +6,11 @@ Unicode true
 ManifestDPIAware true
 ManifestDPIAwareness "PerMonitorV2,System"
 
-OutFile "FBReaderSetup-${VERSION}.exe"
+!ifdef VERSION
+OutFile "fbreader-windows-x86_64-setup-${VERSION}.exe"
+!else
+OutFile "fbreader-windows-x86_64-setup.exe"
+!endif
 
 !ifdef X64
 InstallDir $PROGRAMFILES64\FBReader

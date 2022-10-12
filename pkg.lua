@@ -94,3 +94,27 @@ for _, cc in ipairs(zlibraryData) do
     os.cp(cc[1], cc[2])
 end
 
+local NSIS = os.getenv("NSIS") or ""
+local makensis = NSIS.."\\makensis.exe"
+local zipExe = path.join(os.scriptdir(), "3rd/minizip/minizip.exe")
+local hasZip = os.exists(zipExe)
+
+if os.exists(NSIS) then
+    os.cd("dist")
+    os.rm("control.nsi")
+    local exec = "cmd /c mklink control.nsi ..\\distributions\\nsi\\win32\\control.nsi"
+    print(exec)
+    os.exec(exec)
+    exec = '"'..makensis..'" /DX64 /DLANGDISPLAY control.nsi'
+    print(exec)
+    os.exec(exec)
+    os.rm("control.nsi")
+    os.cd("-")
+end
+if hasZip then
+    os.cd("dist")
+    exec = "../"..zipExe.." -i -o -m fbreader-windows-x86_64.zip fbreader.exe share/"
+    print(exec)
+    os.exec(exec)
+    os.cd("-")
+end
