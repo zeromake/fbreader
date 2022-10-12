@@ -30,7 +30,7 @@ jobs:
         shell: powershell
         run: |
           .\build-3rd.ps1
-          xmake f --ver= -c
+          xmake f -c
           xmake build fbreader
           xmake lua .\pkg.lua
       - name: update

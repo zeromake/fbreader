@@ -74,6 +74,7 @@ sub("fbreader/data", "FBReader", table.join({
     {"icons/filetree/win32/*", "../icons/"},
     {"icons/booktree/new/*", "../icons/"},
 }, helps))
+
 for _, f in ipairs({
     "build/windows/x64/release/fbreader.exe",
     "build/windows/x64/debug/fbreader.exe",
@@ -96,21 +97,36 @@ for _, cc in ipairs(zlibraryData) do
 end
 
 local NSIS = os.getenv("NSIS") or ""
-local makensis = NSIS.."\\makensis.exe"
+local makensis = NSIS.."/makensis.exe"
 local zipExe = path.join(os.scriptdir(), "3rd/minizip/minizip.exe")
 local hasZip = os.exists(zipExe)
 
-if os.exists(NSIS) or find_program("makensis") ~= nil then
+local USERPROFILE = os.getenv("USERPROFILE") or ""
+local scoopNsis = USERPROFILE.."/scoop/shims/makensis.exe"
+
+local makensis = {
+    NSIS,
+    scoopNsis,
+}
+
+local makensisPath = nil
+
+for _, f in ipairs(makensis) do
+    if os.exists(f) then
+        makensisPath = f
+    end
+end
+if makensisPath == nil and find_program("makensis") ~= nil then
+    makensisPath = "makensis"
+end
+
+if makensisPath ~= nil then
     os.cd("dist")
     os.rm("control.nsi")
     local exec = "cmd /c mklink control.nsi ..\\distributions\\nsi\\win32\\control.nsi"
     print(exec)
     os.exec(exec)
-    if find_program("makensis") ~= nil then
-        exec = 'makensis /DX64 /DLANGDISPLAY control.nsi'
-    else
-        exec = '"'..makensis..'" /DX64 /DLANGDISPLAY control.nsi'
-    end
+    exec = '"'..makensisPath..'" /DX64 /DLANGDISPLAY control.nsi'
     print(exec)
     os.exec(exec)
     os.rm("control.nsi")

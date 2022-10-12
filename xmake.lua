@@ -6,6 +6,8 @@ local VERSION = os.getenv("VERSION") or "v0.0.0"
 local SHAREDIR = "/share"
 local IMAGEDIR = SHAREDIR.."/icons"
 
+printf("-------------------------------version: %s-------------------------------\n", VERSION)
+
 if VERSION:startswith("v") then
     VERSION = VERSION:sub(2)
 end
