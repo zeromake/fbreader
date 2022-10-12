@@ -86,6 +86,8 @@ local downloadDir = path.join(os.scriptdir(), "download")
 local curlBin = find_program("curl")
 local proxyUrl = nil --"socks5://127.0.0.1:10800"
 
+os.mkdir(downloadDir)
+
 local function curlDowload(url, f)
     local argv = {"-L", "-o", f}
     if proxyUrl ~= nil then

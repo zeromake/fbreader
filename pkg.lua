@@ -1,3 +1,4 @@
+import("lib.detect.find_program")
 
 local zlibraryData = {}
 
@@ -99,13 +100,17 @@ local makensis = NSIS.."\\makensis.exe"
 local zipExe = path.join(os.scriptdir(), "3rd/minizip/minizip.exe")
 local hasZip = os.exists(zipExe)
 
-if os.exists(NSIS) then
+if os.exists(NSIS) or find_program("makensis") ~= nil then
     os.cd("dist")
     os.rm("control.nsi")
     local exec = "cmd /c mklink control.nsi ..\\distributions\\nsi\\win32\\control.nsi"
     print(exec)
     os.exec(exec)
-    exec = '"'..makensis..'" /DX64 /DLANGDISPLAY control.nsi'
+    if find_program("makensis") ~= nil then
+        exec = 'makensis /DX64 /DLANGDISPLAY control.nsi'
+    else
+        exec = '"'..makensis..'" /DX64 /DLANGDISPLAY control.nsi'
+    end
     print(exec)
     os.exec(exec)
     os.rm("control.nsi")
