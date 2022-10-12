@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Setup Windows 10 SDK version 10.0.20348.0
-        uses: GuillaumeFalourd/setup-windows10-sdk-action@dev
+        uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
         with:
           sdk-version: 20348
       - uses: xmake-io/github-action-setup-xmake@v1
