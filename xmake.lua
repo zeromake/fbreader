@@ -6,8 +6,6 @@ local VERSION = os.getenv("VERSION") or "v0.0.0"
 local SHAREDIR = "/share"
 local IMAGEDIR = SHAREDIR.."/icons"
 
-printf("-------------------------------version: %s-------------------------------\n", VERSION)
-
 if VERSION:startswith("v") then
     VERSION = VERSION:sub(2)
 end
@@ -17,9 +15,15 @@ local SHAREDIR_MACRO = "~~\\\\share"
 local IMAGEDIR_MACRO = SHAREDIR_MACRO.."\\\\icons"
 local APPIMAGEDIR_MACRO = IMAGEDIR_MACRO
 local INSTALLDIR_MACRO = ""
+local is32bit = os.getenv("ARCH") == "x86"
 
 add_includedirs("3rd/.include", "3rd/include")
-add_linkdirs("3rd/lib")
+
+if is32bit then
+    add_linkdirs("3rd/lib32")
+else
+    add_linkdirs("3rd/lib")
+end
 
 add_defines(
     "XML_STATIC",
@@ -48,12 +52,12 @@ end
 
 if is_plat("windows") then
     add_cxxflags("/utf-8", "/UNICODE")
-    -- add_ldflags("/SUBSYSTEM:WINDOWS")
+    add_ldflags("/SUBSYSTEM:WINDOWS")
 elseif is_plat("mingw") then
 	add_cxxflags("-municode")
 	add_ldflags("-municode", {force = true})
 	-- add_ldflags("-Wl,--subsystem,windows", {force = true})
-    -- add_ldflags("-mwindows")
+    add_ldflags("-mwindows")
     add_defines("PFD_HAS_IFILEDIALOG=0", "PFD_HAS_DUPENV_S=0")
 end
 

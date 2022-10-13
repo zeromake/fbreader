@@ -2,8 +2,13 @@ import("lib.detect.find_program")
 
 local zlibraryData = {}
 
-local out = path.join(os.scriptdir(), "dist")
-local shareOut = path.join(os.scriptdir(), "dist/share")
+local arch = os.getenv("ARCH") or "x64"
+if arch == "x86_64" then
+    arch = "x64"
+end
+local is32bit = arch ~= "x64"
+local out = path.join(os.scriptdir(), "dist", arch)
+local shareOut = path.join(os.scriptdir(), "dist", arch, "share")
 
 local function sub(dir, out, items)
     for _, f in ipairs(items) do
@@ -75,14 +80,20 @@ sub("fbreader/data", "FBReader", table.join({
     {"icons/booktree/new/*", "../icons/"},
 }, helps))
 
-for _, f in ipairs({
-    "build/windows/x64/release/fbreader.exe",
-    "build/windows/x64/debug/fbreader.exe",
-    "build/windows/x86/release/fbreader.exe",
-    "build/windows/x86/debug/fbreader.exe",
-    "build/mingw/x86_64/release/fbreader.exe",
-    "build/mingw/x86_64/debug/fbreader.exe",
-}) do
+local fbreaders = nil
+if is32bit then
+    fbreaders = {
+        "build/windows/x86/release/fbreader.exe",
+        "build/mingw/x86/release/fbreader.exe",
+    }
+else
+    fbreaders = {
+        "build/windows/x64/release/fbreader.exe",
+        "build/mingw/x86_64/release/fbreader.exe",
+    }
+end
+
+for _, f in ipairs(fbreaders) do
     f = path.join(os.scriptdir(), f)
     if os.exists(f) then
         local t = path.join(out, "fbreader.exe")
@@ -97,7 +108,7 @@ for _, cc in ipairs(zlibraryData) do
 end
 
 local NSIS = os.getenv("NSIS") or ""
-local makensis = NSIS.."/makensis.exe"
+NSIS = NSIS.."\\makensis.exe"
 local zipExe = path.join(os.scriptdir(), "3rd/minizip/minizip.exe")
 local hasZip = os.exists(zipExe)
 
@@ -121,20 +132,33 @@ if makensisPath == nil and find_program("makensis") ~= nil then
 end
 
 if makensisPath ~= nil then
-    os.cd("dist")
-    os.rm("control.nsi")
-    local exec = "cmd /c mklink control.nsi ..\\distributions\\nsi\\win32\\control.nsi"
+    local nsi = "fbreader-windows-x86_64-setup.nsi"
+    if is32bit then
+        nsi = "fbreader-windows-x86-setup.nsi"
+    end
+    os.cd(out)
+    os.rm(nsi)
+    local exec = "cmd /c mklink "..nsi.." ..\\..\\distributions\\nsi\\win32\\control.nsi"
     print(exec)
     os.exec(exec)
-    exec = '"'..makensisPath..'" /DX64 /DLANGDISPLAY control.nsi'
+    if is32bit then
+        exec = '"'..makensisPath..'" /DLANGDISPLAY '..nsi
+    else
+        exec = '"'..makensisPath..'" /DX64 /DLANGDISPLAY '..nsi
+    end
     print(exec)
     os.exec(exec)
-    os.rm("control.nsi")
+    os.rm(nsi)
     os.cd("-")
 end
+
 if hasZip then
-    os.cd("dist")
-    exec = "../"..zipExe.." -i -o -m fbreader-windows-x86_64.zip fbreader.exe share/"
+    os.cd(out)
+    if is32bit then
+        exec = "../../"..zipExe.." -i -o -m fbreader-windows-x86.zip fbreader.exe share/"
+    else
+        exec = "../../"..zipExe.." -i -o -m fbreader-windows-x86_64.zip fbreader.exe share/"
+    end
     print(exec)
     os.exec(exec)
     os.cd("-")

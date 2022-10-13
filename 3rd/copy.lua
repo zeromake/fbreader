@@ -1,19 +1,26 @@
+local arch = os.getenv("ARCH") or "x64"
+if arch == "x86_64" then
+    arch = "x64"
+end
+local is32bit = arch ~= "x64"
+
 local includeDir = path.join(os.scriptdir(), "include")
 local libDir = path.join(os.scriptdir(), "lib")
+
+if is32bit then
+    libDir = path.join(os.scriptdir(), "lib32")
+end
 
 os.mkdir(includeDir)
 os.mkdir(libDir)
 
-os.cp(path.join(os.scriptdir(), "build/mingw/x86_64/release/*.a"), libDir)
-os.cp(path.join(os.scriptdir(), "build/windows/x64/release/*.lib"), libDir)
-
-
-for _, dir in ipairs(os.dirs(path.join(os.scriptdir(), "build/.packages/**/include"))) do
-    local d = path.directory(dir)
-    os.cp(path.join(dir, "*.h"), includeDir.."/")
-    os.cp(path.join(d, "lib/*.a"), libDir.."/")
+if is32bit then
+    os.cp(path.join(os.scriptdir(), "build/mingw/x86/release/*.a"), libDir)
+    os.cp(path.join(os.scriptdir(), "build/windows/x86/release/*.lib"), libDir)
+else
+    os.cp(path.join(os.scriptdir(), "build/mingw/x86_64/release/*.a"), libDir)
+    os.cp(path.join(os.scriptdir(), "build/windows/x64/release/*.lib"), libDir)
 end
-
 -- os.cp("curl/curl-7.83.1_2-win64-mingw/lib/*.a", "lib/")
 
 local headerFiles = {

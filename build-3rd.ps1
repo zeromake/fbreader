@@ -1,9 +1,8 @@
-Try{
-Remove-Item -Force -Recurse .\3rd\include
-Remove-Item -Force -Recurse .\3rd\lib
-Remove-Item -Force -Recurse .\3rd\build
-}Catch{}
-xmake f -c --file=.\3rd\xmake.lua
+if ($env:ARCH -eq "x86") {
+    xmake f -a x86 -c --file=.\3rd\xmake.lua
+} else {
+    xmake f -c --file=.\3rd\xmake.lua
+}
 xmake lua .\3rd\fetch.lua
 xmake build --file=.\3rd\xmake.lua
 xmake lua .\3rd\copy.lua
