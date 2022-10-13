@@ -9,8 +9,11 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup Windows 10 SDK version 10.0.20348.0
-        uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.7
+        uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
         with:
           sdk-version: 20348
       - uses: xmake-io/github-action-setup-xmake@v1
@@ -23,9 +26,6 @@ jobs:
           scoop update
           scoop bucket add extras
           scoop install nsis
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: build-x86_64
         env:
           VERSION: ${{ github.ref_name }}
