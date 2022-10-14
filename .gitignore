@@ -2,6 +2,7 @@ makefiles/target.mk
 .cproject
 .project
 .settings
+.DS_Store
 *.a
 *.o
 *.d

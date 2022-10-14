@@ -33,8 +33,8 @@
             "type": "lldb",
             "request": "launch",
             "name": "osx-debug",
-            "program": "${workspaceFolder}/build/FBReader.app",
-            "args": [],
+            "program": "${workspaceFolder}/dist/fbreader.app",
+            "args": ["/Users/zero/Documents/project/fbreader-c/fbreader/data/help/MiniHelp.desktop.zh.fb2"],
             "cwd": "${workspaceFolder}"
         }
     ]

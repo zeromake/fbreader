@@ -1,6 +1,6 @@
 add_rules("mode.debug", "mode.release")
 
-set_languages("c17", "cxx20")
+set_languages("cxx20")
 
 local VERSION = os.getenv("VERSION") or "v0.0.0"
 local SHAREDIR = "/share"
@@ -9,15 +9,28 @@ local IMAGEDIR = SHAREDIR.."/icons"
 if VERSION:startswith("v") then
     VERSION = VERSION:sub(2)
 end
+local installDir = ""
 
-local FilePathSep = "\\\\"
-local SHAREDIR_MACRO = "~~\\\\share"
-local IMAGEDIR_MACRO = SHAREDIR_MACRO.."\\\\icons"
-local APPIMAGEDIR_MACRO = IMAGEDIR_MACRO
-local INSTALLDIR_MACRO = ""
+local SHAREDIR_MACRO = nil
+local IMAGEDIR_MACRO = nil
+local APPIMAGEDIR_MACRO = nil
+
+if is_host("macosx") then
+    installDir = "/fbreader.app"
+    SHAREDIR_MACRO = "~~/Contents/Share"
+    IMAGEDIR_MACRO = SHAREDIR_MACRO.."/icons"
+    APPIMAGEDIR_MACRO = SHAREDIR_MACRO.."/icons"
+elseif is_host("windows") then
+    SHAREDIR_MACRO = "~~\\\\share"
+    IMAGEDIR_MACRO = SHAREDIR_MACRO.."\\\\icons"
+    APPIMAGEDIR_MACRO = IMAGEDIR_MACRO
+    add_includedirs("3rd/.include")
+end
+
+local INSTALLDIR_MACRO = installDir
 local is32bit = os.getenv("ARCH") == "x86"
 
-add_includedirs("3rd/.include", "3rd/include")
+add_includedirs("3rd/include")
 
 if is32bit then
     add_linkdirs("3rd/lib32")
@@ -135,7 +148,7 @@ target("zltext")
 
 local zluiSubDirs = {}
 
-if is_plat("windows", "mingw") then
+if is_host("windows") then
     table.join2(zluiSubDirs, {
         "src/win32/view",
         "src/win32/w32widgets",
@@ -146,16 +159,40 @@ if is_plat("windows", "mingw") then
         "src/win32/time",
         "src/win32/message",
     })
+elseif is_host("macosx") then
+    table.join2(zluiSubDirs, {
+        "src/cocoa/application",
+        "src/cocoa/filesystem",
+        "src/cocoa/library",
+        "src/cocoa/view",
+        "src/cocoa/dialogs",
+        "src/cocoa/image",
+        "src/cocoa/time",
+        "src/cocoa/util",
+        "src/cocoa/message",
+    })
 end
 
 target("zlui")
     set_kind("static")
     -- set_kind("shared")
     -- add_links("gdi32", "comctl32", "comdlg32")
+    if is_host("macosx") then
+        set_values("objc.build.arc", false)
+        add_mxxflags("-fno-objc-arc")
+    end
     add_includedirs("zlibrary/text/include", "zlibrary/core/include")
     for _, sub in ipairs(zluiSubDirs) do
-        add_files(path.join("zlibrary/ui", sub, "*.cpp"))
+        if is_host("macosx") then
+            add_files(path.join("zlibrary/ui", sub, "*.M"))
+        else
+            add_files(path.join("zlibrary/ui", sub, "*.cpp"))
+        end
     end
+    remove_files(
+        "zlibrary/ui/src/cocoa/application/CocoaWindow.M",
+        "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.M"
+    )
 
 local fbreaderSubDirs = {
     "src/database/sqldb",
@@ -207,15 +244,31 @@ target("fbreader")
     add_includedirs("zlibrary/core/include", "zlibrary/text/include")
     add_deps("zlcore", "zltext", "zlui")
     -- 3rd link
-    add_links("z", "expat", "bzip2", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl")
+    add_links("z", "bzip2", "expat", "fribidi", "unibreak", "sqlite3", "curl")
+    if is_host("macosx") then
+        set_values("objc.build.arc", false)
+        add_mxxflags("-fno-objc-arc")
+        add_frameworks("Cocoa")
+        add_links("iconv", "stdc++")
+        add_ldflags("-static-libstdc++")
+        local buildMode = "debug"
+        if is_mode("release") then
+            buildMode = "release"
+        end
+        add_files(
+            "zlibrary/ui/src/cocoa/application/CocoaWindow.M",
+            "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.M"
+        )
+    end
     if is_plat("windows", "mingw") then
+        add_links("wolfssl")
         -- windows lib link
         add_links("png", "gif", "tiff", "jpeg")
         add_links("user32", "gdi32", "shell32", "comctl32", "comdlg32", "ws2_32", "crypt32", "advapi32", "wldap32", "bcrypt")
         -- windows rc
         add_files("fbreader/win32/FBReader.rc")
     end
-    if is_plat("windows") ~= true then
+    if is_plat("windows") ~= true and is_host("windows") then
         add_ldflags("-static-libgcc", "-static-libstdc++")
     end
     for _, sub in ipairs(fbreaderSubDirs) do

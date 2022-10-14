@@ -14,12 +14,16 @@ end
 os.mkdir(includeDir)
 os.mkdir(libDir)
 
-if is32bit then
-    os.cp(path.join(os.scriptdir(), "build/mingw/x86/release/*.a"), libDir)
-    os.cp(path.join(os.scriptdir(), "build/windows/x86/release/*.lib"), libDir)
-else
-    os.cp(path.join(os.scriptdir(), "build/mingw/x86_64/release/*.a"), libDir)
-    os.cp(path.join(os.scriptdir(), "build/windows/x64/release/*.lib"), libDir)
+if is_host("macosx") then
+    os.cp(path.join(os.scriptdir(), "../build/macosx/x86_64/release/*.a"), libDir)
+elseif is_host("windows") then
+    if is32bit then
+        os.cp(path.join(os.scriptdir(), "build/mingw/x86/release/*.a"), libDir)
+        os.cp(path.join(os.scriptdir(), "build/windows/x86/release/*.lib"), libDir)
+    else
+        os.cp(path.join(os.scriptdir(), "build/mingw/x86_64/release/*.a"), libDir)
+        os.cp(path.join(os.scriptdir(), "build/windows/x64/release/*.lib"), libDir)
+    end
 end
 -- os.cp("curl/curl-7.83.1_2-win64-mingw/lib/*.a", "lib/")
 
@@ -72,16 +76,16 @@ local headerFiles = {
             "gif_lib_private.h",
         },
     },
-    {
-        "jpeg/jpeg-9e/",
-        {
-            "jconfig.h",
-            "jpeglib.h",
-            "jmorecfg.h",
-            "jpegint.h",
-            "jerror.h",
-        },
-    },
+    -- {
+    --     "jpeg/jpeg-9e/",
+    --     {
+    --         "jconfig.h",
+    --         "jpeglib.h",
+    --         "jmorecfg.h",
+    --         "jpegint.h",
+    --         "jerror.h",
+    --     },
+    -- },
     {
         "png/lpng1637/",
         {

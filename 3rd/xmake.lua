@@ -2,9 +2,43 @@ add_rules("mode.debug", "mode.release")
 
 set_languages("c17", "cxx20")
 
+local targets = {
+    gif = true,
+    z = true,
+    bzip2 = true,
+    png = true,
+    tiff = true,
+    jpeg = true,
+    unibreak = true,
+    fribidi = true,
+    sqlite3 = true,
+    expat = true,
+    wolfssl = true,
+    curl = true
+}
+
+
+if is_host("windows") then
+    add_includedirs(path.join(os.scriptdir(), ".include"))
+end
+
+if is_host("macosx") then
+    targets = {
+        -- z = true,
+        bzip2 = true,
+        unibreak = true,
+        fribidi = true,
+        sqlite3 = true,
+        expat = true,
+        -- wolfssl = true,
+        -- curl = true,
+    }
+end
+
+if targets["gif"] == true then
+
 target("gif")
     set_kind("static")
-    add_includedirs(path.join(os.scriptdir(),".include"))
     for _, f in ipairs({
         "dgif_lib.c",
         "egif_lib.c",
@@ -16,6 +50,9 @@ target("gif")
     }) do
         add_files(path.join(os.scriptdir(), "gif/giflib-5.2.1", f))
     end
+end
+
+if targets["z"] == true then
 
 target("z")
     set_kind("static")
@@ -25,7 +62,6 @@ target("z")
             os.cp(path.join(os.scriptdir(), "zlib/zlib-1.2.12/zconf.h.in"), libconfig)
         end
     end)
-    add_includedirs(path.join(os.scriptdir(), ".include"))
     for _, f in ipairs({
         "adler32.c",
         "crc32.c",
@@ -45,6 +81,9 @@ target("z")
     }) do
         add_files(path.join(os.scriptdir(), "zlib/zlib-1.2.12", f))
     end
+end
+
+if targets["png"] == true then
 
 target("png")
     set_kind("static")
@@ -113,9 +152,12 @@ target("png")
             add_files(path.join(os.scriptdir(), "png/lpng1637", f))
         end
     end
+end
 
 local tiffSourceDir = path.join(os.scriptdir(), "tiff/tiff-4.4.0/libtiff")
 local jpegSourceDir = path.join(os.scriptdir(), "jpeg/jpeg-9e")
+
+if targets["tiff"] == true then
 
 target("tiff")
     set_kind("static")
@@ -123,7 +165,6 @@ target("tiff")
     add_deps("jpeg", "z")
     add_includedirs(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
     add_includedirs(jpegSourceDir)
-    add_includedirs(path.join(os.scriptdir(), ".include"))
     on_config(function()
         local libconfig = path.join(tiffSourceDir, "tif_config.h")
         if not os.exists(libconfig) then
@@ -183,6 +224,9 @@ target("tiff")
         add_files(path.join(tiffSourceDir, "tif_unix.c"))
     end
 
+end
+
+if targets["jpeg"] == true then
 
 
 target("jpeg")
@@ -249,6 +293,9 @@ target("jpeg")
         add_files(path.join(jpegSourceDir, f))
     end
 
+end
+if targets["bzip2"] == true then
+
 target("bzip2")
     set_kind("static")
     for _, f in ipairs({
@@ -263,6 +310,9 @@ target("bzip2")
         add_files(path.join(os.scriptdir(), "bzip2/bzip2-1.0.6", f))
     end
 
+end
+
+if targets["unibreak"] == true then
 
 target("unibreak")
     set_kind("static")
@@ -278,7 +328,9 @@ target("unibreak")
     }) do
         add_files(path.join(os.scriptdir(), "unibreak/libunibreak-5.0/src", f))
     end
+end
 
+if targets["fribidi"] == true then
 target("fribidi")
     set_kind("static")
     add_defines("FRIBIDI_BUILD", "FRIBIDI_LIB_STATIC", "HAVE_CONFIG_H")
@@ -362,6 +414,9 @@ target("fribidi")
     }) do
         add_files(path.join(os.scriptdir(), "fribidi/fribidi-1.0.12/lib", f))
     end
+end
+
+if targets["sqlite3"] == true then
 
 target("sqlite3")
     set_kind("static")
@@ -370,6 +425,9 @@ target("sqlite3")
     }) do
         add_files(path.join(os.scriptdir(), "sqlite3/sqlite-amalgamation-3390200", f))
     end
+
+end
+if targets["expat"] == true then
 
 target("expat")
     set_kind("static")
@@ -398,6 +456,9 @@ target("expat")
 -- package_end()
 
 -- add_requires("expat")
+
+end
+if targets["wolfssl"] == true then
 
 target("wolfssl")
     set_kind("static")
@@ -513,7 +574,10 @@ target("wolfssl")
         end
     end
 
+end
 local libcurlDir = "libcurl/curl-7.85.0"
+
+if targets["curl"] == true then
 
 target("curl")
     set_kind("static")
@@ -545,3 +609,5 @@ target("curl")
     )
     add_links("ws2_32", "wldap32", "crypt32", "bcrypt")
     add_deps("wolfssl", "z")
+
+end
