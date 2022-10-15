@@ -166,7 +166,7 @@ for _, item in ipairs(headerFiles) do
     end
     for _, f in ipairs(item[2]) do
         local source = os.scriptdir().."/"..item[1]..f
-        if os.exists(source) then
+        if os.exists(source) or f == "*.h" then
             printf("cp %s %s\n", source, target)
             os.cp(source, target)
         end
