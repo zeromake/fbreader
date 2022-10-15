@@ -16,9 +16,6 @@ jobs:
         uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
         with:
           sdk-version: 20348
-      - uses: xmake-io/github-action-setup-xmake@v1
-        with:
-          xmake-version: latest
       - name: Install NSIS
         run: |
           iwr -useb get.scoop.sh -outfile 'install.ps1'
@@ -26,6 +23,7 @@ jobs:
           scoop update
           scoop bucket add extras
           scoop install nsis
+          scoop install xmake
       - name: build-x86_64
         env:
           VERSION: ${{ github.ref_name }}

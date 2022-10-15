@@ -814,19 +814,6 @@ void ZLWin32ApplicationWindow::Toolbar::clear() {
 
 int main(int argc, char **argv);
 
-int __WinMain(char* cmdLine) {
-	std::vector<std::string> arr;
-	ZLStringUtil::splitString(cmdLine, " ", arr);
-	int argc = arr.size();
-	char** argv = new char*[argc]();
-    for (int i = 0; i < argc; i++) {
-        argv[i] = (char*)arr.at(i).c_str();
-    }
-	free(cmdLine);
-	cmdLine = NULL;
-    return main(argc, argv);
-}
-
 char* _W2UTF8(const wchar_t *buffer, int bufferlen) {
 	int len = WideCharToMultiByte(CP_UTF8, 0, buffer, bufferlen, NULL, 0, NULL, NULL);
 	char* _block = (char*)malloc((len + 1) * sizeof(char));
@@ -834,13 +821,51 @@ char* _W2UTF8(const wchar_t *buffer, int bufferlen) {
 	return _block;
 }
 
+int __WinMain(wchar_t* cmdLine, unsigned int codePage) {
+	// AllocConsole();
+	// freopen("CONOUT$", "w", stdout);
+	// wprintf(L"codePage: %d\n", codePage);
+	// if (codePage == 0) {
+	// 	SetConsoleOutputCP(CP_UTF8);
+	// 	codePage = CP_UTF8;
+	// }
+
+	// wchar_t cp[20];
+	// wsprintfW(cp, L".%d", codePage);
+	// wprintf(L"`%s`\n", cp);
+    // _wsetlocale(0, cp);
+	int argc;
+	LPWSTR *_argv = CommandLineToArgvW(cmdLine, &argc);
+	char** argv = new char*[argc]();
+    for (int i = 0; i < argc; i++) {
+		// wprintf(L"`%s`\n", _argv[i]);
+        argv[i] = _W2UTF8(_argv[i], wcslen(_argv[i]));
+    }
+	free(cmdLine);
+	cmdLine = NULL;
+    return main(argc, argv);
+}
+
+wchar_t* _UTF82W(const char *buffer, int bufferlen, const unsigned int codePage=CP_UTF8) {
+	int len = MultiByteToWideChar(codePage, 0, buffer, bufferlen, NULL, 0);
+	wchar_t* _block = (wchar_t*)malloc((len + 1) * sizeof(wchar_t));
+	MultiByteToWideChar(codePage, 0, buffer, bufferlen, (LPWSTR)_block, len);
+	return _block;
+}
+
+static const UINT TryGetACP() {
+	UINT codePage = GetConsoleOutputCP();
+	return codePage;
+}
+
 int APIENTRY WinMain(
     HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
     LPSTR lpCmdLine,
     int nCmdShow) {
-	char* cmdLine = lpCmdLine;
-    return __WinMain(cmdLine);
+	static const UINT codePage = TryGetACP();
+	wchar_t* cmdLine = _UTF82W(lpCmdLine, strlen(lpCmdLine), codePage);
+    return __WinMain(cmdLine, codePage);
 }
 
 int APIENTRY wWinMain(
@@ -848,6 +873,10 @@ int APIENTRY wWinMain(
     HINSTANCE hPrevInstance,
     LPWSTR lpCmdLine,
     int nCmdShow) {
-	char* cmdLine = _W2UTF8(lpCmdLine, wcslen(lpCmdLine));
-    return __WinMain(cmdLine);
+	size_t count = (count + 1) * sizeof(wchar_t);
+	wchar_t* cmdLine = (wchar_t*)malloc(count);
+	memset(cmdLine, 0, count);
+	memcpy(cmdLine, lpCmdLine, count);
+	static const UINT codePage = TryGetACP();
+    return __WinMain(cmdLine, codePage);
 }
