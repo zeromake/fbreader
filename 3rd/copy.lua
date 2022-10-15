@@ -76,16 +76,16 @@ local headerFiles = {
             "gif_lib_private.h",
         },
     },
-    -- {
-    --     "jpeg/jpeg-9e/",
-    --     {
-    --         "jconfig.h",
-    --         "jpeglib.h",
-    --         "jmorecfg.h",
-    --         "jpegint.h",
-    --         "jerror.h",
-    --     },
-    -- },
+    {
+        "jpeg/jpeg-9e/",
+        {
+            "jconfig.h",
+            "jpeglib.h",
+            "jmorecfg.h",
+            "jpegint.h",
+            "jerror.h",
+        },
+    },
     {
         "png/lpng1637/",
         {
@@ -124,7 +124,7 @@ local headerFiles = {
         },
     },
     {
-        "zlib/zlib-1.2.12/",
+        "zlib/zlib-1.2.13/",
         {
             "zlib.h",
             "zconf.h",
@@ -165,6 +165,10 @@ for _, item in ipairs(headerFiles) do
         target = target..item[3]
     end
     for _, f in ipairs(item[2]) do
-        os.cp(os.scriptdir().."/"..item[1]..f, target)
+        local source = os.scriptdir().."/"..item[1]..f
+        if os.exists(source) then
+            printf("cp %s %s\n", source, target)
+            os.cp(source, target)
+        end
     end
 end

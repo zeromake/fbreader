@@ -52,14 +52,16 @@ target("gif")
     end
 end
 
+local zlibPath = "zlib/zlib-1.2.13"
+
 if targets["z"] == true then
 
 target("z")
     set_kind("static")
     on_config(function()
-        local libconfig = path.join(os.scriptdir(), "zlib/zlib-1.2.12/zconf.h")
+        local libconfig = path.join(os.scriptdir(), zlibPath, "zconf.h")
         if not os.exists(libconfig) then
-            os.cp(path.join(os.scriptdir(), "zlib/zlib-1.2.12/zconf.h.in"), libconfig)
+            os.cp(path.join(os.scriptdir(), zlibPath, "zconf.h.in"), libconfig)
         end
     end)
     for _, f in ipairs({
@@ -79,7 +81,7 @@ target("z")
         "gzread.c",
         "gzwrite.c",
     }) do
-        add_files(path.join(os.scriptdir(), "zlib/zlib-1.2.12", f))
+        add_files(path.join(os.scriptdir(), zlibPath, f))
     end
 end
 
@@ -88,7 +90,7 @@ if targets["png"] == true then
 target("png")
     set_kind("static")
     add_deps("z")
-    add_includedirs(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
+    add_includedirs(path.join(os.scriptdir(), zlibPath))
     on_config(function()
         local libconfig = path.join(os.scriptdir(), "png/lpng1637/pnglibconf.h")
         if not os.exists(libconfig) then
@@ -163,7 +165,7 @@ target("tiff")
     set_kind("static")
     -- set_kind("shared")
     add_deps("jpeg", "z")
-    add_includedirs(path.join(os.scriptdir(), "zlib/zlib-1.2.12"))
+    add_includedirs(path.join(os.scriptdir(), zlibPath))
     add_includedirs(jpegSourceDir)
     on_config(function()
         local libconfig = path.join(tiffSourceDir, "tif_config.h")
@@ -593,7 +595,7 @@ target("curl")
         path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"),
         path.join(os.scriptdir(), libcurlDir, "lib"),
         path.join(os.scriptdir(), libcurlDir, "include"),
-        path.join(os.scriptdir(), "zlib/zlib-1.2.12")
+        path.join(os.scriptdir(), zlibPath)
     )
     -- add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
     add_defines(

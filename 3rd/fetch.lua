@@ -5,7 +5,7 @@ import("lib.detect.find_program")
 local downloads = {
     {
         "zlib",
-        "https://zlib.net/zlib1212.zip",
+        "https://github.com/madler/zlib/releases/download/v1.2.13/zlib1213.zip",
     },
     {
         "png",
