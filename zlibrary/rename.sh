@@ -6,5 +6,5 @@ set -- $dirs
 
 for dir in "$@"; do
     n=$(echo $dir | sed 's/\.m//')
-    mv $dir $n.M
+    mv $dir $n.mm
 done

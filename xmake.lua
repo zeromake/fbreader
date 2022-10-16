@@ -150,26 +150,26 @@ local zluiSubDirs = {}
 
 if is_host("windows") then
     table.join2(zluiSubDirs, {
-        "src/win32/view",
-        "src/win32/w32widgets",
-        "src/win32/dialogs",
         "src/win32/application",
+        "src/win32/dialogs",
         "src/win32/image",
         "src/win32/library",
-        "src/win32/time",
         "src/win32/message",
+        "src/win32/time",
+        "src/win32/view",
+        "src/win32/w32widgets",
     })
 elseif is_host("macosx") then
     table.join2(zluiSubDirs, {
         "src/cocoa/application",
-        "src/cocoa/filesystem",
-        "src/cocoa/library",
-        "src/cocoa/view",
         "src/cocoa/dialogs",
+        "src/cocoa/filesystem",
         "src/cocoa/image",
+        "src/cocoa/library",
+        "src/cocoa/message",
         "src/cocoa/time",
         "src/cocoa/util",
-        "src/cocoa/message",
+        "src/cocoa/view",
     })
 end
 
@@ -184,14 +184,14 @@ target("zlui")
     add_includedirs("zlibrary/text/include", "zlibrary/core/include")
     for _, sub in ipairs(zluiSubDirs) do
         if is_host("macosx") then
-            add_files(path.join("zlibrary/ui", sub, "*.M"))
+            add_files(path.join("zlibrary/ui", sub, "*.mm"))
         else
             add_files(path.join("zlibrary/ui", sub, "*.cpp"))
         end
     end
     remove_files(
-        "zlibrary/ui/src/cocoa/application/CocoaWindow.M",
-        "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.M"
+        "zlibrary/ui/src/cocoa/application/CocoaWindow.mm",
+        "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.mm"
     )
 
 local fbreaderSubDirs = {
@@ -256,8 +256,8 @@ target("fbreader")
             buildMode = "release"
         end
         add_files(
-            "zlibrary/ui/src/cocoa/application/CocoaWindow.M",
-            "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.M"
+            "zlibrary/ui/src/cocoa/application/CocoaWindow.mm",
+            "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.mm"
         )
     end
     if is_plat("windows", "mingw") then

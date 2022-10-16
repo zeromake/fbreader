@@ -4,9 +4,9 @@ INCLUDE = $(ZINCLUDE) $(EXTERNAL_INCLUDE)
 
 HEADERS = $(wildcard *.h)
 SOURCES_CPP = $(wildcard *.cpp)
-SOURCES_OBJCPP = $(wildcard *.M)
+SOURCES_OBJCPP = $(wildcard *.mm)
 SOURCES_OBJC = $(wildcard *.m)
-OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES_CPP)) $(patsubst %.M, %.o, $(SOURCES_OBJCPP)) $(patsubst %.m, %.o, $(SOURCES_OBJC))
+OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES_CPP)) $(patsubst %.mm, %.o, $(SOURCES_OBJCPP)) $(patsubst %.m, %.o, $(SOURCES_OBJC))
 
 .SUFFIXES: .cpp .M .m .o .h
 

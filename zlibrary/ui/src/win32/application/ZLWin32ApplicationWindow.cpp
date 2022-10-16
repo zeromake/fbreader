@@ -38,7 +38,6 @@
 #include "../view/ZLWin32ViewWidget.h"
 #include "../../../../core/src/win32/util/W32WCHARUtil.h"
 #include "../time/ZLWin32Time.h"
-#include "../resource/resource.h"
 
 #undef max
 #undef min
