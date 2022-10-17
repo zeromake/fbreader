@@ -2,20 +2,24 @@ local arch = os.getenv("ARCH") or "x64"
 if arch == "x86_64" then
     arch = "x64"
 end
-local is32bit = arch ~= "x64"
+local is32bit = arch ~= "x64" and arch ~= "arm64"
+local isarm64 = arch == "arm64"
 
 local includeDir = path.join(os.scriptdir(), "include")
-local libDir = path.join(os.scriptdir(), "lib")
-
-if is32bit then
-    libDir = path.join(os.scriptdir(), "lib32")
-end
+local libDir = path.join(os.scriptdir(), "lib-"..arch)
 
 os.mkdir(includeDir)
 os.mkdir(libDir)
 
 if is_host("macosx") then
-    os.cp(path.join(os.scriptdir(), "../build/macosx/x86_64/release/*.a"), libDir)
+    if isarm64 then
+        os.cp(path.join(os.scriptdir(), "../build/macosx/arm64/release/*.a"), libDir)
+    else
+        os.cp(path.join(os.scriptdir(), "../build/macosx/x86_64/release/*.a"), libDir)
+    end
+    os.rm(path.join(libDir, "libzlcore.a"))
+    os.rm(path.join(libDir, "libzltext.a"))
+    os.rm(path.join(libDir, "libzlui.a"))
 elseif is_host("windows") then
     if is32bit then
         os.cp(path.join(os.scriptdir(), "build/mingw/x86/release/*.a"), libDir)

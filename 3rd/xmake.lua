@@ -1,6 +1,12 @@
 add_rules("mode.debug", "mode.release")
 
 set_languages("c17", "cxx20")
+local arch = os.getenv("ARCH") or "x64"
+if arch == "x86_64" then
+    arch = "x64"
+end
+local is32bit = arch ~= "x64" and arch ~= "arm64"
+local isarm64 = arch == "arm64"
 
 local targets = {
     gif = true,
@@ -24,14 +30,14 @@ end
 
 if is_host("macosx") then
     targets = {
-        -- z = true,
+        z = true,
         bzip2 = true,
         unibreak = true,
         fribidi = true,
         sqlite3 = true,
         expat = true,
-        -- wolfssl = true,
-        -- curl = true,
+        wolfssl = true,
+        curl = true,
     }
 end
 
@@ -472,11 +478,13 @@ target("wolfssl")
             os.cp(sourceConfig, targetConfig)
         end
     end)
-    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB", "WOLFSSL_USER_SETTINGS", "CYASSL_USER_SETTINGS")
-    add_includedirs(
-        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
-        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"))
-    add_links("ws2_32")
+    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB", "WOLFSSL_USER_SETTINGS", "CYASSL_USER_SETTINGS", "WOLFSSL_NO_MD4", "OPENSSL_EXTRA", "WOLFSSL_SHA512")
+    add_includedirs(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"))
+    if is_host("windows") then
+        add_includedirs(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"))
+    elseif is_host("macosx") then
+        add_includedirs(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/XCODE"))
+    end
     for _, f in ipairs({
         "src/crl.c",
         "src/dtls13.c",
@@ -550,7 +558,7 @@ target("wolfssl")
     }) do
         add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
     end
-    if is_plat("windows") then
+    if is_host("windows") then
         add_links("advapi32")
         local list = {
             "wolfssl.rc",
@@ -567,12 +575,39 @@ target("wolfssl")
         for _, f in ipairs(list) do
             add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
         end
-    else
-        for _, f in ipairs({
-            "wolfcrypt/src/aes_asm.S",
-            "wolfcrypt/src/sp_x86_64_asm.S",
-        }) do
+    elseif is_host("macosx") then
+        local files = {}
+        if isarm64 then
+            table.join2(files, {
+                "wolfcrypt/src/port/arm/armv8-aes.c",
+                "wolfcrypt/src/port/arm/armv8-sha256.c",
+                "wolfcrypt/src/port/arm/armv8-poly1305.c",
+                "wolfcrypt/src/port/arm/armv8-chacha.c",
+                "wolfcrypt/src/port/arm/armv8-curve25519.S",
+                "wolfcrypt/src/sp_arm64.c",
+                "wolfcrypt/src/port/arm/armv8-sha512.c",
+                "wolfcrypt/src/port/arm/armv8-sha512-asm_c.c",
+            })
+        else
+            table.join2(
+                files,
+                {
+                    "wolfcrypt/src/aes_asm.S",
+                    "wolfcrypt/src/sp_x86_64_asm.S",
+                }
+            )
+        end
+        for _, f in ipairs(files) do
             add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
+        end
+    else
+        if is_arch("x86_64") then
+            for _, f in ipairs({
+                "wolfcrypt/src/aes_asm.S",
+                "wolfcrypt/src/sp_x86_64_asm.S",
+            }) do
+                add_files(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable", f))
+            end
         end
     end
 
@@ -585,14 +620,28 @@ target("curl")
     set_kind("static")
     -- set_kind("shared")
     -- add_cxflags("/D UNICODE")
+    on_config(function ()
+        local sourceConfig = path.join(os.scriptdir(), "pre/curl/curl_config.h")
+        local targetConfig = path.join(os.scriptdir(), libcurlDir, "lib/curl_config.h")
+        if not os.exists(targetConfig) then
+            os.cp(sourceConfig, targetConfig)
+        end
+    end)
 
-    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB", "WOLFSSL_USER_SETTINGS", "CYASSL_USER_SETTINGS")
+    add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB", "WOLFSSL_USER_SETTINGS", "CYASSL_USER_SETTINGS", "WOLFSSL_SHA512")
     add_files(path.join(os.scriptdir(), libcurlDir, "lib/*.c"))
     add_files(path.join(os.scriptdir(), libcurlDir, "lib/vtls/*.c"))
     add_files(path.join(os.scriptdir(), libcurlDir, "lib/vauth/*.c"))
+    add_includedirs(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"))
+    if is_host("windows") then
+        add_defines("WIN32", "USE_WIN32_LDAP")
+        add_includedirs(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"))
+        add_links("ws2_32", "wldap32", "crypt32", "bcrypt")
+    elseif is_host("macosx") then
+        add_defines("HAVE_CONFIG_H=1", "HAVE_LONGLONG=1", "SIZEOF_CURL_OFF_T=8", "WOLFSSL_NO_MD4", "OPENSSL_EXTRA")
+        add_includedirs(path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/XCODE"))
+    end
     add_includedirs(
-        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable"),
-        path.join(os.scriptdir(), "wolfssl/wolfssl-5.5.0-stable/IDE/WIN"),
         path.join(os.scriptdir(), libcurlDir, "lib"),
         path.join(os.scriptdir(), libcurlDir, "include"),
         path.join(os.scriptdir(), zlibPath)
@@ -600,16 +649,12 @@ target("curl")
     -- add_defines("SIZEOF_LONG_LONG=8", "WOLFSSL_DES_ECB", "WOLFSSL_LIB","WOLFSSL_USER_SETTINGS","CYASSL_USER_SETTINGS","WOLFSSL_USER_SETTINGS")
     add_defines(
         "USE_WOLFSSL",
-        "WIN32",
         "BUILDING_LIBCURL",
         "CURL_STATICLIB",
-        "HAVE_LIBZ",
-        "HAVE_ZLIB_H",
+        "HAVE_LIBZ=1",
+        "HAVE_ZLIB_H=1"
         -- "UNICODE",
         -- "_UNICODE",
-        "USE_WIN32_LDAP"
     )
-    add_links("ws2_32", "wldap32", "crypt32", "bcrypt")
     add_deps("wolfssl", "z")
-
 end

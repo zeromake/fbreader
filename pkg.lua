@@ -6,7 +6,8 @@ local arch = os.getenv("ARCH") or "x64"
 if arch == "x86_64" then
     arch = "x64"
 end
-local is32bit = arch ~= "x64"
+local is32bit = arch ~= "x64" and arch ~= "arm64"
+local isarm64 = arch == "arm64"
 local out = path.join(os.scriptdir(), "dist", arch)
 local shareOut = path.join(os.scriptdir(), "dist", arch, "share")
 
@@ -38,7 +39,7 @@ elseif is_host("macosx") then
         toolbar = "macosx",
         icon = "desktop",
     }
-    out = path.join(os.scriptdir(), "dist/fbreader.app")
+    out = path.join(os.scriptdir(), "dist", arch, "fbreader.app")
     shareOut = path.join(out, "Contents/Share")
 end
 
@@ -175,10 +176,19 @@ if is_host("windows") then
         end
     end
 elseif is_host("macosx") then
-    for _, f in ipairs({
-        "build/macosx/x86_64/release/fbreader",
-        "build/macosx/x86_64/debug/fbreader",
-    }) do
+    local bins = {}
+    if isarm64 then
+        bins = {
+            "build/macosx/arm64/release/fbreader",
+            "build/macosx/arm64/debug/fbreader",
+        }
+    else
+        bins = {
+            "build/macosx/x86_64/release/fbreader",
+            "build/macosx/x86_64/debug/fbreader",
+        }
+    end
+    for _, f in ipairs(bins) do
         f = path.join(os.scriptdir(), f)
         if os.exists(f) then
             local t = path.join(out, "Contents/MacOS/FBReader")
@@ -271,7 +281,16 @@ elseif is_host("macosx") then
     print(exec)
     os.exec(exec)
     io.writefile(path.join(out, "Contents/PkgInfo"), "APPL????\n")
-    exec = "codesign --force --timestamp=none --deep --sign "..out
+    exec = "codesign --force --timestamp=none --deep --sign - "..out
     print(exec)
     os.exec(exec)
+    os.cd(out.."/..")
+    local zipOut = "fbreader-darwin-x86_64.zip"
+    if isarm64 then
+        zipOut = "fbreader-darwin-arm64.zip"
+    end
+    exec = "zip -r -o ../"..zipOut.." fbreader.app"
+    print(exec)
+    os.exec(exec)
+    os.cd("-")
 end

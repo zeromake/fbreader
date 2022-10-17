@@ -28,15 +28,13 @@ elseif is_host("windows") then
 end
 
 local INSTALLDIR_MACRO = installDir
-local is32bit = os.getenv("ARCH") == "x86"
+local arch = os.getenv("ARCH") or "x64"
+local is32bit = arch ~= "x64" and arch ~= "arm64"
+local isarm64 = arch == "arm64"
 
 add_includedirs("3rd/include")
 
-if is32bit then
-    add_linkdirs("3rd/lib32")
-else
-    add_linkdirs("3rd/lib")
-end
+add_linkdirs("3rd/lib-"..arch)
 
 add_defines(
     "XML_STATIC",
@@ -244,24 +242,18 @@ target("fbreader")
     add_includedirs("zlibrary/core/include", "zlibrary/text/include")
     add_deps("zlcore", "zltext", "zlui")
     -- 3rd link
-    add_links("z", "bzip2", "expat", "fribidi", "unibreak", "sqlite3", "curl")
+    add_links("z", "bzip2", "expat", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl")
     if is_host("macosx") then
         set_values("objc.build.arc", false)
         add_mxxflags("-fno-objc-arc")
         add_frameworks("Cocoa")
         add_links("iconv", "stdc++")
-        add_ldflags("-static-libstdc++")
-        local buildMode = "debug"
-        if is_mode("release") then
-            buildMode = "release"
-        end
         add_files(
             "zlibrary/ui/src/cocoa/application/CocoaWindow.mm",
             "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.mm"
         )
     end
     if is_plat("windows", "mingw") then
-        add_links("wolfssl")
         -- windows lib link
         add_links("png", "gif", "tiff", "jpeg")
         add_links("user32", "gdi32", "shell32", "comctl32", "comdlg32", "ws2_32", "crypt32", "advapi32", "wldap32", "bcrypt")
