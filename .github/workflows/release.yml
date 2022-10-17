@@ -27,7 +27,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: 3rd/download/
-          key: ${{ hashFiles('3rd/fetch.lua') }}
+          key: ${{ runner.os }}-${{ hashFiles('3rd/fetch.lua') }}
       - name: build-x86_64
         env:
           VERSION: ${{ github.ref_name }}
@@ -61,13 +61,16 @@ jobs:
     name: macos build
     runs-on: macos-latest
     steps:
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: actions/cache@v3
         with:
           path: 3rd/download/
-          key: ${{ hashFiles('3rd/fetch.lua') }}
+          key: ${{ runner.os }}-${{ hashFiles('3rd/fetch.lua') }}
       - name: build-x64
         env:
           VERSION: ${{ github.ref_name }}
@@ -97,6 +100,7 @@ jobs:
             dist/fbreader-darwin-x86_64-arm64.zip
   update-release:
     runs-on: ubuntu-latest
+    needs: [build-osx, build-windows]
     steps:
       - uses: actions/download-artifact@v3
         with:
