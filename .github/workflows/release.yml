@@ -63,7 +63,10 @@ jobs:
     steps:
       - name: install-xmake
         run: |
-          bash <(curl -fsSL https://xmake.io/shget.text)
+          curl -Lo ./xmake.pkg https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.macosx.pkg
+          sudo installer -pkg ./xmake.pkg -target /
+          rm ./xmake.pkg
+          xmake --version
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
