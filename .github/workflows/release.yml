@@ -61,9 +61,9 @@ jobs:
     name: macos build
     runs-on: macos-latest
     steps:
-      - uses: xmake-io/github-action-setup-xmake@v1
-        with:
-          xmake-version: latest
+      - name: install-xmake
+        run: |
+          bash <(curl -fsSL https://xmake.io/shget.text)
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0

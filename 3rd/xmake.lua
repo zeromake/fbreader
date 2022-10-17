@@ -89,6 +89,9 @@ target("z")
     }) do
         add_files(path.join(os.scriptdir(), zlibPath, f))
     end
+    if is_host("macosx") then
+        add_defines("Z_HAVE_UNISTD_H=1")
+    end
 end
 
 if targets["png"] == true then
