@@ -60,6 +60,7 @@ jobs:
   build-osx:
     name: macos build
     runs-on: macos-latest
+    steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -96,6 +97,7 @@ jobs:
             dist/fbreader-darwin-x86_64-arm64.zip
   update-release:
     runs-on: ubuntu-latest
+    steps:
       - uses: actions/download-artifact@v3
         with:
           name: fbreader-windows-${{ github.run_id }}
