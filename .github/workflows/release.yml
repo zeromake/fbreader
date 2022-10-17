@@ -27,7 +27,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: 3rd/download/
-          key: ${{ hashFiles(3rd/fetch.lua) }}
+          key: ${{ hashFiles('3rd/fetch.lua') }}
       - name: build-x86_64
         env:
           VERSION: ${{ github.ref_name }}
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: 3rd/download/
-          key: ${{ hashFiles(3rd/fetch.lua) }}
+          key: ${{ hashFiles('3rd/fetch.lua') }}
       - name: build-x64
         env:
           VERSION: ${{ github.ref_name }}
