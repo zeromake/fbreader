@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-windows:
+    name: windows build
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -108,9 +109,14 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: fbreader-windows-${{ github.run_id }}
+          path: dist
       - uses: actions/download-artifact@v3
         with:
           name: fbreader-osx-${{ github.run_id }}
+          path: dist
+      - name: list file
+        run: |
+          ls -R
       - name: update
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
