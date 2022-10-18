@@ -87,8 +87,8 @@ def main():
     '''main worker'''
 
     if len(sys.argv) == 1:
-        print >> sys.stderr, 'Usage: extract_i18n.py <lang> > <file.csv>'
-        print >> sys.stderr, ' (to be run from the directory where en.xml is located)'
+        print('Usage: extract_i18n.py <lang> > <file.csv>', file=sys.stderr)
+        print(' (to be run from the directory where en.xml is located)', file=sys.stderr)
         sys.exit(1)
 
     coll = Collector()

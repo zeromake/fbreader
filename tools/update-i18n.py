@@ -89,8 +89,8 @@ class Collector:
                         english = value.get('en', None)
 
                         if english is None:
-                            print >> sys.stderr, 'English file does not have the string for', key[0:i]
-                            print >> sys.stderr, '  entry is marked as obosolete.'
+                            print('English file does not have the string for', key[0:i], file=sys.stderr)
+                            print('  entry is marked as obosolete.', file=sys.stderr)
 
                             elem = SubElement(parent, 'node', name=key[i-1], value=localized, obsolete='true')
                         elif localized is not None:
@@ -103,7 +103,7 @@ class Collector:
 
         fix_it(root)
 
-        print >> output, '<?xml version="1.0" encoding="UTF-8"?>'
+        print('<?xml version="1.0" encoding="UTF-8"?>', file=output)
         ElementTree(root).write(output, 'utf-8')
 
 def main():

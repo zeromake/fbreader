@@ -98,7 +98,7 @@ class Collector:
 
         fix_it(root)
 
-        print >> output, '<?xml version="1.0" encoding="UTF-8"?>'
+        print('<?xml version="1.0" encoding="UTF-8"?>', file=output)
         ElementTree(root).write(output, 'ascii')
 
 def main():

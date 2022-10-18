@@ -7,7 +7,7 @@ class unicode_doc(csv.excel):
 
 csv.register_dialect("unicode_doc", unicode_doc)
 
-print "<unicode>"
+print("<unicode>")
 reader = csv.reader(sys.stdin, "unicode_doc")
 i = 0
 for data in reader:
@@ -18,5 +18,5 @@ for data in reader:
 		if data[14] != "":
 			str += " upper=\"0x" + data[14] + "\""
 		str += "/>"
-		print str
-print "</unicode>"
+		print(str)
+print("</unicode>")

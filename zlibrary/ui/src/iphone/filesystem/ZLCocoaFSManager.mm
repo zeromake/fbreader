@@ -33,3 +33,7 @@ void ZLCocoaFSManager::normalize(std::string &path) const {
 std::string ZLCocoaFSManager::convertFilenameToUtf8(const std::string &name) const {
 	return name;
 }
+
+std::string ZLCocoaFSManager::mimeType(const std::string &path) const {
+	return std::string();
+}

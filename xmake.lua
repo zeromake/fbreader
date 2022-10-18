@@ -266,3 +266,42 @@ target("fbreader")
     for _, sub in ipairs(fbreaderSubDirs) do
         add_files(path.join("fbreader", sub, "*.cpp"))
     end
+
+target("statisticsGenerator")
+    set_kind("binary")
+    add_deps("zlcore")
+    add_includedirs("zlibrary/core/include", "zlibrary/core/src/language")
+    add_files("tools/StatisticsGenerator/generator.cpp")
+    add_files("tools/StatisticsGenerator/initLibrary.cpp")
+    if is_host("windows") then
+        add_includedirs("zlibrary/core/src/win32/filesystem")
+    else
+        add_includedirs("zlibrary/core/src/unix/filesystem")
+    end
+    add_links("bzip2", "expat")
+
+target("languageDetector")
+    set_kind("binary")
+    add_deps("zlcore")
+    add_includedirs("zlibrary/core/include", "zlibrary/core/src/language")
+    add_files("tools/StatisticsGenerator/detector.cpp")
+    add_files("tools/StatisticsGenerator/initLibrary.cpp")
+    if is_host("windows") then
+        add_includedirs("zlibrary/core/src/win32/filesystem")
+    else
+        add_includedirs("zlibrary/core/src/unix/filesystem")
+    end
+    add_links("bzip2", "expat")
+
+target("patternGenerator")
+    set_kind("binary")
+    add_deps("zlcore")
+    add_includedirs("zlibrary/core/include", "zlibrary/core/src/language")
+    add_files("tools/StatisticsGenerator/pattern.cpp")
+    add_files("tools/StatisticsGenerator/initLibrary.cpp")
+    if is_host("windows") then
+        add_includedirs("zlibrary/core/src/win32/filesystem")
+    else
+        add_includedirs("zlibrary/core/src/unix/filesystem")
+    end
+    add_links("bzip2", "expat")

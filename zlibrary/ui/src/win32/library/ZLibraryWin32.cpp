@@ -38,23 +38,28 @@ const std::string ZLibrary::PathDelimiter(";");
 const std::string ZLibrary::EndOfLine("\r\n");
 
 bool ZLibrary::init(int &argc, char **&argv) {
-	WCHAR **wArgv = CommandLineToArgvW(GetCommandLineW(), &argc);
-	static std::string arguments;
-	std::vector<int> offsets;
-	offsets.push_back(0);
-	for (int i = 0; i < argc; ++i) {
-		ZLUnicodeUtil::Ucs2String wArg;
-		for (int j = 0; wArgv[i][j] != 0; ++j) {
-			wArg.push_back(wArgv[i][j]);
+	if (argc == 0 && argv == NULL) {
+		auto wArgs = GetCommandLineW();
+		if (wArgs) {
+			WCHAR **wArgv = CommandLineToArgvW(wArgs, &argc);
+			static std::string arguments;
+			std::vector<int> offsets;
+			offsets.push_back(0);
+			for (int i = 0; i < argc; ++i) {
+				ZLUnicodeUtil::Ucs2String wArg;
+				for (int j = 0; wArgv[i][j] != 0; ++j) {
+					wArg.push_back(wArgv[i][j]);
+				}
+				std::string arg;
+				ZLUnicodeUtil::ucs2ToUtf8(arg, wArg);
+				arguments += arg + '\0';
+				offsets.push_back(arguments.length());
+			}
+			argv = new char*[argc];
+			for (int i = 0; i < argc; ++i) {
+				argv[i] = (char*)arguments.data() + offsets[i];
+			}
 		}
-		std::string arg;
-		ZLUnicodeUtil::ucs2ToUtf8(arg, wArg);
-		arguments += arg + '\0';
-		offsets.push_back(arguments.length());
-	}
-	argv = new char*[argc];
-	for (int i = 0; i < argc; ++i) {
-		argv[i] = (char*)arguments.data() + offsets[i];
 	}
 
 	parseArguments(argc, argv);
