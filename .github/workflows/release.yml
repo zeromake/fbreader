@@ -26,8 +26,6 @@ jobs:
           scoop install nsis
           scoop install xmake
       - name: repo
-        env:
-          VERSION: ${{ github.ref_name }}
         shell: powershell
         run: |
           $env:path+=";$Home\scoop\shims"
@@ -73,7 +71,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: repo
-        env:
+        run:
           xmake repo -a local https://github.com/zeromake/xrepo.git
       - name: build-x64
         env:
