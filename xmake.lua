@@ -2,6 +2,34 @@ add_rules("mode.debug", "mode.release")
 
 set_languages("cxx20")
 
+
+local require_names = {
+    "zlib",
+    "bzip2",
+    "expat",
+    "fribidi",
+    "unibreak",
+    "sqlite3",
+    "curl",
+    "wolfssl",
+}
+
+for _, require_name in ipairs(require_names) do
+    add_requires(require_name, {system=false})
+end
+
+if is_host("windows", "mingw") then
+    local windows_require_names = {
+        "png",
+        "gif",
+        "tiff",
+        "jpeg"
+    }
+    for _, require_name in ipairs(windows_require_names) do
+        add_requires(require_name, {system=false})
+    end
+end
+
 local VERSION = os.getenv("VERSION") or "v0.0.0"
 local SHAREDIR = "/share"
 local IMAGEDIR = SHAREDIR.."/icons"
@@ -20,7 +48,7 @@ if is_host("macosx") then
     SHAREDIR_MACRO = "~~/Contents/Share"
     IMAGEDIR_MACRO = SHAREDIR_MACRO.."/icons"
     APPIMAGEDIR_MACRO = SHAREDIR_MACRO.."/icons"
-elseif is_host("windows") then
+elseif is_host("windows", "mingw") then
     SHAREDIR_MACRO = "~~\\\\share"
     IMAGEDIR_MACRO = SHAREDIR_MACRO.."\\\\icons"
     APPIMAGEDIR_MACRO = IMAGEDIR_MACRO
@@ -32,9 +60,9 @@ local arch = os.getenv("ARCH") or "x64"
 local is32bit = arch ~= "x64" and arch ~= "arm64"
 local isarm64 = arch == "arm64"
 
-add_includedirs("3rd/include")
+-- add_includedirs("3rd/include")
 
-add_linkdirs("3rd/lib-"..arch)
+-- add_linkdirs("3rd/lib-"..arch)
 
 add_defines(
     "XML_STATIC",
@@ -46,7 +74,7 @@ add_defines(
     "VERSION=\""..VERSION.."\""
 )
 
-if is_plat("windows", "mingw") then
+if is_host("windows", "mingw") then
     add_defines(
         "UNICODE",
         "_UNICODE",
@@ -61,14 +89,14 @@ if is_plat("windows", "mingw") then
     )
 end
 
-if is_plat("windows") then
+if is_host("windows") then
     add_cxxflags("/utf-8", "/UNICODE")
-    add_ldflags("/SUBSYSTEM:WINDOWS")
-elseif is_plat("mingw") then
+    -- add_ldflags("/SUBSYSTEM:WINDOWS")
+elseif is_host("mingw") then
 	add_cxxflags("-municode")
 	add_ldflags("-municode", {force = true})
 	-- add_ldflags("-Wl,--subsystem,windows", {force = true})
-    add_ldflags("-mwindows")
+    -- add_ldflags("-mwindows")
     add_defines("PFD_HAS_IFILEDIALOG=0", "PFD_HAS_DUPENV_S=0")
 end
 
@@ -103,7 +131,7 @@ local zlcoreSubDirs = {
     "src/unix/curl",
 }
 
-if is_plat("windows", "mingw") then
+if is_host("windows", "mingw") then
     table.join2(zlcoreSubDirs, {
         "src/desktop/application",
         "src/desktop/dialogs",
@@ -123,7 +151,7 @@ end
 target("zlcore")
     set_kind("static")
     -- set_kind("shared")
-    -- add_links("zlib", "bzip2", "expat", "curl")
+    add_packages("zlib", "bzip2", "expat", "curl")
     add_includedirs("zlibrary/core/include")
     for _, sub in ipairs(zlcoreSubDirs) do
         add_files(path.join("zlibrary/core", sub, "*.cpp"))
@@ -132,6 +160,7 @@ target("zlcore")
 
 target("zltext")
     set_kind("static")
+    add_packages("unibreak", "fribidi")
     add_includedirs("zlibrary/text/include", "zlibrary/core/include")
     for _, sub in ipairs({
         "src/model",
@@ -175,7 +204,10 @@ target("zlui")
     set_kind("static")
     -- set_kind("shared")
     -- add_links("gdi32", "comctl32", "comdlg32")
-    if is_host("macosx") then
+    add_packages("curl")
+    if is_host("windows", "mingw") then
+        add_packages("gif", "png", "jpeg", "tiff")
+    elseif is_host("macosx") then
         set_values("objc.build.arc", false)
         add_mxxflags("-fno-objc-arc")
     end
@@ -242,7 +274,7 @@ target("fbreader")
     add_includedirs("zlibrary/core/include", "zlibrary/text/include")
     add_deps("zlcore", "zltext", "zlui")
     -- 3rd link
-    add_links("z", "bzip2", "expat", "fribidi", "unibreak", "sqlite3", "curl", "wolfssl")
+    add_packages("zlib", "sqlite3", "wolfssl")
     if is_host("macosx") then
         set_values("objc.build.arc", false)
         add_mxxflags("-fno-objc-arc")
@@ -253,14 +285,13 @@ target("fbreader")
             "zlibrary/ui/src/cocoa/library/ZLCocoaAppDelegate.mm"
         )
     end
-    if is_plat("windows", "mingw") then
+    if is_host("windows", "mingw") then
         -- windows lib link
-        add_links("png", "gif", "tiff", "jpeg")
-        add_links("user32", "gdi32", "shell32", "comctl32", "comdlg32", "ws2_32", "crypt32", "advapi32", "wldap32", "bcrypt")
+        add_syslinks("user32", "gdi32", "shell32", "comctl32", "comdlg32", "ws2_32", "crypt32", "advapi32", "wldap32", "bcrypt")
         -- windows rc
         add_files("fbreader/win32/FBReader.rc")
     end
-    if is_plat("windows") ~= true and is_host("windows") then
+    if is_host("windows") ~= true and is_host("windows") then
         add_ldflags("-static-libgcc", "-static-libstdc++")
     end
     for _, sub in ipairs(fbreaderSubDirs) do
@@ -278,7 +309,7 @@ target("statisticsGenerator")
     else
         add_includedirs("zlibrary/core/src/unix/filesystem")
     end
-    add_links("bzip2", "expat")
+    add_syslinks("shell32")
 
 target("languageDetector")
     set_kind("binary")
@@ -291,7 +322,7 @@ target("languageDetector")
     else
         add_includedirs("zlibrary/core/src/unix/filesystem")
     end
-    add_links("bzip2", "expat")
+    add_syslinks("shell32")
 
 target("patternGenerator")
     set_kind("binary")
@@ -304,4 +335,4 @@ target("patternGenerator")
     else
         add_includedirs("zlibrary/core/src/unix/filesystem")
     end
-    add_links("bzip2", "expat")
+    add_syslinks("shell32")

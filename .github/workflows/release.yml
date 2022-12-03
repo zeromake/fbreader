@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Setup Windows 10 SDK version 10.0.20348.0
         uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.8
         with:
@@ -25,20 +25,22 @@ jobs:
           scoop bucket add extras
           scoop install nsis
           scoop install xmake
-      - uses: actions/cache@v3
-        with:
-          path: 3rd/download/
-          key: ${{ runner.os }}-${{ hashFiles('3rd/fetch.lua') }}
+      - name: repo
+        env:
+          VERSION: ${{ github.ref_name }}
+        shell: powershell
+        run: |
+          $env:path+=";$Home\scoop\shims"
+          xmake repo -a local https://github.com/zeromake/xrepo.git
       - name: build-x86_64
         env:
           VERSION: ${{ github.ref_name }}
         shell: powershell
         run: |
           $env:path+=";$Home\scoop\shims"
-          .\build-3rd.ps1
-          xmake f -c
-          xmake build fbreader
-          xmake lua .\pkg.lua
+          xmake f -c -y
+          xmake build -y fbreader
+          xmake lua pkg.lua
       - name: build-x86
         env:
           VERSION: ${{ github.ref_name }}
@@ -46,10 +48,9 @@ jobs:
         shell: powershell
         run: |
           $env:path+=";$Home\scoop\shims"
-          .\build-3rd.ps1
-          xmake f -a x86 -c
-          xmake build fbreader
-          xmake lua .\pkg.lua
+          xmake f -a x86 -c -y
+          xmake build -y fbreader
+          xmake lua pkg.lua
       - uses: actions/upload-artifact@v3
         with:
           name: fbreader-windows-${{ github.run_id }}
@@ -70,31 +71,28 @@ jobs:
           xmake --version
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-      - uses: actions/cache@v3
-        with:
-          path: 3rd/download/
-          key: ${{ runner.os }}-${{ hashFiles('3rd/fetch.lua') }}
+          fetch-depth: 1
+      - name: repo
+        env:
+          xmake repo -a local https://github.com/zeromake/xrepo.git
       - name: build-x64
         env:
           VERSION: ${{ github.ref_name }}
         run: |
-          ./build-3rd.sh
-          xmake f -c
-          xmake build fbreader
-          xmake lua ./pkg.lua
+          xmake f -c -y
+          xmake build -y fbreader
+          xmake lua pkg.lua
       - name: build-arm64
         env:
           VERSION: ${{ github.ref_name }}
           ARCH: arm64
         run: |
-          ./build-3rd.sh
-          xmake f -a arm64 -c
-          xmake build fbreader
-          xmake lua ./pkg.lua
+          xmake f -a arm64 -c -y
+          xmake build -y fbreader
+          xmake lua pkg.lua
       - name: build-universal-binary
         run: |
-          xmake lua ./universal-binary.lua
+          xmake lua universal-binary.lua
       - uses: actions/upload-artifact@v3
         with:
           name: fbreader-osx-${{ github.run_id }}

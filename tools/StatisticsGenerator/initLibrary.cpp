@@ -1,3 +1,5 @@
+#include <ZLibrary.h>
+
 #if defined(_WIN32)
 #include <ZLWin32FSManager.h>
 #else
@@ -18,12 +20,22 @@ public:
 
 #endif
 
-extern "C" {
-    void initLibrary() {
-        #ifdef _WIN32
-        ZLWin32FSManager::createInstance();
-        #else
-        ZLEmptyFSManager::createInstance();
-        #endif
-    }
+#if defined(_WIN32)
+const std::string ZLibrary::FileNameDelimiter("\\");
+#else
+const std::string ZLibrary::FileNameDelimiter("/");
+#endif
+
+bool ZLibrary::init(int &argc, char **&argv) {
+    #ifdef _WIN32
+    ZLWin32FSManager::createInstance();
+    #else
+    ZLEmptyFSManager::createInstance();
+    #endif
+    return true;
+}
+
+void ZLibrary::initLocale() {
+    ourLanguage = "es";
+    ourCountry = "LA";
 }
