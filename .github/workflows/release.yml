@@ -36,7 +36,7 @@ jobs:
         shell: powershell
         run: |
           $env:path+=";$Home\scoop\shims"
-          xmake f -c -y
+          xmake f -c -y -vD
           xmake build -y fbreader
           xmake lua pkg.lua
       - name: build-x86
@@ -77,7 +77,7 @@ jobs:
         env:
           VERSION: ${{ github.ref_name }}
         run: |
-          xmake f -c -y
+          xmake f -c -y -vD
           xmake build -y fbreader
           xmake lua pkg.lua
       - name: build-arm64
