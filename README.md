@@ -3,6 +3,43 @@
 fork to [FBReader](https://github.com/geometer/FBReader).
 
 
+## build guide
+
+**pre**
+
+``` bash
+xmake repo -a local https://github.com/zeromake/xrepo.git
+```
+
+**windows**
+> install Visual Studio
+
+``` powershell
+xmake f -c -y
+xmake build -y fbreader
+xmake lua pkg.lua
+```
+
+**windows by mingw**
+> install [llvm-mingw](https://github.com/mstorsjo/llvm-mingw/releases) or other `mingw`.
+``` powershell
+$MINGW="D:\mingw64"
+xmake f -p mingw --mingw=$MINGW -y -c
+xmake build -y fbreader
+xmake lua pkg.lua
+```
+
+**osx**
+> install xcode or clang
+
+``` bash
+xmake f -y -c
+xmake build -y onscripter
+xmake lua pkg.lua
+```
+
+pkg file is on dist dir.
+
 ## change
 
 - [x] fix windows build.
